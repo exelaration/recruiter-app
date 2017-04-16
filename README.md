@@ -14,7 +14,7 @@
 3. Associates 1 or more Job posting (links) with that page
 4. Publishes the page and heads to a career fair
 5. On 1 or more devices he loads the page for that Carreer fair
-6. Attendee uses the page to enter their information (mentioned above)
+6. Candidate uses the page to enter their information (mentioned above)
 
 
 ### Technical Information
