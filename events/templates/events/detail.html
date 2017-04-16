@@ -7,11 +7,8 @@
 {% block content %}
 <div class="starter-template">
   <div>
-    <div class='col-md-9'><h1>{{ event.name }}</h1></div>
+    <div class='col-md-9'><h1>{{ event.title }}</h1></div>
     <div class='col-md-3'><h1>{{ event.date_time }}</h1></div>
-  </div>
-  <div>
-    <div class='col-md-12'><h3>{{ event.description }}</h3> </div>
   </div>
 </div>
 
@@ -23,8 +20,6 @@
     <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post" class="uniForm blueForms" >
         {% csrf_token %}
         {% crispy form %}
-<!--         {{ form.as_p }} -->
-<!--         <input type="submit" value="Register" /> -->
     </form>
   </div>
 </div>

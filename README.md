@@ -6,6 +6,7 @@
     * Last Name (Required)
     * Phone Number (Optional)
     * Email Address (Required)
+    * Selected Job Posting (Required)
 * Use above information to send out emails to all applicants a reminder to apply online
 
 # Recruiter
@@ -57,3 +58,25 @@ This repo was created following an Heroku - DJANGO tutorial:
     * `$ heroku config:get SECRET_KEY`
     * `$ heroku config:set DJANGO_SETTINGS_MODULE=recruit.settings.production`
     * `$ heroku logs --tail --ps postgres --app excellarecruit`
+
+## Heroku Instructions for working with this Project:
+Download and install the Heroku CLI.
+
+If you haven't already, log in to your Heroku account and follow the prompts to create a new SSH public key.
+
+    $ heroku login
+
+Clone the repository
+
+Use Git to clone excellajobs's source code to your local machine.
+
+    $ heroku git:clone -a excellajobs
+    $ cd excellajobs
+    
+Deploy your changes
+
+Make some changes to the code you just cloned and deploy them to Heroku using Git.
+
+    $ git add .
+    $ git commit -am "make it better"
+    $ git push heroku master
