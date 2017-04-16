@@ -1,53 +1,59 @@
-# Heroku Django Starter Template
+# Recruit
+##### Recruit web app for Excella NEST project
+* Use this web app to gather contact information from possible recruits and later send email with a link to job posting they are interested in
+* Information we want to gather:
+    * First Name (Required)
+    * Last Name (Required)
+    * Phone Number (Optional)
+    * Email Address (Required)
+* Use above information to send out emails to all applicants a reminder to apply online
 
-An utterly fantastic project starter template for Django 1.10.
-
-## Features
-
-- Production-ready configuration for Static Files, Database Settings, Gunicorn, etc.
-- Enhancements to Django's static file serving functionality via WhiteNoise.
-- Latest Python 3.6 runtime environment. 
-
-## How to Use
-
-To use this project, follow these steps:
-
-1. Create your working environment.
-2. Install Django (`$ pip install django`)
-3. Create a new project using this template
-
-## Creating Your Project
-
-Using this template to create a new Django app is easy::
-
-    $ django-admin.py startproject --template=https://github.com/heroku/heroku-django-template/archive/master.zip --name=Procfile helloworld
-
-(If this doesn't work on windows, replace `django-admin.py` with `django-admin`)
-
-You can replace ``helloworld`` with your desired project name.
-
-## Deployment to Heroku
-
-    $ git init
-    $ git add -A
-    $ git commit -m "Initial commit"
-
-    $ heroku create
-    $ git push heroku master
-
-    $ heroku run python manage.py migrate
-
-See also, a [ready-made application](https://github.com/heroku/python-getting-started), ready to deploy.
-
-## Using Python 2.7?
-
-Just update `runtime.txt` to `python-2.7.13` (no trailing spaces or newlines!).
+# Recruiter
+1. Uses admin console to add Job Postings 
+2. Create new event/career fair's
+3. Associates 1 or more Job posting (links) with that page
+4. Publishes the page and heads to a career fair
+5. On 1 or more devices he loads the page for that Carreer fair
+6. Attendee uses the page to enter their information (mentioned above)
 
 
-## License: MIT
+### Technical Information
+This repo was created following an Heroku - DJANGO tutorial:
+* https://devcenter.heroku.com/articles/deploying-python
 
-## Further Reading
-
-- [Gunicorn](https://warehouse.python.org/project/gunicorn/)
-- [WhiteNoise](https://warehouse.python.org/project/whitenoise/)
-- [dj-database-url](https://warehouse.python.org/project/dj-database-url/)
+### Steps to work with this repo:
+1. Verify supported technology is installed:
+    * Python 3.5.x
+    * Django
+    * Postgres (Database)
+    * Whitenoise (For static files)
+    * See requirements.txt for full details here
+2. Clone the repo
+3. Create Virtualenv (steps for CMD console)
+    * `$ virtualenv venv` (One time only)
+    * `$ venv\Scripts\activate.bat`
+    * `$ pip install -r requirements.txt`
+4. Create postgresDb
+    * Update base.py with Database credentials
+    * Usefull ORM commands:
+        * `$ python manage.py makemigrations`
+        * `$ python manage.py migrate`
+        * `$ python manage.py migrate app_name_like_home 0002`
+    
+### Working with Heroku
+* Verify you have the heroku remote:
+    * `https://git.heroku.com/excellarecruit.git`
+    * `$ heroku login`
+    * `$ heroku create` (actually creates the heroku remote)
+    * `$ git push heroku master`
+* Other useful Heroku commands
+    * `$ heroku open`
+    * `$ heroku plugins:install heroku-config`
+    * `$ heroku config:push`
+    * `$ heroku run ...`
+    * `$ heroku run python manage.py migrate`
+    * `$ heroku run python manage.py createsuperuser`
+    * `$ heroku ps:scale web=1`
+    * `$ heroku config:get SECRET_KEY`
+    * `$ heroku config:set DJANGO_SETTINGS_MODULE=recruit.settings.production`
+    * `$ heroku logs --tail --ps postgres --app excellarecruit`
