@@ -13,8 +13,8 @@ class JobPostingAdmin(admin.ModelAdmin):
 
 
 class CandidateAdmin(admin.ModelAdmin):
-    list_display = ['last_name', 'first_name', 'email', 'phone', 'selected_job_posting']
-    fields = ['first_name', 'last_name', 'email', 'phone', 'selected_job_posting']
+    list_display = ['last_name', 'first_name', 'email', 'phone', 'selected_job_posting', 'attended_event']
+    fields = ['first_name', 'last_name', 'email', 'phone', 'selected_job_posting', 'attended_event']
 
 
 admin.site.register(models.Event, EventAdmin)

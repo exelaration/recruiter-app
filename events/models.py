@@ -40,6 +40,7 @@ class Candidate(models.Model):
     first_name = models.CharField('First Name', max_length=200)
     last_name = models.CharField('Last Name', max_length=200)
     email = models.EmailField(max_length=200)
+    attended_event = models.ForeignKey(Event, help_text='Event attended when this record was created or last updated.')
     selected_job_posting = models.ForeignKey(JobPosting, help_text='Select Job Posting you are interested in.')
     phone_regex = RegexValidator(regex=r'^\+?1?\d{8,15}$',
                                  message='Phone number must be entered in the format: ''+999999999''. Up to 15 digits allowed.')
