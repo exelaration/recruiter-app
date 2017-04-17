@@ -11,6 +11,7 @@ class JobPosting(models.Model):
     title = models.CharField(max_length=300)
     location = models.CharField(max_length=100, blank=True, null=True)
     job_link = models.URLField('Job Link', max_length=500)
+    enabled = models.BooleanField(default=True)
 
     def show_job_url(self, obj):
         return format_html("<a href='{url}'>{url}</a>", url=obj.job_link)

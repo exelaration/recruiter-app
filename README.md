@@ -1,4 +1,5 @@
 # Recruit
+Current Heroku Deploy: https://excellajobs.herokuapp.com/events/
 ##### Recruit web app for Excella NEST project
 * Use this web app to gather contact information from possible recruits and later send email with a link to job posting they are interested in
 * Information we want to gather:

@@ -3,13 +3,13 @@ from . import models
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['enabled', 'title', 'date_time']
-    fields = ['enabled', 'date_time', 'title', 'job_postings']
+    list_display = ['title', 'date_time', 'enabled']
+    fields = ['date_time', 'title', 'job_postings', 'enabled']
 
 
 class JobPostingAdmin(admin.ModelAdmin):
-    list_display = ['title', 'location', 'job_link']
-    fields = ['title', 'location', 'job_link']
+    list_display = ['title', 'location', 'job_link', 'enabled']
+    fields = ['title', 'location', 'job_link', 'enabled']
 
 
 class CandidateAdmin(admin.ModelAdmin):

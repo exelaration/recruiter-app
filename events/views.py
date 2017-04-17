@@ -17,32 +17,39 @@ def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     if request.method == 'POST':  # if this is a POST request we need to process the form data
         form = RegisterForm(request.POST)
+        form.fields['candidate_job_posting'].choices = get_job_postings_for_event(event_id)
         if form.is_valid():
-            update_or_create_candidate(form)
+            update_or_create_candidate(request, form)
             return HttpResponseRedirect('/events/{0}'.format(event_id))
 
     else:  # if a GET (or any other method) we'll create a blank form
         form = RegisterForm()
-        # form.fields['job_posting'].choices = JobPosting.objects.filter(event_id=event_id)  # Filter EventJob's where event_id = event_id and then return all job_links
+        form.fields['candidate_job_posting'].choices = get_job_postings_for_event(event_id)
         return render(request, 'events/detail.html', {'event': event, 'form': form})
 
     return render(request, 'events/detail.html', {'event': event, 'form': form})
 
 
-def update_or_create_candidate(form):
+def get_job_postings_for_event(event_id):
+    return [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(event__id=event_id)]
+
+
+def update_or_create_candidate(request, form):
     f_email = form.cleaned_data['candidate_email']
     f_first_name = form.cleaned_data['candidate_first_name']
     f_last_name = form.cleaned_data['candidate_last_name']
     f_phone = form.cleaned_data['candidate_phone']
-    f_selected_job_posting = form.cleaned_data['candidate_job_posting']
+    job_posting_id = request.POST.getlist('candidate_job_posting')[0]
+    f_selected_job_posting = JobPosting.objects.get(id=job_posting_id)
     p = Candidate.objects.filter(email=f_email).first()
 
     if p is None:
-        p = Candidate(first_name=f_first_name, last_name=f_last_name, email=f_email, phone=f_phone, selected_job_posting=f_selected_job_posting)
+        p = Candidate(first_name=f_first_name, last_name=f_last_name, email=f_email,
+                      phone=f_phone, selected_job_posting=f_selected_job_posting)
     else:
         p.first_name = f_first_name
         p.last_name = f_last_name
         p.phone = f_phone
-        p.job_posting = f_selected_job_posting
+        p.selected_job_posting = f_selected_job_posting
 
     p.save()
