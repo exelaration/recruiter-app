@@ -17,9 +17,9 @@
 <div>
   <div class='col-md-12'>&nbsp;</div>
   <div class='col-md-12'>
-    <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post" class="uniForm blueForms" >
+    <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
         {% csrf_token %}
-        {% crispy form %}
+        {% crispy form form.helper %}
     </form>
   </div>
 </div>
