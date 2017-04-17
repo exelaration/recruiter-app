@@ -31,7 +31,7 @@ def detail(request, event_id):
 
 
 def get_job_postings_for_event(event_id):
-    return [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(event__id=event_id)]
+    return [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(enabled=True).filter(event__id=event_id)]
 
 
 def update_or_create_candidate(request, form):
