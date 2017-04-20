@@ -20,3 +20,4 @@ class CandidateAdmin(admin.ModelAdmin):
 admin.site.register(models.Event, EventAdmin)
 admin.site.register(models.Candidate, CandidateAdmin)
 admin.site.register(models.JobPosting, JobPostingAdmin)
+admin.site.register(models.EmailTemplate)
