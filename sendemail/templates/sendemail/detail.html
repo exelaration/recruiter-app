@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% crispy sendemail_form sendemail_form.helper %}
+
+{% block content %}
+<div class="starter-template">
+  <div>
+    <div class='col-md-9'><h1>{{ event.title }}</h1></div>
+    <div class='col-md-3'><h1>{{ event.date_time }}</h1></div>
+  </div>
+</div>
+
+<br /><br />
+
+<div>
+  <div class='col-md-12'>&nbsp;</div>
+  <div class='col-md-12'>
+      <h1>Under construction! Emails won't actually send.</h1>
+    <form action="/sendemail/{{ event.id }}/" id="id-registrationForm" method="post">
+        {% csrf_token %}
+        {% crispy form form.helper %}
+    </form>
+  </div>
+</div>
+{% endblock %}

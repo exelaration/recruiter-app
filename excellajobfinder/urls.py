@@ -21,7 +21,7 @@ from django.contrib.auth.views import login
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^events/', include('events.urls')),
-    url(r'^email/$', login),
+    url(r'^sendemail/', include('sendemail.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^$', RedirectView.as_view(url='/events/'))
 ]
