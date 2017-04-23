@@ -136,3 +136,5 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+LOGIN_URL = '/admin/login/'
