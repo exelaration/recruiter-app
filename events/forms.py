@@ -1,8 +1,9 @@
 from django import forms
 from django.forms import inlineformset_factory
+from django.core.validators import RegexValidator
 from .models import Candidate, JobPosting, Attendance
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder, HTML
+from crispy_forms.layout import Layout, Div, Submit, ButtonHolder, Fieldset, HTML, Button, Row, Field
 
 
 class RegisterForm(forms.Form):
@@ -11,9 +12,11 @@ class RegisterForm(forms.Form):
     candidate_first_name = forms.CharField(label='Your First Name', max_length=200)
     candidate_last_name = forms.CharField(label='Your Last Name', max_length=200)
     candidate_email = forms.EmailField(label='Your Email', max_length=200)
-    candidate_phone = forms.CharField(label='Your Phone Number', max_length=15, required=False)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{8,15}$',
+                                 message='Phone number must be entered in the format: ''+999999999''. Up to 15 digits allowed.')
+    candidate_phone = forms.CharField(validators=[phone_regex], label='Your Phone Number', max_length=15, required=False)
     JobPostingFormSet = inlineformset_factory(JobPosting, Attendance, fields=('selected_job_posting',))
-    candidate_job_posting = forms.ChoiceField(label='Job Postings', initial='', required=True)
+    candidate_job_posting = forms.ChoiceField(label='Choose Job', initial='', required=True)
 
     class Meta:
         model = Candidate
@@ -22,19 +25,16 @@ class RegisterForm(forms.Form):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(form=self)
         self.helper.form_id = 'id-registrationForm'
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-10'
         self.helper.form_method = 'post'
         self.helper.form_action = 'detail'
         self.helper.layout = Layout(
-            Fieldset(
-                'Please Register',
-                'candidate_first_name',
-                'candidate_last_name',
-                'candidate_email',
-                'candidate_phone',
-                'candidate_job_posting',
+            Div(
+                Div('candidate_first_name'),
+                Div('candidate_last_name'),
+                Div('candidate_email'),
+                Div('candidate_phone'),
+                Div('candidate_job_posting'),
+                css_class='row'
             ),
             ButtonHolder(
                 Submit('submit', 'Submit', css_class='btn-default')

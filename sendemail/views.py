@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from sendemail.forms import SendEmailForm
 from .models import EmailTemplate
-from events.models import Event
+from events.models import Event, Attendance
 
 
 def index(request):
@@ -14,6 +14,8 @@ def index(request):
 
 def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
+    attendance_list = Attendance.objects.filter(event=event)
+
     if request.method == 'POST':  # if this is a POST request we need to process the form data
         form = SendEmailForm(request.POST)
         form.fields['email_templates'].choices = get_all_active_email_templates()
@@ -24,7 +26,9 @@ def detail(request, event_id):
     else:  # if a GET (or any other method) we'll create a blank form
         form = SendEmailForm()
         form.fields['email_templates'].choices = get_all_active_email_templates()
-        return render(request, 'sendemail/detail.html', {'event': event, 'form': form})
+        return render(request, 'sendemail/detail.html', {'event': event,
+                                                         'attendance_list': attendance_list,
+                                                         'form': form})
 
 
 def get_all_active_email_templates():

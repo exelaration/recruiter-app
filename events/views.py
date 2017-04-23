@@ -21,6 +21,8 @@ def detail(request, event_id):
         if form.is_valid():
             update_or_create_candidate(request, form, event_id)
             return HttpResponseRedirect('/events/{0}'.format(event_id))
+        else:
+            return render(request, 'events/detail.html', {'event': event, 'form': form})
 
     else:  # if a GET (or any other method) we'll create a blank form
         form = RegisterForm()
@@ -42,15 +44,18 @@ def update_or_create_candidate(request, form, event_id):
     job_posting_id = request.POST.getlist('candidate_job_posting')[0]
     f_selected_job_posting = JobPosting.objects.get(id=job_posting_id)
     event_attended = Event.objects.get(id=event_id)
-    p = Candidate.objects.filter(email=f_email).first()
+    person = Candidate.objects.filter(email=f_email).first()
 
-    if p is None:
-        p = Candidate(first_name=f_first_name, last_name=f_last_name, email=f_email, phone=f_phone)
+    if person is None:
+        person = Candidate(first_name=f_first_name, last_name=f_last_name, email=f_email, phone=f_phone)
     else:
-        p.first_name = f_first_name
-        p.last_name = f_last_name
-        p.phone = f_phone
+        person.first_name = f_first_name
+        person.last_name = f_last_name
+        person.phone = f_phone
 
-    p.save()
-    attendance = Attendance(candidate=p, event=event_attended, selected_job_posting=f_selected_job_posting)
-    attendance.save()
+    person.save()
+
+    attendance = Attendance.objects.filter(candidate=person).filter(event=event_attended).filter(selected_job_posting=f_selected_job_posting)
+    if attendance is None:
+        attendance = Attendance(candidate=person, event=event_attended, selected_job_posting=f_selected_job_posting)
+        attendance.save()

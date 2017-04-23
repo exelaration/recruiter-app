@@ -8,7 +8,7 @@ from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder, HTML
 class SendEmailForm(forms.Form):
     error_css_class = 'errorlist'
 
-    email_templates = forms.ChoiceField(label='Choose Email Template to use', initial='', required=True)
+    email_templates = forms.ChoiceField(label='Email Template', initial='', required=True)
 
     class Meta:
         model = EmailTemplate

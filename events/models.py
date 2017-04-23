@@ -20,7 +20,10 @@ class JobPosting(models.Model):
     show_job_url.short_description = "Job URL"
 
     def __str__(self):
-        return self.title
+        if self.location is None:
+            return self.title
+        else:
+            return "{0} ({1})".format(self.title, self.location)
 
 
 class Event(models.Model):
@@ -59,7 +62,7 @@ class Attendance(models.Model):
     selected_job_posting = models.ForeignKey(JobPosting)
 
     def __str__(self):
-        return "{0} attended by {1}".format(self.event, self.candidate)
+        return "{0} : {1} was attended by {2} : {3}".format(self.event.id, self.event, self.candidate, self.selected_job_posting)
 
     class Meta:
         ordering = ['event']
