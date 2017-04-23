@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 
-from .models import Event, Candidate, JobPosting
+from .models import Event, Candidate, JobPosting, Attendance
 from .forms import RegisterForm
 
 from django.core.validators import validate_email
@@ -45,13 +45,12 @@ def update_or_create_candidate(request, form, event_id):
     p = Candidate.objects.filter(email=f_email).first()
 
     if p is None:
-        p = Candidate(first_name=f_first_name, last_name=f_last_name, email=f_email,
-                      phone=f_phone, selected_job_posting=f_selected_job_posting, attended_event=event_attended)
+        p = Candidate(first_name=f_first_name, last_name=f_last_name, email=f_email, phone=f_phone)
     else:
         p.first_name = f_first_name
         p.last_name = f_last_name
         p.phone = f_phone
-        p.selected_job_posting = f_selected_job_posting
-        p.attended_event = event_attended
 
     p.save()
+    attendance = Attendance(candidate=p, event=event_attended, selected_job_posting=f_selected_job_posting)
+    attendance.save()

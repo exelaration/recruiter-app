@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Candidate, JobPosting
+from .models import Candidate, JobPosting, Attendance
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder, HTML
 
@@ -12,7 +12,7 @@ class RegisterForm(forms.Form):
     candidate_last_name = forms.CharField(label='Your Last Name', max_length=200)
     candidate_email = forms.EmailField(label='Your Email', max_length=200)
     candidate_phone = forms.CharField(label='Your Phone Number', max_length=15, required=False)
-    JobPostingFormSet = inlineformset_factory(JobPosting, Candidate, fields=('selected_job_posting',))
+    JobPostingFormSet = inlineformset_factory(JobPosting, Attendance, fields=('selected_job_posting',))
     candidate_job_posting = forms.ChoiceField(label='Job Postings', initial='', required=True)
 
     class Meta:
@@ -40,4 +40,3 @@ class RegisterForm(forms.Form):
                 Submit('submit', 'Submit', css_class='btn-default')
             )
         )
-        # self.helper.add_input(Submit('submit', 'Submit'))
