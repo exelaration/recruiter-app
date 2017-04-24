@@ -6,6 +6,11 @@ from sendemail.forms import SendEmailForm
 from .models import EmailTemplate
 from events.models import Event, Attendance
 
+import os
+import sendgrid
+from sendgrid.helpers.mail import *
+
+
 
 
 @login_required
@@ -24,7 +29,7 @@ def detail(request, event_id):
         form = SendEmailForm(request.POST)
         form.fields['email_templates'].choices = get_all_active_email_templates()
         if form.is_valid():
-            send_emails(request, form, event_id)
+            send_emails(request, event, attendance_list)
             return HttpResponseRedirect('/sendemail')
 
     else:  # if a GET (or any other method) we'll create a blank form
@@ -39,6 +44,21 @@ def get_all_active_email_templates():
     return [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
 
 
-def send_emails(request, form, event_id):
-    pass
+@login_required
+def send_emails(request, event, attendance_list):
+    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+    from_email = Email("allen.tuggle@excella.com")
+    to_email = Email("allen.tuggle@excella.com")
+    subject = "Sending with SendGrid is Fun"
+    content = Content("text/plain", "and easy to do anywhere, even with Python")
 
+    current_email = Mail(from_email, subject, to_email, content)
+
+    response = sg.client.mail.send.post(request_body=current_email.get())
+    print('#########################################')
+    print('#########################################')
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+    print('#########################################')
+    print('#########################################')
