@@ -11,8 +11,6 @@ import sendgrid
 from sendgrid.helpers.mail import *
 
 
-
-
 @login_required
 def index(request):
     event_list = Event.objects.filter(enabled=True).order_by('-date_time')
@@ -45,6 +43,35 @@ def get_all_active_email_templates():
 
 
 @login_required
+def send_email(from_address, to_address, subject, body_text):
+    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+    from_email = Email(from_address)
+    to_email = Email(to_address)
+    content = Content("text/plain", body_text)
+    current_email = Mail(from_email, subject, to_email, content)
+
+    response = sg.client.mail.send.post(request_body=current_email.get())
+    return response
+
+
+@login_required
+def send_test_email(request, event_id, attendance_id):
+    
+    print('#########################################')
+    print('#########################################')
+    print('Logged In User: ' + str(request.user))
+    print(request.user.username)
+    print(request.user.first_name)
+    print(request.user.last_name)
+    print(request.user.email)
+    print('event_id: ' + event_id)
+    print('attendance_id: ' + attendance_id)
+    print('#########################################')
+    print('#########################################')
+    return HttpResponseRedirect('/sendemail/{event_id}'.format(event_id=event_id))
+
+
+@login_required
 def send_emails(request, event, attendance_list):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email("allen.tuggle@excella.com")
@@ -52,13 +79,20 @@ def send_emails(request, event, attendance_list):
     subject = "Sending with SendGrid is Fun"
     content = Content("text/plain", "and easy to do anywhere, even with Python")
 
-    current_email = Mail(from_email, subject, to_email, content)
-
-    response = sg.client.mail.send.post(request_body=current_email.get())
+    # current_email = Mail(from_email, subject, to_email, content)
+    #
+    # response = sg.client.mail.send.post(request_body=current_email.get())
     print('#########################################')
     print('#########################################')
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
+    print('Logged In User: ' + str(request.user))
+    print(request.user.username)
+    print(request.user.first_name)
+    print(request.user.last_name)
+    print(request.user.email)
     print('#########################################')
     print('#########################################')
+    # print(response.status_code)
+    # print(response.body)
+    # print(response.headers)
+    # print('#########################################')
+    # print('#########################################')

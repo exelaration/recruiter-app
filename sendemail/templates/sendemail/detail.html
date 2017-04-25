@@ -3,17 +3,15 @@
 {% crispy sendemail_form sendemail_form.helper %}
 
 {% block content %}
-<div class="starter-template">
-  <div>
+<div class='col-lg-12 row'>
     <div class='col-md-9'><h1>{{ event.title }}</h1></div>
     <div class='col-md-3'><h1>{{ event.date_time }}</h1></div>
-  </div>
 </div>
 
-<br /><br />
+<br /><br /><br />
+<br /><br /><br />
 
 <div>
-    <div class='col-md-12 alert-warning'> <h1><p >Under construction! Emails won't actually send</p></h1> </div>
     <div class='col-md-12'>
         <form action="/sendemail/{{ event.id }}/" id="id-registrationForm" method="post">
             {% csrf_token %}
@@ -21,23 +19,29 @@
         </form>
     </div>
 
-    <div class="starter-template">
-      <div>
-        <div class='col-md-9'><h1>Email Recipients</h1></div>
-      </div>
-    </div>
+<br /><br /><br />
+<br /><br /><br />
+<br /><br /><br />
 
     <div class='col-md-12'>
       <div class='col-lg-12 row'>
-        <div class='col-lg-8'><h3>Candidate</h3></div>
+        <div><legend><h1>Email Recipients</h1></legend></div>
+          <div class='col-lg-2'><h3>Test</h3></div>
+        <div class='col-lg-6'><h3>Candidate</h3></div>
         <div class='col-lg-4'><h3>Choosen Job Posting</h3></div>
+      </div>
+
+        <div class='col-lg-12 row'>
           {% for attendance in attendance_list %}
-              <div class='col-lg-3'>{{ attendance.candidate.first_name }} &nbsp; {{ attendance.candidate.last_name }}</div>
-              <div class='col-lg-3'>{{ attendance.candidate.email }}</div>
+              <div class='col-lg-2'>
+                <a href="sendtest/{{ attendance.id }}/">Test this record</a>
+              </div>
+              <div class='col-lg-2'>{{ attendance.candidate.first_name }} &nbsp; {{ attendance.candidate.last_name }}</div>
+              <div class='col-lg-2'>{{ attendance.candidate.email }}</div>
               <div class='col-lg-2'>{{ attendance.candidate.phone }}</div>
               <div class='col-lg-4'>{{ attendance.selected_job_posting }}</div>
           {% endfor %}
-      </div>
+        </div>
     </div>
 </div>
         
