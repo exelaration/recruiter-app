@@ -27,7 +27,9 @@ def detail(request, event_id):
         form = SendEmailForm(request.POST)
         form.fields['email_templates'].choices = get_all_active_email_templates()
         if form.is_valid():
-            send_emails(request, event, attendance_list)
+            email_template_id = request.POST.getlist('email_templates')[0]
+            email_template = EmailTemplate.objects.get(id=email_template_id)
+            send_emails(request, email_template, attendance_list)
             return HttpResponseRedirect('/sendemail')
 
     else:  # if a GET (or any other method) we'll create a blank form
@@ -42,57 +44,26 @@ def get_all_active_email_templates():
     return [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
 
 
-@login_required
+def send_emails(request, email_template, attendance_list):
+    from_email = str(request.user.email)
+    for attendance in attendance_list:
+        to_email = str(attendance.candidate.email)
+        subject = str(email_template.subject)
+        email_body = email_template.body.replace('##FIRST_NAME##', attendance.candidate.first_name)
+        email_body = email_body.replace('##LAST_NAME##', attendance.candidate.last_name)
+        email_body = email_body.replace('##JOBPOSTING##', attendance.selected_job_posting.job_link)
+        response = send_email(from_email, to_email, subject, str(email_body))
+        print(response)
+
+
 def send_email(from_address, to_address, subject, body_text):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email(from_address)
     to_email = Email(to_address)
-    content = Content("text/plain", body_text)
+    content = Content("text/html", body_text)
     current_email = Mail(from_email, subject, to_email, content)
-
+    print('#############################')
+    print('Send Email {0} : {1}'.format(to_address, subject))
+    print('#############################')
     response = sg.client.mail.send.post(request_body=current_email.get())
     return response
-
-
-@login_required
-def send_test_email(request, event_id, attendance_id):
-    
-    print('#########################################')
-    print('#########################################')
-    print('Logged In User: ' + str(request.user))
-    print(request.user.username)
-    print(request.user.first_name)
-    print(request.user.last_name)
-    print(request.user.email)
-    print('event_id: ' + event_id)
-    print('attendance_id: ' + attendance_id)
-    print('#########################################')
-    print('#########################################')
-    return HttpResponseRedirect('/sendemail/{event_id}'.format(event_id=event_id))
-
-
-@login_required
-def send_emails(request, event, attendance_list):
-    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
-    from_email = Email("allen.tuggle@excella.com")
-    to_email = Email("allen.tuggle@excella.com")
-    subject = "Sending with SendGrid is Fun"
-    content = Content("text/plain", "and easy to do anywhere, even with Python")
-
-    # current_email = Mail(from_email, subject, to_email, content)
-    #
-    # response = sg.client.mail.send.post(request_body=current_email.get())
-    print('#########################################')
-    print('#########################################')
-    print('Logged In User: ' + str(request.user))
-    print(request.user.username)
-    print(request.user.first_name)
-    print(request.user.last_name)
-    print(request.user.email)
-    print('#########################################')
-    print('#########################################')
-    # print(response.status_code)
-    # print(response.body)
-    # print(response.headers)
-    # print('#########################################')
-    # print('#########################################')

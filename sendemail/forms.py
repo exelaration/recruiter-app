@@ -27,7 +27,4 @@ class SendEmailForm(forms.Form):
                 'Choose Email Template',
                 'email_templates',
             ),
-            ButtonHolder(
-                Submit('submit', 'Submit', css_class='btn-default')
-            )
         )

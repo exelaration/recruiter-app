@@ -19,8 +19,9 @@ def detail(request, event_id):
         form = RegisterForm(request.POST)
         form.fields['candidate_job_posting'].choices = get_job_postings_for_event(event_id)
         if form.is_valid():
-            update_or_create_candidate(request, form, event_id)
-            return HttpResponseRedirect('/events/{0}'.format(event_id))
+            candidate_email = update_or_create_candidate(request, form, event_id)
+            context = {'candidate_email': candidate_email, 'event': event}
+            return render(request, 'events/registration_complete.html', context)
         else:
             return render(request, 'events/detail.html', {'event': event, 'form': form})
 
@@ -59,3 +60,6 @@ def update_or_create_candidate(request, form, event_id):
     if attendance is None:
         attendance = Attendance(candidate=person, event=event_attended, selected_job_posting=f_selected_job_posting)
         attendance.save()
+
+    return f_email
+
