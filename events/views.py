@@ -56,7 +56,7 @@ def update_or_create_candidate(request, form, event_id):
 
     person.save()
 
-    attendance = Attendance.objects.filter(candidate=person).filter(event=event_attended).filter(selected_job_posting=f_selected_job_posting)
+    attendance = Attendance.objects.filter(candidate=person).filter(event=event_attended).filter(selected_job_posting=f_selected_job_posting).first()
     if attendance is None:
         attendance = Attendance(candidate=person, event=event_attended, selected_job_posting=f_selected_job_posting)
         attendance.save()

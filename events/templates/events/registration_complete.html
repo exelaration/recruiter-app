@@ -13,10 +13,15 @@
 
 <div>
     <div class='col-md-12'>
-        <div class='col-md-12'>
+        <div class='row col-12'>
             <div class="col-12"><legend><h1>You have successfully registered:</h1></legend></div>
-            <div class="col-12">Email: {{ candidate_email }}</div>
         </div>
+        <div class='row col-12'>
+            <div class="col-4"></div>
+            <div class="col-4">Email: {{ candidate_email }}</div>
+            <div class="col-4"></div>
+        </div>
+        <br /><br />
         <br /><br />
         <form action="/events/{{ event.id }}/" name="id-successForm" id="id-successForm" method="get">
             {% csrf_token %}
