@@ -1,4 +1,4 @@
-{% extends "sendemailbase.html" %}
+{% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% crispy sendemail_form sendemail_form.helper %}
 
@@ -17,9 +17,12 @@
             {% csrf_token %}
             {% crispy form form.helper %}
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-              Send Emails
-            </button>
+            <div class="container col-lg-11">
+                <div class="row-fluid">
+                    <button type="button" class="btn btn-primary btn-lg pull-left" data-toggle="modal" data-target="#myModal">Send Emails</button>
+                    <a href="/sendemail/{{ event.id }}/export" class="btn btn-primary btn-lg pull-right" role="button">Export XLSX</a>
+                </div>
+            </div>
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">

@@ -4,11 +4,25 @@ from django.contrib.auth.decorators import login_required
 
 from sendemail.forms import SendEmailForm
 from .models import EmailTemplate
+from sendemail.xlsx_formatter import *
 from events.models import Event, Attendance
 
 import os
 import sendgrid
 from sendgrid.helpers.mail import *
+
+
+@login_required
+def exportXlsx(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    file_name = "Attendee_List_Event_{0}.xlsx".format(event.id)
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename={0}'.format(file_name)
+
+    attendance_list = Attendance.objects.filter(event=event)
+    xlsx_data = writeToExcel(attendance_list, event)
+    response.write(xlsx_data)
+    return response
 
 
 @login_required
