@@ -30,7 +30,7 @@ def read_env():
             os.environ.setdefault(key, val)
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "excellajobfinder.settings.dev")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "excellajobs.settings.dev")
 
     from django.core.management import execute_from_command_line
 

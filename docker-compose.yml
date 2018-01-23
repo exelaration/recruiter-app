@@ -1,0 +1,25 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    container_name: excellajobs_db
+    ports:
+      - "15432:5432"
+    environment:
+      - POSTGRES_DB=excellajobs
+  web:
+    ports:
+      - "8000:8000"
+    build: 
+      context: .
+      args:
+        - WEB_PORT=8000
+    image: excellajobs-web
+    container_name: excellajobs_web
+    volumes:
+      - .:/code
+    environment:
+      - DATABASE_URL=postgres://postgres@db/excellajobs
+      - PORT=8000
+    depends_on:
+      - db

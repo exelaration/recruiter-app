@@ -1,1 +1,1 @@
-web: gunicorn excellajobfinder.wsgi
+web: gunicorn excellajobs.wsgi
