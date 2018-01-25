@@ -12,10 +12,6 @@ except ImportError:
 DEBUG = False
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-}
-
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -30,3 +26,8 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.cssmin.CSSMinFilter',
 ]
 COMPRESS_CSS_HASHING_METHOD = 'content'
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = get_env_setting('SENDGRID_USERNAME')
+EMAIL_HOST_PASSWORD = get_env_setting('SENDGRID_PASSWORD')
+EMAIL_PORT = 587 

@@ -36,7 +36,7 @@ until ( test_postgresql ) do
 done
 >&2 echo "Postgres ready - continuing"
 
-python manage.py collectstatic
+python manage.py collectstatic --noinput
 python manage.py migrate                  # Apply database migrations
 
 # Start Gunicorn processes

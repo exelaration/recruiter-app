@@ -11,6 +11,23 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
+
+def get_env_setting(setting, default=None):
+    """ Get the environment setting or return the default, if specified, otherwise an exception """
+    try:
+        var_set = os.environ[setting]
+        if var_set == 'true' or var_set == 'True':
+            return True
+        elif var_set == 'false' or var_set == 'False':
+            return False
+        return var_set
+    except KeyError:
+        if default is None:
+            error_msg = "Set the {} env variable".format(setting)
+            raise ImproperlyConfigured(error_msg)
+        else:
+            return default
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -109,6 +126,10 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+ADMINS = [
+    ('Allen Tuggle', 'allen.tuggle@excella.com')
+]
 
 # Update database configuration with $DATABASE_URL.
 DATABASES = {'default': dj_database_url.config()}
