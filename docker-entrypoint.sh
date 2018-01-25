@@ -2,16 +2,21 @@
 
 function test_postgresql {
   pg_isready -h "${db_server}" -d "${db}" -U "${db_user}"
+  echo $db_user
+  echo $db_server
+  echo $db
 }
 
 cd /code
 
-regex="^postgres:\/\/([^:]+)(:(.+))?@(.+)\/(.+)$"
+echo DATABASE_URL: $DATABASE_URL
+regex="^postgres:\/\/([^:]+)(:(.+))?@(.+)(:\d{4})\/(.+)$"
 if [[ $DATABASE_URL =~ $regex ]]
 then
   db_user="${BASH_REMATCH[1]}"
   db_server="${BASH_REMATCH[4]}"
-  db="${BASH_REMATCH[5]}"
+  db="${BASH_REMATCH[6]}"
+
 else
   >&2 echo "DATABASE_URL is not valid"
   exit 1
@@ -21,7 +26,7 @@ fi
 count=0
 until ( test_postgresql ) do
   ((count++))
-  if [ ${count} -gt 100 ]
+  if [ ${count} -gt 45 ]
   then
     >&2 echo "Services didn't become ready in time"
     exit 1

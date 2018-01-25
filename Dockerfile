@@ -15,7 +15,8 @@ RUN pip install -r requirements.txt
 
 COPY . $PROJECT_HOME
 
-EXPOSE $WEB_PORT
+# Heroku does not use Expose
+# EXPOSE $WEB_PORT
 
 ADD ./docker-entrypoint.sh /
 RUN chmod 755 /docker-entrypoint.sh
