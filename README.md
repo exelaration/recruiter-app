@@ -1,6 +1,6 @@
 # Recruit
-Current Heroku Deploy: https://excellajobs.herokuapp.com/events/
-##### Recruit web app for Excella NEST project
+Currently deployed here: https://excella-jobs-stg.herokuapp.com/events/
+##### Excella Jobs Web App for Recruiting
 * Use this web app to gather contact information from possible recruits and later send email with a link to job posting they are interested in
 * Information we want to gather:
     * First Name (Required)
@@ -8,20 +8,23 @@ Current Heroku Deploy: https://excellajobs.herokuapp.com/events/
     * Phone Number (Optional)
     * Email Address (Required)
     * Selected Job Posting (Required)
-* Use above information to send out emails to all applicants a reminder to apply online
+* An email will be sent to the applicant upon completion of this form based on an associated template
 
 # Recruiter
 1. Uses admin console to add Job Postings 
 2. Create new event/career fair's
-3. Associates 1 or more Job posting (links) with that page
-4. Publishes the page and heads to a career fair
-5. On 1 or more devices he loads the page for that Carreer fair
-6. Candidate uses the page to enter their information (mentioned above)
+3. Create one or more Job postings for related to event
+4. Associates 1 or more Job posting (links) with that page
+5. Create an Email template for related evevnt used for sending candidate email
+6. Associate Email template with the new event
+7. Publishes the page and heads to a career fair
+8. On 1 or more devices he loads the page for that Carreer fair
+9. Candidate uses the page to enter their information (mentioned above)
 
 
 ### Technical Information
-This repo was created following an Heroku - DJANGO tutorial:
-* https://devcenter.heroku.com/articles/deploying-python
+This Web App is build using Python Django back end and an Angular 5 front end.
+It is a mixture of Django RESTfull api in the back end plus Django admin for managing models
 
 ### Steps to work with this repo:
 1. Verify supported technology is installed:
@@ -31,11 +34,10 @@ This repo was created following an Heroku - DJANGO tutorial:
     * Whitenoise (For static files)
     * See requirements.txt for full details here
 2. Clone the repo
-3. Create Virtualenv (steps for CMD console)
-    * `$ virtualenv venv` (One time only)
-    * `$ venv\Scripts\activate.bat`
-    * `$ pip install -r requirements.txt`
+3. Run Docker files for running this app locally
+    * `$ docker-compose up -d` (One time only)
 4. Create postgresDb
+    * docker-compose exec into docker container to run the below commands
     * Update base.py with Database credentials
     * Usefull ORM commands:
         * `$ python manage.py makemigrations`

@@ -10,13 +10,12 @@ function test_postgresql {
 cd /code
 
 echo DATABASE_URL: $DATABASE_URL
-regex="^postgres:\/\/([^:]+)(:(.+))?@(.+)(:\d{4})\/(.+)$"
+regex="^postgres:\/\/([^:]+)(:(.+))?@(.+)(:\d{4})?\/(.+)$"
 if [[ $DATABASE_URL =~ $regex ]]
 then
   db_user="${BASH_REMATCH[1]}"
   db_server="${BASH_REMATCH[4]}"
   db="${BASH_REMATCH[6]}"
-
 else
   >&2 echo "DATABASE_URL is not valid"
   exit 1
