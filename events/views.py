@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.core import serializers
 
 from .models import Event, Candidate, JobPosting, Attendance
 from .forms import RegisterForm
@@ -12,6 +13,20 @@ def index(request):
     context = {'event_list': event_list}
     return render(request, 'events/index.html', context)
 
+def all_events(request):
+    event_list = Event.objects.filter(enabled=True).order_by('-date_time')
+    events_serialized = serializers.serialize('json', event_list).replace("\'", '"')
+    print (events_serialized)
+    return JsonResponse(events_serialized, safe=False)
+
+# def wall_copy(request):
+#     posts = user_post.objects.all().order_by('id')[:20].reverse()
+#     posts_serialized = serializers.serialize('json', posts)
+#     return JsonResponse(posts_serialized, safe=False) 
+
+# def some_view(request):
+#     context = {'event_list': event_list}
+#     return JsonResponse({"key": "value"})
 
 def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
