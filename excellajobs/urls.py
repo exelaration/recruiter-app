@@ -17,9 +17,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
 from django.contrib.auth.views import login
+from rest_framework import routers
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/', include('events.urls')),
     url(r'^events/', include('events.urls')),
     url(r'^sendemail/', include('sendemail.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
