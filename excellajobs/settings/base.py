@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'events.apps.EventsConfig',
     'rest_framework',
+    'corsheaders',
     'tinymce',
     'sendemail',
     'crispy_forms',
@@ -70,6 +71,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'excellajobs.urls'
