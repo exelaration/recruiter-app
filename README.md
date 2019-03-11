@@ -36,6 +36,7 @@ It is a mixture of Django RESTfull api in the back end plus Django admin for man
 2. Clone the repo
 3. Run Docker files for running this app locally
     * `$ docker-compose up -d` (One time only)
+    * NOTE: If running docker on OSX you will need to turn on `securely store Docker logins in macOS keychain` under docker preferences.  For more info see: https://github.com/ansible/ansible-container/issues/722
 4. Create postgresDb
     * docker-compose exec into docker container to run the below commands
     * Update base.py with Database credentials
