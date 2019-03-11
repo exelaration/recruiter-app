@@ -3,26 +3,20 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from .models import Event, Candidate, JobPosting, Attendance
 from .forms import RegisterForm
-from .serializers import EventSerializer, AttendanceSerializer, CandidateSerializer
 
 from django.core.validators import validate_email
 
-class EventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-
-class CandidateViewSet(viewsets.ModelViewSet):
-    queryset = Candidate.objects.all()
-    serializer_class = CandidateSerializer
-
-class AttendanceViewSet(viewsets.ModelViewSet):
-    queryset = Attendance.objects.all()
-    serializer_class = AttendanceSerializer
 
 def index(request):
     event_list = Event.objects.filter(enabled=True).order_by('-date_time')
     context = {'event_list': event_list}
     return render(request, 'events/index.html', context)
+
+def all_events(request):
+    event_list = Event.objects.filter(enabled=True).order_by('-date_time')
+    events_serialized = serializers.serialize('json', event_list).replace("\'", '"')
+    print (events_serialized)
+    return JsonResponse(events_serialized, safe=False)
 
 def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
