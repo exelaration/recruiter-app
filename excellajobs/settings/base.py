@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'events.apps.EventsConfig',
-    'rest_framework',
     'corsheaders',
     'tinymce',
     'sendemail',
