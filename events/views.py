@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from rest_framework import viewsets
+from django.http import HttpResponseRedirect, HttpResponse
 
 from .models import Event, Candidate, JobPosting, Attendance
 from .forms import RegisterForm

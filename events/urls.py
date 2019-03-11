@@ -12,8 +12,6 @@ router.register(r'candidates', views.CandidateViewSet)
 router.register(r'attendance', views.AttendanceViewSet)
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^(?P<event_id>[0-9]+)/$', views.detail, name='detail'),
     url(r'^$', views.index, name='index'),
 ]
