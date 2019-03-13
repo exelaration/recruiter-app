@@ -21,7 +21,7 @@ body {
 }
 
 .BannerImg {
-  margin: 0 auto auto auto;
+  margin: -27px auto auto auto;
   height: 29vh;
   z-index: 0;
 }
