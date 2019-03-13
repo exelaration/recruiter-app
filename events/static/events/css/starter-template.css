@@ -1,0 +1,28 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: left;
+}
+.errorlist {
+  color: red;
+}
+
+.banner {
+    background: #D13C45;
+    height:8vh;
+    width:100%;
+    position: fixed;
+    top:0px;
+    left: 0px;
+    right: 0px;
+    z-index: -1;
+}
+
+.BannerImg {
+  margin: 0 auto auto auto;
+  height: 29vh;
+  z-index: 0;
+}
+

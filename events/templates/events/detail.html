@@ -5,6 +5,13 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
+
+{% load static %}
+
+<div class="test">
+    <img src='{% static "events/img/head.svg" %}' alt='top design' class="center BannerImg" />
+</div>
+
 <div class="starter-template">
   <div>
     <div class='col-md-9'><h1>{{ event.title }}</h1></div>
