@@ -48,6 +48,7 @@ class Candidate(models.Model):
                                  message='Phone number must be entered in the format: ''+999999999''. Up to 15 digits allowed.')
     phone = models.CharField(validators=[phone_regex], blank=True,
                              max_length=16, null=True) #validators should be a list
+    selected_jobs = models.ManyToManyField(JobPosting, through='Attendance')
 
     def __str__(self):
         return "{0} {1} - {2}".format(self.first_name, self.last_name, self.email)
