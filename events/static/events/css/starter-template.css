@@ -1,28 +1,95 @@
 body {
   padding-top: 50px;
 }
+
 .starter-template {
-  padding: 40px 15px;
-  text-align: left;
+  text-align: center;
 }
+
 .errorlist {
   color: red;
 }
 
 .banner {
     background: #D13C45;
-    height:8vh;
-    width:100%;
+    height: 8vh;
+    width: 100%;
     position: fixed;
-    top:0px;
+    top: 0px;
     left: 0px;
     right: 0px;
-    z-index: -1;
+    z-index: 1;
 }
 
 .BannerImg {
-  margin: -27px auto auto auto;
-  height: 29vh;
-  z-index: 0;
+  margin: 0px auto auto auto;
+  height: 22vh;
+  z-index: 5;
+  position: fixed;
+  top: 4vh;
+  left: 0px;
+  right: 0px;
 }
 
+.homeImg {
+    position: absolute;
+    right: 11px;
+    left: 0px;
+    width: 23px;
+    top: 20px;
+}
+
+.eventTitle {
+    font-family: Helvetica;
+    font-size: 26px;
+    color: #212121;
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 48px;
+}
+
+.eventDate {
+    font-family: Helvetica;
+    font-size: 18px;
+    color: #2E2C38;
+    letter-spacing: -0.19px;
+}
+
+.input {
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    height: 6vh;
+    width: 100%;
+}
+
+.input-Labels {
+    background: #FFFFFF;
+    border-radius: 4px;
+    font-family: Helvetica;
+    font-size: 16px !important;
+    font-weight: 500;
+    color: #2E2C38;
+    letter-spacing: -0.2px;
+    margin-bottom: 13px !important;
+}
+
+#centerContainer {
+  margin: auto;
+  width: 58%;
+  padding: 10px;
+  height: auto;
+  position: relative;
+  top: 19vh;
+  z-index: 1;
+  overflow: auto;
+}
+
+.row {
+    position: inherit;
+}
+
+.banner a {
+    color: #ffffff !important;
+    text-decoration: none;
+}
