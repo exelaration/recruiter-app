@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-{% crispy registration_form.helper %}
 
 {% block title %}Register{% endblock %}
 
@@ -19,7 +18,14 @@
   <div class='col-md-12'>
     <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
         {% csrf_token %}
-        {% crispy form form.helper %}
+        <div class="row">
+            <div>{{ form.candidate_first_name|as_crispy_field }}</div>
+            <div>{{ form.candidate_last_name|as_crispy_field }}</div>
+            <div>{{ form.candidate_email|as_crispy_field }}</div>
+            <div>{{ form.candidate_phone|as_crispy_field }}</div>
+            <div>{{ form.candidate_job_posting|as_crispy_field }}</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
 </div>
