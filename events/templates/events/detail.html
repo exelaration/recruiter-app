@@ -15,14 +15,14 @@
 </div>
 
 <div class="row">
-    <div id="centerContainer">
+    <div class="centerContainer">
         <div class="starter-template col-sm-12">
             <div>
                 <div class='eventTitle col-sm-12'>{{event.title }}</div>
                 <div class='eventDate col-sm-12 '>{{ event.date_time }}</div>
             </div>
         </div>
-        <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
+        <form action="/events/{{ event.id }}/" id="id-registrationForm" method="get">
             {% csrf_token %}
             <!--{$ crispy form form.helper #}-->
             <div class="form-group">
@@ -58,7 +58,7 @@
             </div>
 
              <div class="form-group">
-                <div class="center"><button class="disableBtn customBtn">Submit</button></div>
+                <div class="center"><button type="submit" class="disableBtn customBtn">Submit</button></div>
             </div>
         </form>
     </div>
