@@ -22,7 +22,7 @@
                 <div class='eventDate col-sm-12 '>{{ event.date_time }}</div>
             </div>
         </div>
-        <form action="/events/{{ event.id }}/" id="id-registrationForm" method="get">
+        <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
             {% csrf_token %}
             <!--{$ crispy form form.helper #}-->
             <div class="form-group">
