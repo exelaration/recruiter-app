@@ -129,3 +129,9 @@ body {
 .center {
     text-align: center;
 }
+
+.nav > li > a:focus,
+.nav > li > a:hover {
+    text-decoration: none !important;
+    background-color: inherit !important;
+}
