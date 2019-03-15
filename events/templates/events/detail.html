@@ -27,17 +27,17 @@
             <!--{$ crispy form form.helper #}-->
             <div class="form-group">
                 <div><label class="input-Labels" for="candidate_first_name">First name:</label></div>
-                <div><input class="input" id="candidate_first_name" type="text" maxlength="200"/></div>
+                <div><input class="input" required id="candidate_first_name" type="text" maxlength="200"/></div>
             </div>
 
             <div class="form-group">
                 <div><label class="input-Labels" for="candidate_last_name">Last name:</label></div>
-                <div><input class="input" id="candidate_last_name" type="text" maxlength="200"/></div>
+                <div><input class="input" required id="candidate_last_name" type="text" maxlength="200"/></div>
             </div>
 
             <div class="form-group">
                 <div><label class="input-Labels" for="candidate_email">Email:</label></div>
-                <div><input class="input" id="candidate_email" type="email" maxlength="200"/></div>
+                <div><input class="input" required id="candidate_email" type="email" maxlength="200"/></div>
             </div>
 
             <div class="form-group">
@@ -48,13 +48,17 @@
             <div class="form-group">
                 <div><label class="input-Labels" for="candidate_job_posting">Jobs:</label></div>
                 <div>
-                    <select class="input" id="candidate_job_posting" multiple="multiple">
+                    <select class="input" required id="candidate_job_posting" multiple="multiple">
                       <option value="volvo">Volvo</option>
                       <option value="saab">Saab</option>
                       <option value="fiat">Fiat</option>
                       <option value="audi">Audi</option>
                     </select>
                 </div>
+            </div>
+
+             <div class="form-group">
+                <div class="center"><button class="disableBtn customBtn">Submit</button></div>
             </div>
         </form>
     </div>

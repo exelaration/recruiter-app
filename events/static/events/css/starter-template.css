@@ -61,6 +61,11 @@ body {
     border-radius: 4px;
     height: 6vh;
     width: 100%;
+    padding-left: 20px;
+    font-family: Helvetica;
+    font-size: 18px;
+    color: #333333;
+    letter-spacing: 0;
 }
 
 .input-Labels {
@@ -92,4 +97,35 @@ body {
 .banner a {
     color: #ffffff !important;
     text-decoration: none;
+}
+
+.activeBtn {
+    background: #3366BB !important;
+    border-radius: 4px;
+    font-family: Helvetica;
+    font-size: 16px;
+    color: #FFFFFF !important;
+    letter-spacing: -0.15px;
+    text-align: center;
+    line-height: 38px;
+}
+
+.disableBtn {
+    background: #CBD3DA !important;
+    border-radius: 4px;
+    font-family: Helvetica;
+    font-size: 16px;
+    color: #FFFFFF;
+    letter-spacing: -0.15px;
+    text-align: center;
+    line-height: 38px;
+}
+
+.customBtn {
+    width: 22vw;
+    height: 8vh;
+}
+
+.center {
+    text-align: center;
 }
