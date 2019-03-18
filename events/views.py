@@ -22,6 +22,7 @@ def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     if request.method == 'POST':  # if this is a POST request we need to process the form data
         form = RegisterForm(request.POST)
+        form2 = RegisterForm(request.POST)
         form.fields['candidate_job_posting'].choices = get_job_postings_for_event(event_id)
         if form.is_valid():
             candidate_email = update_or_create_candidate(request, form, event_id)
