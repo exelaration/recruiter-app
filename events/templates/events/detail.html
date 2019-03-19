@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
 {% block title %}Register{% endblock %}
 
@@ -24,37 +24,29 @@
         <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
             {% csrf_token %}
             <div class="form-group">
-                <div>{{ form.candidate_first_name.label_tag }}</div>
-                <div>{{ form.candidate_first_name }}</div>
-{#                <div><label class="input-Labels" for="candidate_first_name">First name:</label></div>#}
-{#                <div><input class="input" required id="candidate_first_name" type="text" maxlength="200"/></div>#}
+                <div>{{ form.candidate_first_name|add_label_class:"input-Labels" }}</div>
+                <div>{{ form.candidate_first_name|add_class:"input" }}</div>
             </div>
 
             <div class="form-group">
-                <div>{{ form.candidate_last_name.label_tag }}</div>
-                <div>{{ form.candidate_last_name }}</div>
-{#                <div><label class="input-Labels" for="candidate_last_name">Last name:</label></div>#}
-{#                <div><input class="input" required id="candidate_last_name" type="text" maxlength="200"/></div>#}
+                <div>{{ form.candidate_last_name|add_label_class:"input-Labels" }}</div>
+                <div>{{ form.candidate_last_name|add_class:"input" }}</div>
             </div>
 
             <div class="form-group">
-                <div>{{ form.candidate_email.label_tag }}</div>
-                <div>{{ form.candidate_email }}</div>
-{#                <div><label class="input-Labels" for="candidate_email">Email:</label></div>#}
-{#                <div><input class="input" required id="candidate_email" type="email" maxlength="200"/></div>#}
+                <div>{{ form.candidate_email|add_label_class:"input-Labels" }}</div>
+                <div>{{ form.candidate_email|add_class:"input" }}</div>
             </div>
 
             <div class="form-group">
-                <div>{{ form.candidate_phone.label_tag }}</div>
-                <div>{{ form.candidate_phone }}</div>
-                <div><label class="input-Labels" for="candidate_phone">Phone number:</label></div>
-                <div><input class="input" id="candidate_phone" type="text" maxlength="15"/></div>
+                <div>{{ form.candidate_phone|add_label_class:"input-Labels" }}</div>
+                <div>{{ form.candidate_phone|add_class:"input" }}</div>
             </div>
 
             <div class="form-group">
 {#                This will become a touch-friendly multiselect field later #}
-                <div>{{ form.candidate_job_posting.label_tag }}</div>
-                <div>{{ form.candidate_job_posting }}</div>
+                <div>{{ form.candidate_job_posting|add_label_class:"input-Labels" }}</div>
+                <div>{{ form.candidate_job_posting|add_class:"input" }}</div>
 {#                This is a sample of what the formatting might look like with dummy data #}
                 <div><label class="input-Labels" for="candidate_job_posting">Jobs:</label></div>
                 <div>
