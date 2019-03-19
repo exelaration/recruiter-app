@@ -17,43 +17,44 @@
     <div id="centerContainer">
         <div class="starter-template col-sm-12">
             <div>
-                <div class='eventTitle col-sm-12'>{{event.title }}</div>
+                <div class='eventTitle col-sm-12'>{{ event.title }}</div>
                 <div class='eventDate col-sm-12 '>{{ event.date_time }}</div>
             </div>
         </div>
         <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
             {% csrf_token %}
             <div class="form-group">
-{#                Having the form fields in forms.py lets us access content in views.py: #}
-                <div>{{ form.candidate_first_name|as_crispy_field }}</div>
+                <div>{{ form.candidate_first_name.label_tag }}</div>
+                <div>{{ form.candidate_first_name }}</div>
 {#                <div><label class="input-Labels" for="candidate_first_name">First name:</label></div>#}
 {#                <div><input class="input" required id="candidate_first_name" type="text" maxlength="200"/></div>#}
             </div>
 
             <div class="form-group">
-                <div>{{ form.candidate_last_name|as_crispy_field }}</div>
+                <div>{{ form.candidate_last_name.label_tag }}</div>
+                <div>{{ form.candidate_last_name }}</div>
 {#                <div><label class="input-Labels" for="candidate_last_name">Last name:</label></div>#}
 {#                <div><input class="input" required id="candidate_last_name" type="text" maxlength="200"/></div>#}
             </div>
 
             <div class="form-group">
-{#              This shows the sort of formatting we'd like, but so far we can't access the content in views.py #}
-{#                <div>{{ form.candidate_email|as_crispy_field }}</div>#}
                 <div>{{ form.candidate_email.label_tag }}</div>
-                <div>{{ form.candidate_email.widget }}</div>
+                <div>{{ form.candidate_email }}</div>
 {#                <div><label class="input-Labels" for="candidate_email">Email:</label></div>#}
 {#                <div><input class="input" required id="candidate_email" type="email" maxlength="200"/></div>#}
             </div>
 
             <div class="form-group">
-{#                <div>{{ form.candidate_phone|as_crispy_field }}</div>#}
+                <div>{{ form.candidate_phone.label_tag }}</div>
+                <div>{{ form.candidate_phone }}</div>
                 <div><label class="input-Labels" for="candidate_phone">Phone number:</label></div>
                 <div><input class="input" id="candidate_phone" type="text" maxlength="15"/></div>
             </div>
 
             <div class="form-group">
 {#                This will become a touch-friendly multiselect field later #}
-                <div>{{ form.candidate_job_posting|as_crispy_field }}</div>
+                <div>{{ form.candidate_job_posting.label_tag }}</div>
+                <div>{{ form.candidate_job_posting }}</div>
 {#                This is a sample of what the formatting might look like with dummy data #}
                 <div><label class="input-Labels" for="candidate_job_posting">Jobs:</label></div>
                 <div>
