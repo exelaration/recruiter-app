@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'widget_tweaks',
 ]
 
 CORS_ORIGIN_WHITELIST = (
