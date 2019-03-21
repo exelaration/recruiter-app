@@ -44,11 +44,8 @@
             </div>
 
             <div class="form-group">
-{#                This will become a touch-friendly multiselect field later #}
-                <div>{{ form.candidate_job_posting|add_label_class:"input-Labels" }}</div>
-                <div>{{ form.candidate_job_posting|add_class:"input" }}</div>
-{#                This is a sample of what the formatting might look like with dummy data #}
-                <div><label class="input-Labels" for="candidate_job_posting">Jobs:</label></div>
+                <div>{{ form.candidate_job_postings|add_label_class:"input-Labels" }}</div>
+                <div>{{ form.candidate_job_postings|add_class:"input-Multi" }}</div>
                 <div>
                     <select class="input" required id="candidate_job_posting" placeholder="Select job posting" multiple="multiple">
                       <option value="volvo">Volvo</option>

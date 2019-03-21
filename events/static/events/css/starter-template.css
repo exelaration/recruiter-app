@@ -74,6 +74,15 @@ body {
     letter-spacing: 0;
 }
 
+.input-Multi {
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    font-family: Helvetica;
+    font-size: 18px;
+    color: #333333;
+    letter-spacing: 0;
+}
+
 .input-Labels {
     background: #FFFFFF;
     border-radius: 4px;
