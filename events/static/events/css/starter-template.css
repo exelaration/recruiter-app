@@ -31,6 +31,12 @@ body {
   right: 0px;
 }
 
+
+.congratsImg {
+    position: initial;
+    width: 101vw;
+}
+
 .homeImg {
     position: absolute;
     right: 11px;
@@ -79,7 +85,7 @@ body {
     margin-bottom: 13px !important;
 }
 
-#centerContainer {
+.centerContainer {
   margin: auto;
   width: 58%;
   padding: 10px;
@@ -122,7 +128,7 @@ body {
 }
 
 .customBtn {
-    width: 22vw;
+    width: 33vw;
     height: 8vh;
 }
 
@@ -134,4 +140,36 @@ body {
 .nav > li > a:hover {
     text-decoration: none !important;
     background-color: inherit !important;
+}
+
+.congratLbl {
+    font-family: Helvetica;
+    font-size: 56px;
+    color: #494949;
+    text-align: center;
+    font-weight: 500;
+    top: -13vh;
+}
+
+.congratMsg {
+    text-align: center;
+    position: relative;
+    top: -10vh;
+    font-family: Helvetica;
+    font-size: 24px;
+    color: #494949;
+}
+
+.indexHead {
+    text-align: center;
+    position: relative;
+    top: 5vh;
+    font-family: Helvetica;
+    font-size: 30px;
+    color: #494949;
+}
+
+.starter-template a {
+    text-decoration: underline !important;
+    cursor: pointer;
 }
