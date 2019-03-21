@@ -4,13 +4,18 @@
 
 {% block content %}
 <div class="starter-template">
-  <h1>Choose a Recruiting Event Please</h1>
-  <hr />
+  <h1 class="indexHead">Choose a Recruiting Event Please</h1>
+
+    <div style="height:5vh;"></div> <br />
   {% for event in event_list %}
-      <div class='col-md-12'>
-        <div class='col-md-2'>{{ event.date_time }}</div>
-        <div class='col-md-6'><a href="{{ event.id }}/">{{ event.title }}</a></div>
-      </div>
+    <div class="row">
+        <div class="centerContainer" style="top: 0vh;">
+          <div class='col-sm-12'>
+            <div class='center col-sm-6'>{{ event.date_time }}</div>
+            <div class='center col-sm-6' class="adec"><a href="{{ event.id }}/">{{ event.title }}</a></div>
+          </div>
+        </div>
+    </div>
   {% endfor %}
 </div>
 {% endblock %}

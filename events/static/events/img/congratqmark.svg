@@ -1,0 +1,11 @@
+<svg width="262px" height="41px" viewBox="0 0 262 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="recruiter_end" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="success_screen" transform="translate(-552.000000, -324.000000)">
+            <text id="✔" font-family="LastResort, .LastResort" font-size="42" font-weight="normal" fill="#038567">
+                <tspan x="666" y="356">✔</tspan>
+            </text>
+            <path d="M554,345 L637,345" id="Stroke-40" stroke="#038567" stroke-width="2.72" stroke-linecap="round"></path>
+            <path d="M729,345 L812,345" id="Stroke-41" stroke="#038567" stroke-width="2.72" stroke-linecap="round"></path>
+        </g>
+    </g>
+</svg>

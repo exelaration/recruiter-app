@@ -20,6 +20,7 @@ def all_events(request):
 
 def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
+
     if request.method == 'POST':  # if this is a POST request we need to process the form data
         form = RegisterForm(request.POST)
         form.fields['candidate_job_postings'].choices = get_job_postings_for_event(event_id)
