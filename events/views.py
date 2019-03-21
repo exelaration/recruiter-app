@@ -22,7 +22,7 @@ def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     if request.method == 'POST':  # if this is a POST request we need to process the form data
         form = RegisterForm(request.POST)
-        form.fields['candidate_job_posting'].choices = get_job_postings_for_event(event_id)
+        form.fields['candidate_job_postings'].choices = get_job_postings_for_event(event_id)
         if form.is_valid():
             candidate_email = update_or_create_candidate(request, form, event_id)
             context = {'candidate_email': candidate_email, 'event': event}
@@ -32,7 +32,7 @@ def detail(request, event_id):
 
     else:  # if a GET (or any other method) we'll create a blank form
         form = RegisterForm()
-        form.fields['candidate_job_posting'].choices = get_job_postings_for_event(event_id)
+        form.fields['candidate_job_postings'].choices = get_job_postings_for_event(event_id)
         return render(request, 'events/detail.html', {'event': event, 'form': form})
 
     return render(request, 'events/detail.html', {'event': event, 'form': form})
@@ -47,8 +47,10 @@ def update_or_create_candidate(request, form, event_id):
     f_first_name = form.cleaned_data['candidate_first_name']
     f_last_name = form.cleaned_data['candidate_last_name']
     f_phone = form.cleaned_data['candidate_phone']
-    job_posting_id = request.POST.getlist('candidate_job_posting')[0]
-    f_selected_job_posting = JobPosting.objects.get(id=job_posting_id)
+    job_posting_ids = request.POST.getlist('candidate_job_postings')
+    f_selected_job_postings = []
+    for job_id in job_posting_ids:
+        f_selected_job_postings += [JobPosting.objects.get(id=job_id)]
     event_attended = Event.objects.get(id=event_id)
     person = Candidate.objects.filter(email=f_email).first()
 
@@ -61,10 +63,15 @@ def update_or_create_candidate(request, form, event_id):
 
     person.save()
 
-    attendance = Attendance.objects.filter(candidate=person).filter(event=event_attended).filter(selected_job_posting=f_selected_job_posting).first()
-    if attendance is None:
-        attendance = Attendance(candidate=person, event=event_attended, selected_job_posting=f_selected_job_posting)
-        attendance.save()
+    for job_posting in f_selected_job_postings:
+        attendance = Attendance.objects\
+            .filter(candidate=person)\
+            .filter(event=event_attended)\
+            .filter(selected_job_posting=job_posting)\
+            .first()
+        if attendance is None:
+            attendance = Attendance(candidate=person, event=event_attended, selected_job_posting=job_posting)
+            attendance.save()
 
     return f_email
 
