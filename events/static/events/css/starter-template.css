@@ -74,12 +74,28 @@ body {
     letter-spacing: 0;
 }
 
-.input-Multi {
+.input-Multi > ul {
     background: #FFFFFF;
     border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    list-style-type:none;
+    padding-left: .5vw;
+    padding-right: .5vw;
+}
+
+.input-Multi li {
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.input-Multi label {
     font-family: Helvetica;
-    font-size: 18px;
-    color: #333333;
+    font-size: 16px !important;
+    font-weight: 500;
+    color: #2E2C38;
     letter-spacing: 0;
 }
 

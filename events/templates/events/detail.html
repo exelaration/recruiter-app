@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
-
 {% block title %}Register{% endblock %}
 
 {% block content %}
@@ -45,15 +44,7 @@
 
             <div class="form-group">
                 <div>{{ form.candidate_job_postings|add_label_class:"input-Labels" }}</div>
-                <div>{{ form.candidate_job_postings|add_class:"input-Multi" }}</div>
-                <div>
-                    <select class="input" required id="candidate_job_posting" placeholder="Select job posting" multiple="multiple">
-                      <option value="volvo">Volvo</option>
-                      <option value="saab">Saab</option>
-                      <option value="fiat">Fiat</option>
-                      <option value="audi">Audi</option>
-                    </select>
-                </div>
+                <div class="input-Multi">{{ form.candidate_job_postings }}</div>
             </div>
 
              <div class="form-group">
