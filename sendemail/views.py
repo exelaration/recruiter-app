@@ -43,7 +43,7 @@ def detail(request, event_id):
         if form.is_valid():
             email_template_id = request.POST.getlist('email_templates')[0]
             email_template = EmailTemplate.objects.get(id=email_template_id)
-            send_emails(request, email_template, attendance_list)
+            send_emails(request, email_template, attendance_list, event)
             return HttpResponseRedirect('/sendemail')
 
     else:  # if a GET (or any other method) we'll create a blank form
@@ -58,14 +58,19 @@ def get_all_active_email_templates():
     return [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
 
 
-def send_emails(request, email_template, attendance_list):
+def send_emails(request, email_template, attendance_list, event):
     from_email = str(request.user.email)
+    candidates_to_job_postings = []
     for attendance in attendance_list:
-        to_email = str(attendance.candidate.email)
+        candidates_to_job_postings[attendance.candidate] += [attendance.selected_job_posting]
+    for candidate, job_postings in candidates_to_job_postings:
+        to_email = str(candidate.email)
         subject = str(email_template.subject)
-        email_body = email_template.body.replace('##FIRST_NAME##', attendance.candidate.first_name)
-        email_body = email_body.replace('##LAST_NAME##', attendance.candidate.last_name)
-        email_body = email_body.replace('##JOBPOSTING##', attendance.selected_job_posting.job_link)
+        email_body = email_template.body.replace('##FIRST_NAME##', candidate.first_name)
+        email_body = email_body.replace('##LAST_NAME##', candidate.last_name)
+        email_body = email_body.replace('##EVENT##', event.title)
+        email_body = email_body.replace('##JOBPOSTING##', job_postings[0].)
+        email_body = email_body.replace('##JOBPOSTING##', job_postings[0].job_link)
         response = send_email(from_email, to_email, subject, str(email_body))
         print(response)
 
