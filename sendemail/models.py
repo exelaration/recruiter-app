@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from tinymce.models import HTMLField
+from events.models import Event, Candidate
 
 
 class EmailTemplate(models.Model):
@@ -13,3 +14,12 @@ class EmailTemplate(models.Model):
 
     class Meta:
         ordering = ['id', 'subject']
+
+class EmailLog(models.Model):
+    event_id = models.ForeignKey(Event)
+    candidate_id = models.ForeignKey(Candidate)
+    to_address = models.CharField('To')
+    from_address = models.CharField('From')
+    subject = models.CharField('Subject', max_length=100)
+    time_sent = models.DateTimeField()
+    body = HTMLField()
