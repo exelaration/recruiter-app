@@ -14,4 +14,4 @@ class RegisterForm(forms.Form):
                                  message='Phone number must be entered in the format: ''+999999999''. Up to 15 digits allowed.')
     candidate_phone = forms.CharField(validators=[phone_regex], label='Phone number:', max_length=15, required=False)
     JobPostingFormSet = inlineformset_factory(JobPosting, Attendance, fields=('selected_job_posting',))
-    candidate_job_posting = forms.ChoiceField(label='Jobs:', initial='', required=True)
+    candidate_job_postings = forms.MultipleChoiceField(label='Jobs:', initial='', widget=forms.CheckboxSelectMultiple(), required=True)

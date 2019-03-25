@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
-
 {% block title %}Register{% endblock %}
 
 {% block content %}
@@ -44,19 +43,8 @@
             </div>
 
             <div class="form-group">
-{#                This will become a touch-friendly multiselect field later #}
-                <div>{{ form.candidate_job_posting|add_label_class:"input-Labels" }}</div>
-                <div>{{ form.candidate_job_posting|add_class:"input" }}</div>
-{#                This is a sample of what the formatting might look like with dummy data #}
-                <div><label class="input-Labels" for="candidate_job_posting">Jobs:</label></div>
-                <div>
-                    <select class="input" required id="candidate_job_posting" placeholder="Select job posting" multiple="multiple">
-                      <option value="volvo">Volvo</option>
-                      <option value="saab">Saab</option>
-                      <option value="fiat">Fiat</option>
-                      <option value="audi">Audi</option>
-                    </select>
-                </div>
+                <div>{{ form.candidate_job_postings|add_label_class:"input-Labels" }}</div>
+                <div class="input-Multi">{{ form.candidate_job_postings }}</div>
             </div>
 
              <div class="form-group">
