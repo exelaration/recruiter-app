@@ -1,7 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.core.validators import RegexValidator
-from django.core.validators import validate_email
 from .models import Candidate, JobPosting, Attendance
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, ButtonHolder, Fieldset, HTML, Button, Row, Field
