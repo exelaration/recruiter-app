@@ -22,29 +22,38 @@
         </div>
         <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
             {% csrf_token %}
-            <div class="form-group">
+            <div class="form-group required">
                 <div>{{ form.candidate_first_name|add_label_class:"input-Labels" }}</div>
                 <div>{{ form.candidate_first_name|add_class:"input" }}</div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
                 <div>{{ form.candidate_last_name|add_label_class:"input-Labels" }}</div>
                 <div>{{ form.candidate_last_name|add_class:"input" }}</div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
                 <div>{{ form.candidate_email|add_label_class:"input-Labels" }}</div>
                 <div>{{ form.candidate_email|add_class:"input" }}</div>
+                {% if form.candidate_email.errors %}
+                  <p class="alert alert-danger"> {{ form.candidate_email.errors.as_text }} </p>
+                {% endif %}
             </div>
 
             <div class="form-group">
                 <div>{{ form.candidate_phone|add_label_class:"input-Labels" }}</div>
-                <div>{{ form.candidate_phone|add_class:"input" }}</div>
+                <div id="candidate_phone">{{ form.candidate_phone|add_class:"input" }}</div>
+                {% if form.candidate_phone.errors %}
+                  <p class="alert alert-danger"> {{ form.candidate_phone.errors.as_text }} </p>
+                {% endif %}
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
                 <div>{{ form.candidate_job_postings|add_label_class:"input-Labels" }}</div>
                 <div class="input-Multi">{{ form.candidate_job_postings }}</div>
+                {% if form.candidate_job_postings.errors %}
+                  <p class="alert alert-danger"> {{ form.candidate_job_postings.errors.as_text }} </p>
+                {% endif %}
             </div>
 
              <div class="form-group">
@@ -53,4 +62,22 @@
         </form>
     </div>
 </div>
+
+<script>
+  $('#candidate_phone').keyup(function(evt) {
+    var len = $('#candidate_phone input').val().length;
+    if(len == 3 || len == 7){
+      var phone = $('#candidate_phone input').val();
+
+      if(evt.which != 8) {
+        phone += '-';
+      }
+      else {
+        phone = phone.substring(0, phone.length - 1);
+      }
+      $('#candidate_phone input').val(phone);
+    }
+  });
+</script>
+
 {% endblock %}
