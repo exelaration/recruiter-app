@@ -1,0 +1,162 @@
+*{
+    margin: 0;
+}
+
+.backgroundImage{
+    background-position: center;
+    position: fixed;
+}
+
+.inside_block{
+    position: relative;
+    margin: auto;
+}
+
+.loginbg{
+    background-color: white;
+    position: absolute;
+    top: 420px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    padding: 50px;
+    width: 450px;
+    border-radius: 10px;
+    font-family: 'Raleway', sans-serif;
+    box-shadow: 0px 5px 30px 5px slategray;
+}
+
+.logo{
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+h2{
+    margin-bottom: 30px;
+}
+
+.loginbox{
+    margin-top: 15px;
+    padding: 5px 15px;
+    width: 100%;
+    height: 50px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+
+.loginbtn{
+    border-radius: 6px;
+    background-color: #40ABDB;
+    border-color: transparent;
+    padding: 17px 52px;
+    color: white;
+    font-size: 15px;
+    float: right;
+}
+
+.rem{
+    color: gray;
+    transform: translateY(90%);
+}
+
+.loginbtn, .rem{
+    display: inline-block;
+}
+
+.forgotpw{
+    margin: 10px 0px 20px;
+    font-size: 14px;
+    color: #40ABDB;
+}
+
+.errornote{
+    color: red;
+}
+
+.loginlabel, .forgotpw, .rem, .loginbtn, loginbox{
+    font-weight: 700;
+}
+
+@media only screen and (min-width: 1367px){
+
+    .backgroundImage{
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+@media only screen and (max-height: 1366px){
+
+    @media only screen and (max-width: 1024px){
+
+        .backgroundImage{
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .logo{
+            top: 300px;
+        }
+
+        .loginbg{
+            top: 620px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1366px){
+
+    @media only screen and (max-height: 1024px) {
+        .backgroundImage {
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .logo {
+            top: 200px;
+        }
+
+        .loginbg {
+            top: 520px;
+        }
+    }
+}
+
+@media only screen and (max-height: 812px){
+
+    .logo{
+        top: 400px;
+    }
+
+    .loginbg{
+        top: 720px;
+    }
+
+    .backgroundImage {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media only screen and (max-height: 768px){
+
+    .logo{
+        top: 100px;
+    }
+
+    .loginbg{
+        top: 420px;
+    }
+
+    .backgroundImage {
+        height: 100vh;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
