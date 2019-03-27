@@ -10,11 +10,11 @@
 
 {% load static %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "css/login_style.css" %}">
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "excellajobs/css/login_style.css" %}">
 {{ form.media }}
 {% endblock %}
 
-<img alt='background image' class="backgroundImage" src='{% static "images/abstract_red.svg" %}'/>
+<img alt='background image' class="backgroundImage" src='{% static "excellajobs/images/abstract_red.svg" %}'/>
 <div class="inside_block">
     {% block content %} {% endblock %}
 </div>

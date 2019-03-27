@@ -17,14 +17,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
 from django.contrib.auth.views import login
-from django.conf.urls import url
-from django.contrib import admin
-from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^events/', include('events.urls')),
     url(r'^sendemail/', include('sendemail.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
-    url(r'^$', RedirectView.as_view(url='/events/')),
+    url(r'^$', RedirectView.as_view(url='/events/'))
 ]
