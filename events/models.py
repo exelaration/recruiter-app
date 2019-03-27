@@ -53,6 +53,16 @@ class Candidate(models.Model):
     def __str__(self):
         return "{0} {1} - {2}".format(self.first_name, self.last_name, self.email)
 
+    # These permit use as a dictionary key
+    def __hash__(self):
+        return hash(self.id)
+
+    def __eq__(self, other):
+        return self.id == other.id
+
+    def __ne__(self, other):
+        return not(self == other)
+
     class Meta:
         verbose_name_plural = 'Candidates'
 

@@ -3,10 +3,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from sendemail.forms import SendEmailForm
-from .models import EmailTemplate
+from .models import EmailTemplate, EmailLog
 from sendemail.xlsx_formatter import *
-from events.models import Event, Attendance
+from events.models import Event, Candidate, Attendance
 
+import datetime
 import os
 import sendgrid
 from sendgrid.helpers.mail import *
@@ -60,22 +61,23 @@ def get_all_active_email_templates():
 
 def send_emails(request, email_template, attendance_list, event):
     from_email = str(request.user.email)
-    candidates_to_job_postings = []
-    for attendance in attendance_list:
-        candidates_to_job_postings[attendance.candidate] += [attendance.selected_job_posting]
-    for candidate, job_postings in candidates_to_job_postings:
+    candidates_to_job_postings = {attendance_list[0].candidate: [attendance_list[0].selected_job_posting]}
+    # for attendance in attendance_list:
+    #     candidates_to_job_postings[attendance.candidate.id] += [attendance.selected_job_posting]
+    for candidate, job_postings in candidates_to_job_postings.items():
         to_email = str(candidate.email)
         subject = str(email_template.subject)
         email_body = email_template.body.replace('##FIRST_NAME##', candidate.first_name)
         email_body = email_body.replace('##LAST_NAME##', candidate.last_name)
         email_body = email_body.replace('##EVENT##', event.title)
-        email_body = email_body.replace('##JOBPOSTING##', job_postings[0].)
+        email_body = email_body.replace('##JOB_NAME##', job_postings[0].title)
         email_body = email_body.replace('##JOBPOSTING##', job_postings[0].job_link)
-        response = send_email(from_email, to_email, subject, str(email_body))
+        email_body = email_body.replace('##JOB_POSTINGS##', job_postings[0].job_link) #TODO: treat as a list to job titles and links
+        response = send_email(event,candidate,from_email, to_email, subject, str(email_body))
         print(response)
 
 
-def send_email(from_address, to_address, subject, body_text):
+def send_email(event, candidate, from_address, to_address, subject, body_text):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email(from_address)
     to_email = Email(to_address)
@@ -85,4 +87,12 @@ def send_email(from_address, to_address, subject, body_text):
     print('Send Email {0} : {1}'.format(to_address, subject))
     print('#############################')
     response = sg.client.mail.send.post(request_body=current_email.get())
+    EmailLog(event_id=event,
+             candidate_id=candidate,
+             to_address=to_email,
+             from_address=from_email,
+             subject=subject,
+             time_sent=datetime.datetime.now(),
+             body=content,
+             response=response)
     return response
