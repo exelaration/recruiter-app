@@ -37,20 +37,22 @@ body {
   text-decoration: none;
 }
 
-.banner-lg .navbar-nav {
-  float: right;
+.banner .navbar,  .banner .navbar .navbar-nav{
+  position: absolute;
+  right: 0;
+  padding-right: .4em;
+  top: 0;
 }
 
 .banner .navbar {
-  position: absolute;
-  right: 0;
-  padding-right: 0;
+  width: 100vw;
 }
 
 .BannerImg {
   margin: -4% auto auto auto;
   max-width: 100%;
   max-height: 400px;
+  pointer-events: none;
 }
 
 .page-title {
@@ -77,6 +79,10 @@ body {
     padding: 1em 0;
 }
 
+.homeIcon a {
+  display: inline-block;
+}
+
 .eventTitle {
     font-size: 2.4em;
     color: #212121;
@@ -96,6 +102,7 @@ body {
     border: 1px solid #CCCCCC;
     border-radius: 4px;
     height: 6vh;
+    min-height: 2em;
     width: 100%;
     padding-left: 20px;
     font-size: 1.4em;
@@ -134,12 +141,13 @@ body {
     font-weight: 500;
     color: #2E2C38;
     letter-spacing: -0.2px;
-    margin-bottom: 13px !important;
+    margin-bottom: 0px !important;
 }
 
 .centerContainer {
   margin: auto;
   width: 58%;
+  min-width: 320px;
   padding: 10px;
   height: auto;
   position: relative;
@@ -186,6 +194,10 @@ body {
     background-color: inherit !important;
 }
 
+.nav > li {
+  display: inline-block !important;
+}
+
 .congratLbl {
     font-size: 5em;
     color: #494949;
@@ -213,6 +225,10 @@ body {
 .starter-template a {
     text-decoration: underline !important;
     cursor: pointer;
+}
+
+.spacer {
+  min-height: 2em;
 }
 
 .form-group.required div:first-of-type label::before {
