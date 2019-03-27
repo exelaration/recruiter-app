@@ -214,3 +214,10 @@ body {
     text-decoration: underline !important;
     cursor: pointer;
 }
+
+.form-group.required div:first-of-type label::before {
+    color: #D13C45;
+    content: '* ';
+    font-size: 1.4em;
+    vertical-align: middle;
+  }
