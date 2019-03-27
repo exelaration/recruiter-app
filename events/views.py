@@ -75,4 +75,3 @@ def update_or_create_candidate(request, form, event_id):
             attendance.save()
 
     return f_email
-
