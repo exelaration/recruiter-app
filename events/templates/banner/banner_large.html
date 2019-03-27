@@ -1,0 +1,16 @@
+{% load static %}
+<div class="banner banner-lg">
+  <nav>
+    <div class="container">
+      <div class="page-title col-md-8"><img alt="Excella Logo" class="excella-logo-2" src='{% static "excellajobs/img/logo_2.svg" %}'/> | <div class="title">{{ title }}</div></div>
+      <div class="col-md-4 navbar">
+      <ul class="navbar-nav nav">
+        {% if user.is_authenticated %}
+          <li><a href="/admin/">Site administration</a></li>
+          <li><a href="/admin/logout/">Log-out</a></li>
+        {% endif %}
+      </ul>
+      </div>
+    </div>
+  </nav>
+</div>
