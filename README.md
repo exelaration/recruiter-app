@@ -27,25 +27,24 @@ This Web App is build using Python Django back end and an Angular 5 front end.
 It is a mixture of Django RESTfull api in the back end plus Django admin for managing models
 
 ### Steps to work with this repo:
-1. Verify supported technology is installed:
-    * Python 3.5.x
-    * Django
-    * Postgres (Database)
-    * Whitenoise (For static files)
-    * See requirements.txt for full details here
+1. Verify that the following are installed:
+    * Git
+    * Docker
 2. Clone the repo
+    * On Windows, ensure that git will check out files with line endings as-is `git config --global core.autocrlf input`
 3. Run Docker files for running this app locally
     * `$ docker-compose up -d` (One time only)
         * NOTE: If running docker on OSX you will need to turn on `securely store Docker logins in macOS keychain` under docker preferences.  For more info see: https://github.com/ansible/ansible-container/issues/722
     * Run this command to create db superuser for admin console:
         * `$ docker-compose exec web python manage.py createsuperuser`
         * I tend to use 'admin' as my user name
-4. Create postgresDb
-    * docker-compose exec into docker container to run the below commands
+4. Access the website at `http://localhost:8000/events/` and `http://localhost:8000/admin/` 
+5. Useful when troubleshooting:
+    * `docker-compose exec web [command]` into docker container to run the below commands
     * Update base.py with Database credentials
     * Usefull ORM commands:
-        * `$ python manage.py makemigrations`
-        * `$ python manage.py migrate`
+        * `$ python manage.py makemigrations` - run after database ("model") changes
+        * `$ python manage.py migrate` - run after `makemigrations` or fetching new 
         * `$ python manage.py migrate app_name_like_home 0002`
     
 ### Working with Heroku
