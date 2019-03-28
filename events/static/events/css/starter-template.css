@@ -199,7 +199,7 @@ body {
     cursor: pointer;
 }
 
-.form-group.required div:first-of-type label::before {
+.form-group.required>div:first-of-type::before {
     color: #D13C45;
     content: '* ';
     font-size: 1.4em;
