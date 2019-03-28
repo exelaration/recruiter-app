@@ -56,12 +56,16 @@
                         <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
                         <a href="#" class="forgotpw">� Forgot Password?</a>
                     </div>
+                    <br>
+                    <br>
+
                 {% endif %}
                 <br>
-                <br>
-                <br>
                 <div class="submit-row">
-                    <label class="rem"><input type="checkbox" name="remember" value="RememberMe"> Remember me</label><input type="submit" class="loginbtn" value="{% trans 'Log in' %}">
+                    {% if remember_me_function %}
+                        <label class="rem"><input type="checkbox" name="remember" value="RememberMe"> Remember me</label>
+                    {% endif %}
+                    <input type="submit" class="loginbtn" value="{% trans 'Log in' %}">
                 </div>
             </form>
         </div>
