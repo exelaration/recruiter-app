@@ -62,6 +62,8 @@
     </div>
 </div>
 
+<script src='{% static "events/js/bootstrap-multiselect.js" %}'></script>
+
 <script>
   $(document).ready(function() {
     $('#candidate_phone').keyup(function(evt) {
@@ -78,6 +80,8 @@
         $('#candidate_phone input').val(phone);
       }
     });
+
+    $('#id_candidate_job_postings').multiselect();
 
     $('.required input').change(function(evt){
       var good = true;
