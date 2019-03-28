@@ -95,6 +95,15 @@ button.multiselect.dropdown-toggle.btn {
     background-image: none !important;
 }
 
+div.input-Multi ul>li>a>label {
+  padding: 0;
+  overflow: hidden;
+}
+
+.open>.dropdown-menu {
+  margin-bottom: 3em;
+}
+
 .dropdown-menu,
 .form-group div {
     width: 100%;

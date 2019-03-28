@@ -145,12 +145,16 @@ body {
 }
 
 .centerContainer {
+  position: relative;
   margin: auto;
   width: 58%;
-  min-width: 320px;
+  min-width: 45em;
   padding: 10px;
   height: auto;
-  position: relative;
+}
+
+.centerContainer form {
+  padding-bottom: 2em;
 }
 
 .row {
