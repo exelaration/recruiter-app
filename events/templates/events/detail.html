@@ -63,19 +63,39 @@
 </div>
 
 <script>
-  $('#candidate_phone').keyup(function(evt) {
-    var len = $('#candidate_phone input').val().length;
-    if(len == 3 || len == 7){
-      var phone = $('#candidate_phone input').val();
+  $(document).ready(function() {
+    $('#candidate_phone').keyup(function(evt) {
+      var len = $('#candidate_phone input').val().length;
+      if(len == 3 || len == 7){
+        var phone = $('#candidate_phone input').val();
 
-      if(evt.which != 8) {
-        phone += '-';
+        if(evt.which != 8) {
+          phone += '-';
+        }
+        else {
+          phone = phone.substring(0, phone.length - 1);
+        }
+        $('#candidate_phone input').val(phone);
+      }
+    });
+
+    $('.required input').change(function(evt){
+      var good = true;
+
+      $('.required input:not([type="checkbox"])').each(function(i){
+        if($(this).val() == '') good = false;
+      });
+      if(good && $('.required input[type="checkbox"]:checked').length > 0){
+          $('#id-registrationForm>.form-group>div>button').removeClass('disableBtn').addClass('activeBtn');
       }
       else {
-        phone = phone.substring(0, phone.length - 1);
+        $('#id-registrationForm>.form-group>div>button').removeClass('activeBtn').addClass('disableBtn');
       }
-      $('#candidate_phone input').val(phone);
-    }
+    });
+
+    // $('.disableBtn').click(function( evt ) {
+    //   evt.preventDefault();
+    // });
   });
 </script>
 
