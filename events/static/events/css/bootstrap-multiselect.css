@@ -58,6 +58,16 @@ span.multiselect-native-select select {
 .multiselect-container>li>a>label.radio,.multiselect-container>li>a>label.checkbox {
     margin: 0;
 }
+
+.multiselect-container>li>a>label input{
+  opacity: 0;
+}
+
+button.multiselect.dropdown-toggle.btn {
+  display: inline-flex;
+  justify-content: space-between;
+}
+
 .multiselect-container>li>a>label>input[type=checkbox] {
     margin-bottom: 5px;
 }
@@ -83,6 +93,15 @@ span.multiselect-native-select select {
     width: 100%;
     height: 6vh;
     background-image: none !important;
+}
+
+div.input-Multi ul>li>a>label {
+  padding: 0;
+  overflow: hidden;
+}
+
+.open>.dropdown-menu {
+  margin-bottom: 3em;
 }
 
 .dropdown-menu,

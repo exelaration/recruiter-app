@@ -62,20 +62,26 @@
     </div>
 </div>
 
-<script>
-  $('#candidate_phone').keyup(function(evt) {
-    var len = $('#candidate_phone input').val().length;
-    if(len == 3 || len == 7){
-      var phone = $('#candidate_phone input').val();
+<script src='{% static "events/js/bootstrap-multiselect.js" %}'></script>
 
-      if(evt.which != 8) {
-        phone += '-';
+<script>
+  $(document).ready(function() {
+    $('#candidate_phone').keyup(function(evt) {
+      var len = $('#candidate_phone input').val().length;
+      if(len == 3 || len == 7){
+        var phone = $('#candidate_phone input').val();
+
+        if(evt.which != 8) {
+          phone += '-';
+        }
+        else {
+          phone = phone.substring(0, phone.length - 1);
+        }
+        $('#candidate_phone input').val(phone);
       }
-      else {
-        phone = phone.substring(0, phone.length - 1);
-      }
-      $('#candidate_phone input').val(phone);
-    }
+    });
+
+    $('#id_candidate_job_postings').multiselect();
   });
 </script>
 
