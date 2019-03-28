@@ -1,0 +1,74 @@
+{% extends "admin/basesite.html" %}
+{% load widget_tweaks %}
+{% block title %}Login{% endblock %}
+
+{% load i18n static %}
+
+{% block content %}
+
+    {% load static %}
+
+    <img alt='excella logo' class="logo" src='{% static "excellajobs/images/logo.svg" %}'/>
+
+    <div class="loginbg">
+        {% if form.errors and not form.non_field_errors %}
+            <p class="errornote">{% if form.errors.items|length == 1 %}
+                {% trans "Please correct the error below." %}
+            {% else %}
+                {% trans "Please correct the errors below." %}
+            {% endif %}</p>
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="errornote">{{ error }}</p>
+            {% endfor %}
+            <br>
+        {% endif %}
+
+        <div id="content-main">
+            {% if user.is_authenticated %}
+                <p class="errornote">
+                    {% blocktrans trimmed %}
+                    You are authenticated as {{ username }}, but are not authorized to
+                    access this page. Would you like to login to a different account?
+                    {% endblocktrans %}
+                </p>
+            {% endif %}
+
+            <h2>LOG IN</h2>
+            <form action="{{ app_path }}" method="post" id="login-form">
+                {% csrf_token %}
+
+                <div>{{ form.username|add_label_class:"loginlabel" }}</div>
+                <div>{{ form.username|add_class:"loginbox" }}</div>
+
+                <br>
+                <br>
+                <div>{{ form.password|add_label_class:"loginlabel" }}</div>
+                <div>{{ form.password|add_class:"loginbox" }}</div>
+
+                <input type="hidden" name="next" value="{{ next }}">
+
+                {% url 'admin_password_reset' as password_reset_url %}
+                {% if password_reset_url %}
+                    <div class="password-reset-link">
+                        <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+                        <a href="#" class="forgotpw">� Forgot Password?</a>
+                    </div>
+                    <br>
+                    <br>
+
+                {% endif %}
+                <br>
+                <div class="submit-row">
+                    {% if remember_me_function %}
+                        <label class="rem"><input type="checkbox" name="remember" value="RememberMe"> Remember me</label>
+                    {% endif %}
+                    <input type="submit" class="loginbtn" value="{% trans 'Log in' %}">
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}
