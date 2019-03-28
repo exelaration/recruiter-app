@@ -2,9 +2,13 @@
     margin: 0;
 }
 
+#container{
+    background-color: #79aec8;
+}
+
 .backgroundImage{
-    background-position: center;
     position: fixed;
+    background-size: cover;
 }
 
 .inside_block{
@@ -15,7 +19,6 @@
 .loginbg{
     background-color: white;
     position: absolute;
-    top: 420px;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
@@ -28,7 +31,6 @@
 
 .logo{
     position: absolute;
-    top: 100px;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
@@ -69,7 +71,7 @@ h2{
 .forgotpw{
     margin: 10px 0px 20px;
     font-size: 14px;
-    color: #40ABDB;
+
 }
 
 .errornote{
@@ -80,43 +82,110 @@ h2{
     font-weight: 700;
 }
 
-@media only screen and (min-width: 1367px){
+a:link, a:visited{
+    text-decoration: none;
+    color: #40ABDB;
+}
 
-    .backgroundImage{
-        width: 100%;
-        top: 50%;
-        transform: translateY(-50%);
+a:hover{
+    color: #3e7ac8;
+}
+
+/*For 800x600 laptop*/
+
+@media only screen and (max-width: 800px) {
+
+    .logo {
+        top: 10vh;
+        height: 10vh;
+    }
+
+    .loginbg {
+        top: 55vh;
+        height: 60vh;
+        max-height: 350px;
+    }
+
+    .backgroundImage {
+        height: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+}
+
+/*For iPads vertical*/
+
+@media only screen and (min-width: 801px) {
+
+    .logo {
+        top: 300px;
+    }
+
+    .loginbg {
+        top: 620px;
+    }
+
+    .backgroundImage {
+        height: 100%;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
 
-@media only screen and (max-height: 1366px){
+/*For iPads horizontal and iPad Pros vertical*/
 
-    @media only screen and (max-width: 1024px){
+@media only screen and (min-width: 1021px) {
 
-        .backgroundImage{
-            height: 100%;
-            left: 50%;
-            transform: translateX(-50%);
+    .backgroundImage {
+        height: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    @media only screen and (max-height: 980px) {
+
+        .logo {
+            top: 100px;
         }
 
-        .logo{
-            top: 300px;
+        .loginbg {
+            top: 420px;
+        }
+    }
+
+    @media only screen and (min-height: 981px) {
+
+        .logo {
+            top: 350px;
         }
 
-        .loginbg{
-            top: 620px;
+        .loginbg {
+            top: 670px;
         }
     }
 }
 
-@media only screen and (max-width: 1366px){
+/*For iPads Pros horizontal and Desktop*/
 
-    @media only screen and (max-height: 1024px) {
+@media only screen and (min-width: 1306px) {
+
+    @media only screen and (max-height: 768px) {
+
+        .logo {
+            top: 100px;
+        }
+
+        .loginbg {
+            top: 420px;
+        }
+
         .backgroundImage {
-            height: 100%;
-            left: 50%;
-            transform: translateX(-50%);
+            width: 100%;
         }
+    }
+
+    @media only screen and (min-height: 769px) {
 
         .logo {
             top: 200px;
@@ -125,38 +194,23 @@ h2{
         .loginbg {
             top: 520px;
         }
+
+        .backgroundImage {
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     }
 }
 
-@media only screen and (max-height: 812px){
+/*For 4K Device*/
 
-    .logo{
-        top: 400px;
-    }
-
-    .loginbg{
-        top: 720px;
-    }
+@media only screen and (min-width: 2500px) {
 
     .backgroundImage {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
-@media only screen and (max-height: 768px){
-
-    .logo{
-        top: 100px;
-    }
-
-    .loginbg{
-        top: 420px;
-    }
-
-    .backgroundImage {
-        height: 100vh;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0px;
+        width: 100vw;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
