@@ -1,0 +1,43 @@
+<svg width="78px" height="84px" viewBox="0 0 78 84" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="99.0214445%" id="linearGradient-1">
+            <stop stop-color="#000000" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.02" offset="80%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.04" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.12" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.06" offset="20%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-3" cx="33" cy="33" r="33"></circle>
+        <filter x="-18.2%" y="-18.2%" width="136.4%" height="145.5%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="6" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.24 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter2" in2="SourceAlpha" operator="out" result="shadowBlurOuter2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.12 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="recruiter_end" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Recruiter_home_empty" transform="translate(-1097.000000, -170.000000)">
+            <g id="fab" transform="translate(1103.000000, 176.000000)">
+                <g id="button-bg">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                    <circle stroke="url(#linearGradient-1)" stroke-width="0.5" stroke-linejoin="square" fill="#3366BB" fill-rule="evenodd" cx="33" cy="33" r="32.75"></circle>
+                    <circle stroke="url(#linearGradient-2)" stroke-width="0.5" stroke-linejoin="square" cx="33" cy="33" r="32.75"></circle>
+                </g>
+                <g id="Material/Icons-white/add" transform="translate(12.000000, 12.000000)" fill="#FFFFFF">
+                    <polygon id="Shape" points="28 20 22 20 22 14 20 14 20 20 14 20 14 22 20 22 20 28 22 28 22 22 28 22"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
