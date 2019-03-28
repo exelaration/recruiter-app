@@ -13,14 +13,13 @@
 </div>
 
 <div class="row">
-    <div class="centerContainer">
-        <div class="starter-template col-sm-12">
-            <div>
-                <div class='eventTitle col-sm-12'>{{ event.title }}</div>
-                <div class='eventDate col-sm-12 '>{{ event.date_time }}</div>
-            </div>
-        </div>
-        <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
+  <div class="centerContainer">
+    <div class="starter-template row">
+      <div class='eventTitle row'>{{ event.title }}</div>
+      <div class='eventDate row'>{{ event.date_time }}</div>
+    </div>
+    <div class="spacer"></div>
+    <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
             {% csrf_token %}
             <div class="form-group required">
                 <div>{{ form.candidate_first_name|add_label_class:"input-Labels" }}</div>

@@ -98,4 +98,5 @@ button.multiselect.dropdown-toggle.btn {
 .dropdown-menu,
 .form-group div {
     width: 100%;
+    min-height: 2.9em;
 }
