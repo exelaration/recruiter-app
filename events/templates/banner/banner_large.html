@@ -7,6 +7,12 @@
       <ul class="navbar-nav nav">
         {% if user.is_authenticated %}
           <li><a href="/admin/">Site administration</a></li>
+          {% if request.get_full_path != "/events/" %}
+            <li><a href="/events/">My events</a></li>
+          {% endif %}
+          {% if request.get_full_path != "/sendemail/" %}
+            <li><a href="/sendemail/">Send Email</a></li>
+          {% endif %}
           <li><a href="/admin/logout/">Log-out</a></li>
         {% endif %}
       </ul>
