@@ -231,9 +231,13 @@ body {
   min-height: 2em;
 }
 
-.form-group.required div:first-of-type label::before {
+.form-group.required div:first-of-type label::before, label.requiredField::before {
     color: #D13C45;
     content: '* ';
     font-size: 1.4em;
     vertical-align: middle;
   }
+
+.asteriskField {
+  display: none;
+}
