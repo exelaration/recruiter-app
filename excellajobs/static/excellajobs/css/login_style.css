@@ -3,17 +3,18 @@
 }
 
 #container{
-    background-color: #79aec8;
+    background-color: #c1484a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
 }
 
-.backgroundImage{
-    position: fixed;
-    background-size: cover;
-}
-
-.inside_block{
-    position: relative;
-    margin: auto;
+.logo{
+    position: absolute;
+    top: -300px;
+    transform: translate(-50%, -50%);
 }
 
 .loginbg{
@@ -22,18 +23,23 @@
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    padding: 50px;
-    width: 450px;
+    padding: 30px;
+    width: 35vw;
+    min-width: 400px;
     border-radius: 10px;
     font-family: 'Raleway', sans-serif;
     box-shadow: 0px 5px 30px 5px slategray;
 }
 
-.logo{
-    position: absolute;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
+.backgroundImage{
+    position: fixed;
+    background-size: cover;
+    height: 100%;
+}
+
+.inside_block{
+    position: relative;
+    margin: auto;
 }
 
 h2{
@@ -89,128 +95,4 @@ a:link, a:visited{
 
 a:hover{
     color: #3e7ac8;
-}
-
-/*For 800x600 laptop*/
-
-@media only screen and (max-width: 800px) {
-
-    .logo {
-        top: 10vh;
-        height: 10vh;
-    }
-
-    .loginbg {
-        top: 55vh;
-        height: 60vh;
-        max-height: 350px;
-    }
-
-    .backgroundImage {
-        height: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-}
-
-/*For iPads vertical*/
-
-@media only screen and (min-width: 801px) {
-
-    .logo {
-        top: 300px;
-    }
-
-    .loginbg {
-        top: 620px;
-    }
-
-    .backgroundImage {
-        height: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
-/*For iPads horizontal and iPad Pros vertical*/
-
-@media only screen and (min-width: 1021px) {
-
-    .backgroundImage {
-        height: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    @media only screen and (max-height: 980px) {
-
-        .logo {
-            top: 100px;
-        }
-
-        .loginbg {
-            top: 420px;
-        }
-    }
-
-    @media only screen and (min-height: 981px) {
-
-        .logo {
-            top: 350px;
-        }
-
-        .loginbg {
-            top: 670px;
-        }
-    }
-}
-
-/*For iPads Pros horizontal and Desktop*/
-
-@media only screen and (min-width: 1306px) {
-
-    @media only screen and (max-height: 768px) {
-
-        .logo {
-            top: 100px;
-        }
-
-        .loginbg {
-            top: 420px;
-        }
-
-        .backgroundImage {
-            width: 100%;
-        }
-    }
-
-    @media only screen and (min-height: 769px) {
-
-        .logo {
-            top: 200px;
-        }
-
-        .loginbg {
-            top: 520px;
-        }
-
-        .backgroundImage {
-            height: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-    }
-}
-
-/*For 4K Device*/
-
-@media only screen and (min-width: 2500px) {
-
-    .backgroundImage {
-        left: 0px;
-        width: 100vw;
-        top: 50%;
-        transform: translateY(-50%);
-    }
 }
