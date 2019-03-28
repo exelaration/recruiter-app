@@ -5,6 +5,7 @@
     <!-- Custom local static styles for this template -->
     <link href="{% static "events/css/starter-template.css" %}" rel="stylesheet">
     <link href="{% static "events/css/bootstrap-multiselect.css" %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 
     <!-- CDN's for Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -24,21 +25,7 @@
   </head>
 
   <body>
-    <div class="banner">
-      <nav>
-        <div class="container">
-          <ul class="nav navbar-nav">
-            {% if user.is_authenticated %}
-              <li><a href="/admin/login/"><img alt="home icon" class="homeImg" src='{% static "events/img/homeIcon.svg" %}'/></a></li>
-              <li><a href="/events/">All Active Events</a></li>
-              <li><a href="/sendemail">Send Emails for Events</a></li>
-              <li><a href="/admin/">Admin Console</a></li>
-              <li><a href="/admin/logout/">logout</a></li>
-            {% endif %}
-          </ul>
-        </div>
-      </nav>
-    </div>
+    {% block header %}{% include "banner/banner.html" %}{% endblock %}
 
     <div class="container">
       {% block content %} {% endblock %}

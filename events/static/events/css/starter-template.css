@@ -1,5 +1,6 @@
 body {
-  padding-top: 50px;
+  font-family: 'Muli', sans-serif !important;
+  font-size: 12px;
 }
 
 .starter-template {
@@ -11,43 +12,79 @@ body {
 }
 
 .banner {
-    background: #D13C45;
-    height: 8vh;
-    width: 100%;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 1;
+  background: #D13C45;
+  color: #ffffff;
+  width: 100%;
+  max-width: 100vw;
+  top: 0px;
+  left: 0px;
+}
+
+.banner-sm {
+  height: 4em;
+  min-height: 60px;
+  max-height: 80px;
+}
+
+.banner-lg {
+  height: 16rem;
+  min-height: 120px;
+  max-height: 160px;
+}
+
+.banner a {
+  color: #ffffff !important;
+  text-decoration: none;
+}
+
+.banner .navbar,  .banner .navbar .navbar-nav{
+  position: absolute;
+  right: 0;
+  padding-right: .4em;
+  top: 0;
+}
+
+.banner .navbar {
+  width: 100vw;
 }
 
 .BannerImg {
-  margin: 0px auto auto auto;
-  height: 22vh;
-  z-index: 5;
-  position: fixed;
-  top: 4vh;
-  left: 0px;
-  right: 0px;
+  margin: -4% auto auto auto;
+  max-width: 100%;
+  max-height: 400px;
+  pointer-events: none;
 }
 
+.page-title {
+  margin-top: 4rem;
+  font-size: 2.6em;
+}
+
+.page-title .excella-logo-2 {
+  height: .9em;
+}
+
+.page-title .title {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 1.2em;
+}
 
 .congratsImg {
     position: initial;
     width: 101vw;
 }
 
-.homeImg {
-    position: absolute;
-    right: 11px;
-    left: 0px;
-    width: 23px;
-    top: 20px;
+.homeIcon {
+    padding: 1em 0;
+}
+
+.homeIcon a {
+  display: inline-block;
 }
 
 .eventTitle {
-    font-family: Helvetica;
-    font-size: 26px;
+    font-size: 2.4em;
     color: #212121;
     letter-spacing: 0;
     text-align: center;
@@ -55,8 +92,7 @@ body {
 }
 
 .eventDate {
-    font-family: Helvetica;
-    font-size: 18px;
+    font-size: 1em;
     color: #2E2C38;
     letter-spacing: -0.19px;
 }
@@ -66,10 +102,10 @@ body {
     border: 1px solid #CCCCCC;
     border-radius: 4px;
     height: 6vh;
+    min-height: 2em;
     width: 100%;
     padding-left: 20px;
-    font-family: Helvetica;
-    font-size: 18px;
+    font-size: 1.4em;
     color: #333333;
     letter-spacing: 0;
 }
@@ -92,8 +128,7 @@ body {
 }
 
 .input-Multi label {
-    font-family: Helvetica;
-    font-size: 16px !important;
+    font-size: 1.4em !important;
     font-weight: 500;
     color: #2E2C38;
     letter-spacing: 0;
@@ -102,21 +137,20 @@ body {
 .input-Labels {
     background: #FFFFFF;
     border-radius: 4px;
-    font-family: Helvetica;
-    font-size: 16px !important;
+    font-size: 1.4em !important;
     font-weight: 500;
     color: #2E2C38;
     letter-spacing: -0.2px;
-    margin-bottom: 13px !important;
+    margin-bottom: 0px !important;
 }
 
 .centerContainer {
   margin: auto;
   width: 58%;
+  min-width: 320px;
   padding: 10px;
   height: auto;
   position: relative;
-  top: 19vh;
   z-index: 1;
   overflow: auto;
 }
@@ -125,16 +159,10 @@ body {
     position: inherit;
 }
 
-.banner a {
-    color: #ffffff !important;
-    text-decoration: none;
-}
-
 .activeBtn {
     background: #3366BB !important;
     border-radius: 4px;
-    font-family: Helvetica;
-    font-size: 16px;
+    font-size: 1.4em;
     color: #FFFFFF !important;
     letter-spacing: -0.15px;
     text-align: center;
@@ -144,8 +172,7 @@ body {
 .disableBtn {
     background: #CBD3DA !important;
     border-radius: 4px;
-    font-family: Helvetica;
-    font-size: 16px;
+    font-size: 1.4em;
     color: #FFFFFF;
     letter-spacing: -0.15px;
     text-align: center;
@@ -167,9 +194,12 @@ body {
     background-color: inherit !important;
 }
 
+.nav > li {
+  display: inline-block !important;
+}
+
 .congratLbl {
-    font-family: Helvetica;
-    font-size: 56px;
+    font-size: 5em;
     color: #494949;
     text-align: center;
     font-weight: 500;
@@ -180,8 +210,7 @@ body {
     text-align: center;
     position: relative;
     top: -10vh;
-    font-family: Helvetica;
-    font-size: 24px;
+    font-size: 2em;
     color: #494949;
 }
 
@@ -189,14 +218,17 @@ body {
     text-align: center;
     position: relative;
     top: 5vh;
-    font-family: Helvetica;
-    font-size: 30px;
+    font-size: 2.4em;
     color: #494949;
 }
 
 .starter-template a {
     text-decoration: underline !important;
     cursor: pointer;
+}
+
+.spacer {
+  min-height: 2em;
 }
 
 .form-group.required div:first-of-type label::before {
