@@ -151,8 +151,6 @@ body {
   padding: 10px;
   height: auto;
   position: relative;
-  z-index: 1;
-  overflow: auto;
 }
 
 .row {
