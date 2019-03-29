@@ -7,10 +7,11 @@ from .models import EmailTemplate, EmailLog
 from sendemail.xlsx_formatter import *
 from events.models import Event, Candidate, Attendance
 
+from urllib.error import HTTPError
+
 import datetime
 import os
-import sendgrid
-from sendgrid.helpers.mail import *
+from django.core.mail import send_mail
 
 
 @login_required
@@ -75,26 +76,32 @@ def send_emails(request, email_template, attendance_list, event):
         email_body = email_body.replace('##JOB_NAME##', job_postings[0].title)
         email_body = email_body.replace('##JOBPOSTING##', job_postings[0].job_link)
         email_body = email_body.replace('##JOB_POSTINGS##', job_postings[0].job_link) #TODO: treat as a list to job titles and links
-        response = send_email(event,candidate,from_email, to_email, subject, str(email_body))
+        response = send_email(event, candidate, from_email, to_email, subject, str(email_body))
         print(response)
 
 
 def send_email(event, candidate, from_address, to_address, subject, body_text):
-    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
-    from_email = Email(from_address)
-    to_email = Email(to_address)
-    content = Content("text/html", body_text)
-    current_email = Mail(from_email, subject, to_email, content)
+    # sg = sendgrid.SendGridAPIClient()
+    # from_email = Email(from_address)
+    # to_email = Email(to_address)
+    # content = Content("text/html", body_text)
+    # current_email = Mail(from_email, subject, to_email, content)
     print('#############################')
     print('Send Email {0} : {1}'.format(to_address, subject))
     print('#############################')
-    response = sg.client.mail.send.post(request_body=current_email.get())
+    try:
+        response = send_mail(subject, body_text, from_address, [to_address])
+    except Exception as err:    #Really this should be more specific error types....
+        response = "EMAIL FAILED TO SEND: " , err
+
+    # This will save the email in the log even if it has not been sent!
+    # The response would be only indicator that it didn't go....
+    # Need to decide if that is appropriate or not
     EmailLog(event_id=event,
              candidate_id=candidate,
-             to_address=to_email,
-             from_address=from_email,
+             to_address=to_address,
+             from_address=from_address,
              subject=subject,
-             time_sent=datetime.datetime.now(),
-             body=content,
-             response=response)
+             body=body_text,
+             response=response).save()
     return response
