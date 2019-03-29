@@ -55,7 +55,9 @@ def detail(request, event_id):
 
 
 def get_all_active_email_templates():
-    return [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
+    templates = [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
+    templates.insert(0, ('', ''))
+    return templates
 
 
 def send_emails(request, email_template, attendance_list):

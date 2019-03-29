@@ -229,9 +229,13 @@ body {
     cursor: pointer;
 }
 
-.form-group.required>div:first-of-type::before {
+.form-group.required>div:first-of-type::before, label.requiredField::before {
     color: #D13C45;
     content: '* ';
     font-size: 1.4em;
     vertical-align: middle;
   }
+
+.asteriskField {
+  display: none;
+}
