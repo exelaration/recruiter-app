@@ -68,9 +68,11 @@
   $(document).ready(function() {
     $('#candidate_phone').keyup(function(evt) {
       var len = $('#candidate_phone input').val().length;
+      //add dashes after enty of 3rd and 6th digits (3+1+3 = 7th character
       if(len == 3 || len == 7){
         var phone = $('#candidate_phone input').val();
 
+        //If the keyup was a backspace, get rid of the previos number as well.
         if(evt.which != 8) {
           phone += '-';
         }
@@ -82,6 +84,24 @@
     });
 
     $('#id_candidate_job_postings').multiselect();
+
+    $('.required input').change(function(evt){
+      var good = true;
+
+      $('.required input:not([type="checkbox"])').each(function(i){
+        if($(this).val() == '') good = false;
+      });
+      if(good && $('.required input[type="checkbox"]:checked').length > 0){
+          $('#id-registrationForm>.form-group>div>button').removeClass('disableBtn').addClass('activeBtn');
+      }
+      else {
+        $('#id-registrationForm>.form-group>div>button').removeClass('activeBtn').addClass('disableBtn');
+      }
+    });
+
+    // $('.disableBtn').click(function( evt ) {
+    //   evt.preventDefault();
+    // });
   });
 </script>
 
