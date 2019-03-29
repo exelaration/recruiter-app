@@ -1,19 +1,17 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
+import os
+from collections import defaultdict
+
+import sendgrid
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render
+from sendgrid.helpers.mail import *
 
 from sendemail.forms import SendEmailForm
-from .models import EmailTemplate, EmailLog
 from sendemail.xlsx_formatter import *
-from events.models import Event, Candidate, Attendance
+from .models import EmailTemplate, EmailLog
 
-from urllib.error import HTTPError
-
-import datetime
-import os
-import sendgrid
-from sendgrid.helpers.mail import *
 
 @login_required
 def exportXlsx(request, event_id):
@@ -65,13 +63,27 @@ def get_all_active_email_templates():
 
 def send_emails(request, email_template, attendance_list, event):
     from_email = str(request.user.email)
+    email_recipients = defaultdict(list)
     for attendance in attendance_list:
-        to_email = str(attendance.candidate.email)
+        email_recipients[attendance.candidate] += [attendance.selected_job_posting]
+    for candidate, job_postings in email_recipients:
+        to_email = str(candidate.email)
         subject = str(email_template.subject)
-        email_body = email_template.body.replace('##FIRST_NAME##', attendance.candidate.first_name)
-        email_body = email_body.replace('##LAST_NAME##', attendance.candidate.last_name)
+        email_body = email_template.body.replace('##FIRST_NAME##', candidate.first_name)
+        email_body = email_body.replace('##LAST_NAME##', candidate.last_name)
+        email_body = email_body.replace('##EVENT##', event.title)
+
+        job_names = ""
+        job_postings = ""
+        job_list = ""
+        for posting in job_postings:
+            # add each job as appropriate
+            pass
+
+        email_body = email_body.replace('##JOB_NAME##', attendance.selected_job_posting.title)
         email_body = email_body.replace('##JOBPOSTING##', attendance.selected_job_posting.job_link)
-        response = send_email(event, attendance.candidate, from_email, to_email, subject, str(email_body))
+        email_body = email_body.replace('##JOBS_LIST##', attendance.selected_job_posting.job_link) #TODO: treat as a list of job titles and links
+        response = send_email(event, candidate, from_email, to_email, subject, str(email_body))
         print(response)
 
 
