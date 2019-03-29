@@ -16,7 +16,7 @@ span.multiselect-native-select select {
 .multiselect-container {
     position: absolute;
     list-style-type: none;
-    margin: 0; 
+    margin: 0;
     padding: 0;
 }
 
@@ -28,11 +28,11 @@ span.multiselect-native-select select {
     padding: 0;
 }
 
-.multiselect-container>li>a.multiselect-all label { 
+.multiselect-container>li>a.multiselect-all label {
     font-weight: 700;
 }
 
-.multiselect-container>li.multiselect-group label { 
+.multiselect-container>li.multiselect-group label {
     margin: 0;
     padding: 3px 20px 3px 20px;
     height: 100%;
@@ -48,7 +48,7 @@ span.multiselect-native-select select {
 }
 
 .multiselect-container>li>a>label {
-    margin: 0; 
+    margin: 0;
     height: 100%;
     cursor: pointer;
     font-weight: 400;
@@ -58,11 +58,21 @@ span.multiselect-native-select select {
 .multiselect-container>li>a>label.radio,.multiselect-container>li>a>label.checkbox {
     margin: 0;
 }
+
+.multiselect-container>li>a>label input{
+  opacity: 0;
+}
+
+button.multiselect.dropdown-toggle.btn {
+  display: inline-flex;
+  justify-content: space-between;
+}
+
 .multiselect-container>li>a>label>input[type=checkbox] {
     margin-bottom: 5px;
 }
 
-.btn-group>.btn-group:nth-child(2)>.multiselect.btn { 
+.btn-group>.btn-group:nth-child(2)>.multiselect.btn {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
     width: 100%;
@@ -85,7 +95,17 @@ span.multiselect-native-select select {
     background-image: none !important;
 }
 
+div.input-Multi ul>li>a>label {
+  padding: 0;
+  overflow: hidden;
+}
+
+.open>.dropdown-menu {
+  margin-bottom: 3em;
+}
+
 .dropdown-menu,
 .form-group div {
     width: 100%;
+    min-height: 2.9em;
 }
