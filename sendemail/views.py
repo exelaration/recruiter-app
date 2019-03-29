@@ -1,16 +1,19 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 
 from sendemail.forms import SendEmailForm
-from .models import EmailTemplate
+from .models import EmailTemplate, EmailLog
 from sendemail.xlsx_formatter import *
-from events.models import Event, Attendance
+from events.models import Event, Candidate, Attendance
 
+from urllib.error import HTTPError
+
+import datetime
 import os
 import sendgrid
 from sendgrid.helpers.mail import *
-
 
 @login_required
 def exportXlsx(request, event_id):
@@ -43,7 +46,7 @@ def detail(request, event_id):
         if form.is_valid():
             email_template_id = request.POST.getlist('email_templates')[0]
             email_template = EmailTemplate.objects.get(id=email_template_id)
-            send_emails(request, email_template, attendance_list)
+            send_emails(request, email_template, attendance_list, event)
             return HttpResponseRedirect('/sendemail')
 
     else:  # if a GET (or any other method) we'll create a blank form
@@ -60,7 +63,7 @@ def get_all_active_email_templates():
     return templates
 
 
-def send_emails(request, email_template, attendance_list):
+def send_emails(request, email_template, attendance_list, event):
     from_email = str(request.user.email)
     for attendance in attendance_list:
         to_email = str(attendance.candidate.email)
@@ -68,11 +71,11 @@ def send_emails(request, email_template, attendance_list):
         email_body = email_template.body.replace('##FIRST_NAME##', attendance.candidate.first_name)
         email_body = email_body.replace('##LAST_NAME##', attendance.candidate.last_name)
         email_body = email_body.replace('##JOBPOSTING##', attendance.selected_job_posting.job_link)
-        response = send_email(from_email, to_email, subject, str(email_body))
+        response = send_email(event, attendance.candidate, from_email, to_email, subject, str(email_body))
         print(response)
 
 
-def send_email(from_address, to_address, subject, body_text):
+def send_email(event, candidate, from_address, to_address, subject, body_text):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email(from_address)
     to_email = Email(to_address)
@@ -81,5 +84,22 @@ def send_email(from_address, to_address, subject, body_text):
     print('#############################')
     print('Send Email {0} : {1}'.format(to_address, subject))
     print('#############################')
-    response = sg.client.mail.send.post(request_body=current_email.get())
+    try:
+        if(os.environ.get('SENDGRID_API_KEY')) :
+            response = sg.client.mail.send.post(request_body=current_email.get())
+        else :
+            response = send_mail(subject, body_text, from_address, [to_address])
+    except Exception as err:
+        response = 'Failed to send Email: ' , err
+
+    # This will save the email in the log even if it has not been sent!
+    # The response would be only indicator that it didn't go....
+    # Need to decide if that is appropriate or not
+    EmailLog(event_id=event,
+             candidate_id=candidate,
+             to_address=to_address,
+             from_address=from_address,
+             subject=subject,
+             body=body_text,
+             response=response).save()
     return response
