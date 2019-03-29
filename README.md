@@ -30,16 +30,17 @@ It is a mixture of Django RESTfull api in the back end plus Django admin for man
 1. Verify that the following are installed:
     * Git
     * Docker
-2. Clone the repo
+2. Create an SSH public-private key pair for Git
+3. Clone the repository from GitHub
     * On Windows, ensure that git will check out files with line endings as-is `git config --global core.autocrlf input`
-3. Run Docker files for running this app locally
+4. Run Docker files for running this app locally
     * `$ docker-compose up -d` (One time only)
         * NOTE: If running docker on OSX you will need to turn on `securely store Docker logins in macOS keychain` under docker preferences.  For more info see: https://github.com/ansible/ansible-container/issues/722
     * Run this command to create db superuser for admin console:
         * `$ docker-compose exec web python manage.py createsuperuser`
         * I tend to use 'admin' as my user name
-4. Access the website at `http://localhost:8000/events/` and `http://localhost:8000/admin/` 
-5. Useful when troubleshooting:
+5. Access the website at `http://localhost:8000/events/` and `http://localhost:8000/admin/` 
+6. Useful when troubleshooting:
     * `docker-compose exec web [command]` into docker container to run the below commands
     * Update base.py with Database credentials
     * Usefull ORM commands:
