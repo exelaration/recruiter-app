@@ -145,14 +145,16 @@ body {
 }
 
 .centerContainer {
+  position: relative;
   margin: auto;
   width: 58%;
-  min-width: 320px;
+  min-width: 45em;
   padding: 10px;
   height: auto;
-  position: relative;
-  z-index: 1;
-  overflow: auto;
+}
+
+.centerContainer form {
+  padding-bottom: 2em;
 }
 
 .row {
@@ -227,11 +229,7 @@ body {
     cursor: pointer;
 }
 
-.spacer {
-  min-height: 2em;
-}
-
-.form-group.required div:first-of-type label::before, label.requiredField::before {
+.form-group.required>div:first-of-type::before, label.requiredField::before {
     color: #D13C45;
     content: '* ';
     font-size: 1.4em;
