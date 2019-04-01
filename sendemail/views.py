@@ -66,23 +66,28 @@ def send_emails(request, email_template, attendance_list, event):
     email_recipients = defaultdict(list)
     for attendance in attendance_list:
         email_recipients[attendance.candidate] += [attendance.selected_job_posting]
-    for candidate, job_postings in email_recipients:
+    for candidate, job_postings in email_recipients.items():
         to_email = str(candidate.email)
         subject = str(email_template.subject)
         email_body = email_template.body.replace('##FIRST_NAME##', candidate.first_name)
         email_body = email_body.replace('##LAST_NAME##', candidate.last_name)
         email_body = email_body.replace('##EVENT##', event.title)
 
-        job_names = ""
-        job_postings = ""
-        job_list = ""
-        for posting in job_postings:
-            # add each job as appropriate
-            pass
+        posting = job_postings[0]
+        job_names = posting.title
+        job_posting = posting.job_link
+        job_list = '{name}: {link}'.format(name=posting.title, link=posting.job_link)
+        for posting in job_postings[1:-1]:
+            job_names += ', {name}'.format(name=posting.title)
+            job_list += '\n{name}: {link}'.format(name=posting.title, link=posting.job_link)
+        if len(job_postings) > 1:
+            posting = job_postings[-1]
+            job_names += ', or {name}'.format(name=posting.title)
+            job_list += '\n{name}: {link}'.format(name=posting.title, link=posting.job_link)
+        email_body = email_body.replace('##JOB_NAMES##', job_names)
+        email_body = email_body.replace('##JOBPOSTING##', job_posting)
+        email_body = email_body.replace('##JOBS_LIST##', job_list)
 
-        email_body = email_body.replace('##JOB_NAME##', attendance.selected_job_posting.title)
-        email_body = email_body.replace('##JOBPOSTING##', attendance.selected_job_posting.job_link)
-        email_body = email_body.replace('##JOBS_LIST##', attendance.selected_job_posting.job_link) #TODO: treat as a list of job titles and links
         response = send_email(event, candidate, from_email, to_email, subject, str(email_body))
         print(response)
 
