@@ -56,7 +56,8 @@ def detail(request, event_id):
 
 
 def get_all_active_email_templates():
-    templates = [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
+    templates = [(email_template.id, str(email_template)) for email_template in
+                 EmailTemplate.objects.filter(enabled=True)]
     templates.insert(0, ('', ''))
     return templates
 
@@ -112,12 +113,12 @@ def send_email(event, candidate, from_address, to_address, subject, body_text):
     print('Send Email {0} : {1}'.format(to_address, subject))
     print('#############################')
     try:
-        if(os.environ.get('SENDGRID_API_KEY')) :
+        if (os.environ.get('SENDGRID_API_KEY')):
             response = sg.client.mail.send.post(request_body=current_email.get())
-        else :
+        else:
             response = send_mail(subject, body_text, from_address, [to_address])
     except Exception as err:
-        response = 'Failed to send Email: ' , err
+        response = 'Failed to send Email: ', err
 
     # This will save the email in the log even if it has not been sent!
     # The response would be only indicator that it didn't go....
