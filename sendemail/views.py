@@ -113,7 +113,7 @@ def send_email(event, candidate, from_address, to_address, subject, body_text):
     print('Send Email {0} : {1}'.format(to_address, subject))
     print('#############################')
     try:
-        if (os.environ.get('SENDGRID_API_KEY')):
+        if os.environ.get('SENDGRID_API_KEY'):
             response = sg.client.mail.send.post(request_body=current_email.get())
         else:
             response = send_mail(subject, body_text, from_address, [to_address])
