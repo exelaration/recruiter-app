@@ -7,19 +7,61 @@
 {% endblock %}
 
 {% block content %}
+<div class="add-item" data-toggle="modal" data-target="#addEvent" data-placement="left" title="Add Event"></div>
 <div class="starter-template">
 <!--  <h1 class="indexHead">My Events</h1> -->
 
-    <div style="height:5vh;"></div> <br />
+
+  <div class="row">
+      <div class="col-md-3 ta-left"><h4>Event name</h4></div>
+      <div class="col-md-2 ta-left"><h4>Date</h4></div>
+      <div class="col-md-2 ta-left"><!--<h4>Location</h4> Not yet--></div>
+      <div class="col-md-5"></div>
+  </div>
   {% for event in event_list %}
-    <div class="row">
-        <div class="centerContainer" style="top: 0vh;">
-          <div class='col-sm-12'>
-            <div class='center col-sm-6'>{{ event.date_time }}</div>
-            <div class='center col-sm-6' class="adec"><a href="{{ event.id }}/">{{ event.title }}</a></div>
-          </div>
+    <div class="row list-item">
+        <div class='col-md-3 ta-left'>{{ event.title }}</div>
+        <div class='col-md-2 ta-left'>{{ event.date_time }}</div>
+        <div class='col-md-2 ta-left'><!-- This needs to be implemented {{ event.location }} --></div>
+
+        <div class='col-md-5 ta-right'>
+          {% if user.is_authenticated %}
+            <a href="/admin/events/event/{{ event.id }}/change/"><button class="btn btn-link">Edit</button></a>
+          {% endif %}
+          <a href="{{ event.id }}/"><button class="btn btn-primary">Open</button></a>
         </div>
     </div>
   {% endfor %}
+  <div class="modal fade modal-full-screen" id="addEvent" tabindex="-1" role="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        {% block modal %}
+            {% include "events/evt_modal.html" %}
+        {% endblock %}
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onClick="">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script type="text/javascript">
+  $(function () {
+    $('.add-item').tooltip();
+
+    $('.add-item').click(function(evt){
+      evt.preventDefault();
+
+      $.ajax({
+        url: "./edit/"
+      }).done(function(data) {
+        $( '#addEvent .modal-body' ).replaceWith( data );
+      });
+    });
+  });
+</script>
 {% endblock %}

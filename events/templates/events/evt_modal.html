@@ -1,0 +1,44 @@
+{% load widget_tweaks %}
+
+{% block content %}
+
+{% load static %}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+      <div class="modal-body">
+        <h5 class="modal-title" id="myModalLabel">CREATE NEW EVENT</h5>
+        <div class="row"><h2>Enter Event</h2></div>
+        <div class="container">
+
+          <form action="/events/edit/{{ event.id }}/" id="id-registrationForm" method="post">
+                  {% csrf_token %}
+                  <div class="form-group required">
+                      <div>{{ form.event_date|add_label_class:"input-Labels" }}</div>
+                      <div>{{ form.event_date|add_class:"input" }}</div>
+                  </div>
+
+                  <div class="form-group required">
+                      <div>{{ form.event_title|add_label_class:"input-Labels" }}</div>
+                      <div>{{ form.event_title|add_class:"input" }}</div>
+                  </div>
+
+                  <div class="form-group required">
+                      <div>{{ form.event_jobs|add_label_class:"input-Labels" }}</div>
+                      <div class="input-Multi">{{ form.event_jobs }}</div>
+                      {% if form.event_jobs.errors %}
+                        <p class="alert alert-danger"> {{ form.event_jobs.errors.as_text }} </p>
+                      {% endif %}
+                  </div>
+
+                   <div class="form-group">
+                      <div class="center"><button class="disableBtn customBtn" type="submit">Submit</button></div>
+                  </div>
+              </form>
+        </div>
+        {{ form.errors }}
+        {{ form.non_field_errors }}
+      </div>
+<script>
+  $('#id_event_date').datepicker();
+  </script>
+{% endblock %}
