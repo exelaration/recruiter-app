@@ -12,8 +12,8 @@ class Event(models.Model):
     enabled = models.BooleanField(default=True)
     job_postings = models.ManyToManyField(JobPosting, blank=True,
                                           help_text='Select all Job Postings being recruited for this Event.')
-    auto_email = models.BooleanField(default=False, verbose_name='Auto send Email on Registration')
-    email_template = models.ForeignKey(EmailTemplate, blank=True,
+    auto_email = models.BooleanField('Auto send Email on Registration', default=False)
+    email_template = models.ForeignKey(EmailTemplate, blank=True, null=True,
                                        help_text='Select the email template for auto-sending emails at this event.')
 
     def __str__(self):
