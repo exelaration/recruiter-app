@@ -1,19 +1,17 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
+import os
+from collections import defaultdict
+
+import sendgrid
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render
+from sendgrid.helpers.mail import *
 
 from sendemail.forms import SendEmailForm
-from .models import EmailTemplate, EmailLog
 from sendemail.xlsx_formatter import *
-from events.models import Event, Candidate, Attendance
+from .models import EmailTemplate, EmailLog
 
-from urllib.error import HTTPError
-
-import datetime
-import os
-import sendgrid
-from sendgrid.helpers.mail import *
 
 @login_required
 def exportXlsx(request, event_id):
@@ -58,20 +56,56 @@ def detail(request, event_id):
 
 
 def get_all_active_email_templates():
-    templates = [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
+    templates = [(email_template.id, str(email_template)) for email_template in
+                 EmailTemplate.objects.filter(enabled=True)]
     templates.insert(0, ('', ''))
     return templates
 
 
 def send_emails(request, email_template, attendance_list, event):
     from_email = str(request.user.email)
+    email_recipients = defaultdict(list)
     for attendance in attendance_list:
-        to_email = str(attendance.candidate.email)
+        email_recipients[attendance.candidate] += [attendance.selected_job_posting]
+    for candidate, job_postings in email_recipients.items():
+        to_email = str(candidate.email)
         subject = str(email_template.subject)
-        email_body = email_template.body.replace('##FIRST_NAME##', attendance.candidate.first_name)
-        email_body = email_body.replace('##LAST_NAME##', attendance.candidate.last_name)
-        email_body = email_body.replace('##JOBPOSTING##', attendance.selected_job_posting.job_link)
-        response = send_email(event, attendance.candidate, from_email, to_email, subject, str(email_body))
+        email_body = email_template.body.replace('##FIRST_NAME##', candidate.first_name)
+        email_body = email_body.replace('##LAST_NAME##', candidate.last_name)
+        email_body = email_body.replace('##EVENT##', event.title)
+
+        job_list = '<ul>'
+        # First job
+        posting = job_postings[0]
+        job_names = '<a href="{link}">{name}</a>' \
+            .format(name=posting.title, link=posting.job_link)
+        job_list += '<li><a href="{link}">{name}</a></li>' \
+            .format(name=posting.title, link=posting.job_link)
+        job_posting = '<a href="{link}"/>'.format(link=posting.job_link)
+
+        # Middle job(s)
+        for posting in job_postings[1:-1]:
+            job_names += ', <a href="{link}">{name}</a>' \
+                .format(name=posting.title, link=posting.job_link)
+            job_list += '<li><a href="{link}">{name}</a></li>' \
+                .format(name=posting.title, link=posting.job_link)
+            job_posting = '<a href="{link}"/>'.format(link=posting.job_link)
+
+        # Last job, unless there's only 1 to list
+        if len(job_postings) > 1:
+            posting = job_postings[-1]
+            job_names += ', or <a href="{link}">{name}</a>' \
+                .format(name=posting.title, link=posting.job_link)
+            job_list += '<li><a href="{link}">{name}</a></li>' \
+                .format(name=posting.title, link=posting.job_link)
+            job_posting = '<a href="{link}"/>'.format(link=posting.job_link)
+
+        job_list += '</ul>'
+        email_body = email_body.replace('##JOB_NAMES##', job_names)
+        email_body = email_body.replace('##JOBS_LIST##', job_list)
+        email_body = email_body.replace('##JOBPOSTING##', job_posting)  # legacy
+
+        response = send_email(event, candidate, from_email, to_email, subject, str(email_body))
         print(response)
 
 
@@ -85,12 +119,12 @@ def send_email(event, candidate, from_address, to_address, subject, body_text):
     print('Send Email {0} : {1}'.format(to_address, subject))
     print('#############################')
     try:
-        if(os.environ.get('SENDGRID_API_KEY')) :
+        if os.environ.get('SENDGRID_API_KEY'):
             response = sg.client.mail.send.post(request_body=current_email.get())
-        else :
+        else:
             response = send_mail(subject, body_text, from_address, [to_address])
     except Exception as err:
-        response = 'Failed to send Email: ' , err
+        response = 'Failed to send Email: ', err
 
     # This will save the email in the log even if it has not been sent!
     # The response would be only indicator that it didn't go....
