@@ -10,7 +10,10 @@ from sendgrid.helpers.mail import *
 
 from sendemail.forms import SendEmailForm
 from sendemail.xlsx_formatter import *
-from .models import EmailTemplate, EmailLog
+from sendemail.models.email_log import EmailLog
+from sendemail.models.email_template import EmailTemplate
+from events.models.attendance import Attendance
+from events.models.event import Event
 
 
 @login_required
