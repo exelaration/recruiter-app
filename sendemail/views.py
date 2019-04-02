@@ -94,7 +94,9 @@ def send_emails(request, email_template, attendance_list, event):
         # Last job, unless there's only 1 to list
         if len(job_postings) > 1:
             posting = job_postings[-1]
-            job_names += ', or <a href="{link}">{name}</a>' \
+            if len(job_postings) > 2:
+                job_names += ','
+            job_names += ' or <a href="{link}">{name}</a>' \
                 .format(name=posting.title, link=posting.job_link)
             job_list += '<li><a href="{link}">{name}</a></li>' \
                 .format(name=posting.title, link=posting.job_link)
