@@ -20,7 +20,8 @@ body {
   width: 4em;
   border-radius: 2em;
   top: -2em;
-  left: 100%;
+  left: 90%;
+  left: calc(100% - 4em);
   cursor: pointer;
   box-shadow: 0px 0px  6px rgba(0,0,0,0.12);
   z-index: 100;
@@ -56,9 +57,14 @@ body {
 
 .starter-template .btn-primary {
   color: white !important;
-  background-color: #2196F3 !important;
+  background-color: #3366BB !important;
   background-image: none !important;
-  border-color: #2196F3 !important;
+  border-color: #3366BB !important;
+}
+
+.starter-template .btn-primary[disabled] {
+  background-color: #CBD3DA !important;
+  border-color: #CBD3DA !important;
 }
 
 .starter-template .list-item.row {
@@ -67,6 +73,10 @@ body {
   background-color: white;
   padding: .2em;
   margin-bottom: .4em;
+}
+
+.starter-template .multiselect-container a {
+  text-decoration: none !important
 }
 
 .banner {

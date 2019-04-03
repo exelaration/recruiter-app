@@ -31,14 +31,39 @@
                   </div>
 
                    <div class="form-group">
-                      <div class="center"><button class="disableBtn customBtn" type="submit">Submit</button></div>
+                      <div class="center"><button class="btn btn-primary btn-lg" id="event_submit" type="submit" disabled>Save</button></div>
                   </div>
               </form>
         </div>
         {{ form.errors }}
         {{ form.non_field_errors }}
       </div>
-<script>
-  $('#id_event_date').datepicker();
-  </script>
+
+    <script src='{% static "events/js/bootstrap-multiselect.js" %}'></script>
+    <script>
+      $(function () {
+        
+      $('#id_event_date').datepicker();
+      $('#id_event_jobs').multiselect();
+
+      var checkInput = function() {
+        var good = true;
+
+        $('.required input:not([type="checkbox"])').each(function(i){
+          if($(this).val() == '') good = false;
+        });
+        if(good && $('.required input[type="checkbox"]:checked').length > 0){
+          $('#event_submit').attr('disabled', false);
+        }
+        else {
+          $('#event_submit').attr('disabled', true);
+        }
+      }
+
+      $('.required input').change(function(evt){
+        checkInput();
+      });
+      checkInput();
+    });
+    </script>
 {% endblock %}

@@ -17,6 +17,6 @@ class RegisterForm(forms.Form):
     candidate_job_postings = forms.MultipleChoiceField(label='Jobs:', initial='', widget=forms.SelectMultiple(), required=True)
 
 class EventForm(forms.Form):
-    event_date = forms.DateField(label='Event date time')
+    event_date = forms.DateField(label='Event date time', widget=forms.TextInput(attrs={'autocomplete':'off'}))
     event_title = forms.CharField(label='Title of Event')
     event_jobs = forms.MultipleChoiceField(label='Job postings', initial='', widget=forms.SelectMultiple(), required=True)

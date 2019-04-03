@@ -57,10 +57,11 @@ def edit(request, event_id):
     else:  # if a GET (or any other method) we'll create a blank form
         form = EventForm()
         if event:
-            print(event.date_time)
             form.fields['event_date'].initial = event.date_time
             form.fields['event_title'].initial = event.title
-            form.fields['event_jobs'].choices = get_job_postings_for_event(event_id)
+            form.fields['event_jobs'].choices = get_all_enabled_job_postings()
+            form.fields['event_jobs'].initial = get_job_posting_ids_for_event(event_id)
+            print (get_job_posting_ids_for_event(event_id))
         else:
             form.fields['event_jobs'].choices = get_all_enabled_job_postings()
 
@@ -69,6 +70,9 @@ def edit(request, event_id):
 
 def get_job_postings_for_event(event_id):
     return [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(enabled=True).filter(event__id=event_id)]
+
+def get_job_posting_ids_for_event(event_id):
+    return [job_posting.id for job_posting in JobPosting.objects.filter(enabled=True).filter(event__id=event_id)]
 
 def get_all_enabled_job_postings():
     return [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(enabled=True)]
