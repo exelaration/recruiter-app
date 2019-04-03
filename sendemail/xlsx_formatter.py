@@ -1,5 +1,3 @@
-from events.models import Event, Attendance
-
 import io
 import xlsxwriter
 

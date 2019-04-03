@@ -1,5 +1,7 @@
 from django.contrib import admin
-from . import models
+
+from sendemail.models.email_log import EmailLog
+from sendemail.models.email_template import EmailTemplate
 
 
 class EmailTemplateAdmin(admin.ModelAdmin):
@@ -15,5 +17,5 @@ class EmailLogAdmin(admin.ModelAdmin):
     list_filter = ['time_sent', 'event_id', 'candidate_id', 'to_address', 'from_address', 'subject']
 
 
-admin.site.register(models.EmailTemplate, EmailTemplateAdmin)
-admin.site.register(models.EmailLog, EmailLogAdmin)
+admin.site.register(EmailTemplate, EmailTemplateAdmin)
+admin.site.register(EmailLog, EmailLogAdmin)

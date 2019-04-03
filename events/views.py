@@ -1,7 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 
-from .models import Event, Candidate, JobPosting, Attendance
+from events.models.attendance import Attendance
+from events.models.candidate import Candidate
+from events.models.event import Event
+from events.models.job_posting import JobPosting
 from .forms import RegisterForm, EventForm
 
 from django.core.validators import validate_email
@@ -12,11 +15,6 @@ def index(request):
     context = {'event_list': event_list}
     return render(request, 'events/index.html', context)
 
-def all_events(request):
-    event_list = Event.objects.filter(enabled=True).order_by('-date_time')
-    events_serialized = serializers.serialize('json', event_list).replace("\'", '"')
-    print (events_serialized)
-    return JsonResponse(events_serialized, safe=False)
 
 def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)

@@ -1,9 +1,9 @@
 from django import forms
-from django.forms import inlineformset_factory
 from django.core.validators import RegexValidator
-from .models import Candidate, JobPosting, Attendance
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Submit, ButtonHolder, Fieldset, HTML, Button, Row, Field
+from django.forms import inlineformset_factory
+
+from events.models.attendance import Attendance
+from events.models.job_posting import JobPosting
 
 
 class RegisterForm(forms.Form):
