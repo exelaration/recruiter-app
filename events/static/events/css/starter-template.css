@@ -188,7 +188,6 @@ body {
 }
 
 .input-Multi li {
-    height: 6vh;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -333,4 +332,17 @@ body {
     right: 3em;
     top: 1em;
     font-size: 1.6rem;
+}
+
+.dropdown-menu > li > a {
+    padding: 0 1.2em !important;
+    height: 2.8em;
+}
+
+@media only screen and (orientation: landscape) and (max-height: 800px),
+only screen and (max-width: 800px)
+ {
+    .ui-datepicker {
+      font-size: 1.4em !important;
+    }
 }
