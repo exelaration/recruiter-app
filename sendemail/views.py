@@ -55,7 +55,9 @@ def detail(request, event_id):
         form.fields['email_templates'].choices = get_all_active_email_templates()
         if event.email_template:
             print(event.email_template)
-            form.fields['email_templates'].default = event.email_template
+            form.fields['email_templates'].default = event.email_template.id
+            print(form.fields['email_templates'].default)
+            print(str(form.fields['email_templates'].choices))
         return render(request, 'sendemail/detail.html', {'event': event,
                                                          'attendance_list': attendance_list,
                                                          'form': form})
