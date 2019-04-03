@@ -1,8 +1,8 @@
-from django import forms
-from django.forms import inlineformset_factory
-from .models import EmailTemplate
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder, HTML
+from crispy_forms.layout import Layout, Fieldset
+from django import forms
+
+from sendemail.models.email_template import EmailTemplate
 
 
 class SendEmailForm(forms.Form):

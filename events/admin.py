@@ -1,5 +1,9 @@
 from django.contrib import admin
-from . import models
+
+from events.models.attendance import Attendance
+from events.models.candidate import Candidate
+from events.models.event import Event
+from events.models.job_posting import JobPosting
 
 
 class EventAdmin(admin.ModelAdmin):
@@ -53,8 +57,7 @@ class AttendanceAdmin(admin.ModelAdmin):
         return obj.selected_job_posting
 
 
-admin.site.register(models.Event, EventAdmin)
-admin.site.register(models.JobPosting, JobPostingAdmin)
-admin.site.register(models.Candidate, CandidateAdmin)
-admin.site.register(models.Attendance, AttendanceAdmin)
-
+admin.site.register(Event, EventAdmin)
+admin.site.register(JobPosting, JobPostingAdmin)
+admin.site.register(Candidate, CandidateAdmin)
+admin.site.register(Attendance, AttendanceAdmin)
