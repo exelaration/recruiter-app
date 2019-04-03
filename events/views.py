@@ -5,6 +5,7 @@ from events.models.attendance import Attendance
 from events.models.candidate import Candidate
 from events.models.event import Event
 from events.models.job_posting import JobPosting
+from sendemail.views import send_emails
 from .forms import RegisterForm
 
 from django.core.validators import validate_email
@@ -62,6 +63,7 @@ def update_or_create_candidate(request, form, event_id):
 
     person.save()
 
+    attendance_list = []
     for job_posting in f_selected_job_postings:
         attendance = Attendance.objects\
             .filter(candidate=person)\
@@ -71,5 +73,10 @@ def update_or_create_candidate(request, form, event_id):
         if attendance is None:
             attendance = Attendance(candidate=person, event=event_attended, selected_job_posting=job_posting)
             attendance.save()
+        attendance_list += [attendance]
+
+    # Send emails automatically when the event creator wants them
+    if event_attended.auto_email and event_attended.email_template is not None:
+        send_emails(request, event_attended.email_template, attendance_list, event_attended)
 
     return f_email
