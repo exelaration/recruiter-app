@@ -84,7 +84,7 @@ def send_emails(request, email_template, attendance_list, event):
             .format(name=posting.title, link=posting.job_link)
         job_list += '<li><a href="{link}">{name}</a></li>' \
             .format(name=posting.title, link=posting.job_link)
-        job_posting = '<a href="{link}"/>'.format(link=posting.job_link)
+        job_posting = '<a href="{link}">{link}</a>'.format(link=posting.job_link)
 
         # Middle job(s)
         for posting in job_postings[1:-1]:
@@ -92,18 +92,19 @@ def send_emails(request, email_template, attendance_list, event):
                 .format(name=posting.title, link=posting.job_link)
             job_list += '<li><a href="{link}">{name}</a></li>' \
                 .format(name=posting.title, link=posting.job_link)
-            job_posting = '<a href="{link}"/>'.format(link=posting.job_link)
+            job_posting += ', <a href="{link}">{link}</a>'.format(link=posting.job_link)
 
         # Last job, unless there's only 1 to list
         if len(job_postings) > 1:
             posting = job_postings[-1]
             if len(job_postings) > 2:
                 job_names += ','
+                job_posting += ','
             job_names += ' or <a href="{link}">{name}</a>' \
                 .format(name=posting.title, link=posting.job_link)
             job_list += '<li><a href="{link}">{name}</a></li>' \
                 .format(name=posting.title, link=posting.job_link)
-            job_posting = '<a href="{link}"/>'.format(link=posting.job_link)
+            job_posting += ' and <a href="{link}">{link}</a>'.format(link=posting.job_link)
 
         job_list += '</ul>'
         email_body = email_body.replace('##JOB_NAMES##', job_names)
