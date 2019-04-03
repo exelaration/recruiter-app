@@ -120,7 +120,6 @@ body {
 }
 
 .input-Multi li {
-    height: 6vh;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -132,6 +131,11 @@ body {
     font-weight: 500;
     color: #2E2C38;
     letter-spacing: 0;
+}
+
+.input-Multi .dropdown-menu>li>a {
+    padding: 0 1.2em !important;
+    line-height: 3em;
 }
 
 .input-Labels {
