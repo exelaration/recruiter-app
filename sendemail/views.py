@@ -82,41 +82,43 @@ def send_emails(request, email_template, attendance_list, event):
         email_body = email_body.replace('##LAST_NAME##', candidate.last_name)
         email_body = email_body.replace('##EVENT##', event.title)
 
-        job_list = '<ul>'
-        # First job
-        posting = job_postings[0]
-        job_names = '<a href="{link}">{name}</a>' \
-            .format(name=posting.title, link=posting.job_link)
-        job_list += '<li><a href="{link}">{name}</a></li>' \
-            .format(name=posting.title, link=posting.job_link)
-        job_posting = '<a href="{link}"/>'.format(link=posting.job_link)
+        job_names = []
+        job_list = []
+        job_posting = []
+        for posting in job_postings:
+            job_names += ['<a href="{link}">{name}</a>' \
+                .format(name=posting.title, link=posting.job_link)]
+            job_list += ['<li><a href="{link}">{name}</a></li>' \
+                .format(name=posting.title, link=posting.job_link)]
+            job_posting += ['<a href="{link}">{link}</a>'.format(link=posting.job_link)]
 
-        # Middle job(s)
-        for posting in job_postings[1:-1]:
-            job_names += ', <a href="{link}">{name}</a>' \
-                .format(name=posting.title, link=posting.job_link)
-            job_list += '<li><a href="{link}">{name}</a></li>' \
-                .format(name=posting.title, link=posting.job_link)
-            job_posting = '<a href="{link}"/>'.format(link=posting.job_link)
+        job_names = format_list_string(job_names, separator_2_items=' or ', last_separator=', or ')
+        job_list = format_list_string(job_list, prefix='<ul>', separator='', postfix='</ul>')
+        job_posting = format_list_string(job_posting, separator_2_items=' and ', last_separator=', and ')
 
-        # Last job, unless there's only 1 to list
-        if len(job_postings) > 1:
-            posting = job_postings[-1]
-            if len(job_postings) > 2:
-                job_names += ','
-            job_names += ' or <a href="{link}">{name}</a>' \
-                .format(name=posting.title, link=posting.job_link)
-            job_list += '<li><a href="{link}">{name}</a></li>' \
-                .format(name=posting.title, link=posting.job_link)
-            job_posting = '<a href="{link}"/>'.format(link=posting.job_link)
-
-        job_list += '</ul>'
         email_body = email_body.replace('##JOB_NAMES##', job_names)
         email_body = email_body.replace('##JOBS_LIST##', job_list)
         email_body = email_body.replace('##JOBPOSTING##', job_posting)  # legacy
 
         response = send_email(event, candidate, from_email, to_email, subject, str(email_body))
         print(response)
+
+
+# Creates grammatically correct lists with and/or/but in English, no matter which comma rule is used
+def format_list_string(list_items, prefix='', separator=', ', separator_2_items=None, last_separator=None, postfix=''):
+    if not separator_2_items:
+        separator_2_items = separator
+    if not last_separator:
+        last_separator = separator
+    result = prefix
+    if len(list_items) <= 1:
+        result += separator.join(list_items[0:])
+    elif len(list_items) <= 2:
+        result += separator_2_items.join(list_items)
+    else:
+        result += separator.join(list_items[0:-1]) + last_separator + list_items[-1]
+    result += postfix
+    return result
 
 
 def send_email(event, candidate, from_address, to_address, subject, body_text):
