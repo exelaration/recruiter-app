@@ -67,20 +67,43 @@
 <script>
   $(document).ready(function() {
     $('#candidate_phone').keyup(function(evt) {
-      var len = $('#candidate_phone input').val().length;
-      //add dashes after enty of 3rd and 6th digits (3+1+3 = 7th character
-      if(len == 3 || len == 7){
-        var phone = $('#candidate_phone input').val();
+      var input_phone = $('#candidate_phone input').val();
+      var phone = input_phone;
+      //Replace copy/paste, etc. characters so we end up with NNN-NNN-NNNN
+      phone = phone.replace('+1',''); // International notation (from autofill); rejects foreign numbers
+      phone = phone.replace('(','');
+      phone = phone.replace(')','');
+      phone = phone.replace('--',''); // People typing in (NNN)NNN-NNNN without looking will end up with NNN-NNN--NNNN ... so fix it here
+      phone = phone.replace(/\./g,'');
+      phone = phone.replace(/\s/g,'');
 
-        //If the keyup was a backspace, get rid of the previos number as well.
+      var len = phone.length;
+
+      //add dashes after enty of 3rd and 6th digits \
+      if(len == 3 || len == 7){
+        //If the keyup was a backspace, get rid of the previous number as well.
         if(evt.which != 8) {
           phone += '-';
         }
         else {
           phone = phone.substring(0, phone.length - 1);
         }
-        $('#candidate_phone input').val(phone);
       }
+      else if(len == 10){
+        var regex = /[0-9]{10}/;
+        var found = phone.match(regex);
+        if(found) { // Must have pasted it in.... reformat
+          phone = phone.substring(0,3) + '-' + phone.substring(3,6) + '-' + phone.substring(6);
+        }
+      }
+      else if(len == 11){ // check for stripped parens, but still a dash.  i.e pasted (NNN) NNN-NNNN
+        var regex = /[0-9]{6}-[0-9]{4}/;
+        var found = phone.match(regex);
+        if(found) {
+          phone = phone.substring(0,3) + '-' + phone.substring(3);
+        }
+      }
+      if(phone != input_phone) $('#candidate_phone input').val(phone);
     });
 
     $('#id_candidate_job_postings').multiselect();
