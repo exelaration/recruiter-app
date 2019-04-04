@@ -54,10 +54,21 @@ def detail(request, event_id):
         form = SendEmailForm()
         form.fields['email_templates'].choices = get_all_active_email_templates()
         if event.email_template:
-            print(event.email_template)
-            form.fields['email_templates'].default = event.email_template.id
-            print(form.fields['email_templates'].default)
-            print(str(form.fields['email_templates'].choices))
+            # print(event.email_template)
+            # # print(form.fields['email_templates'].default) # 'ChoiceField' object has no attribute 'default'
+            # print(form.fields['email_templates'].initial)
+            # print("form.initial['email_templates'] = event.email_template.id: "+ str(form.initial['email_templates']))
+            # form.fields['email_templates'].default = event.email_template.id
+            # form.fields['email_templates'].initial = event.email_template.id
+            form.initial['email_templates'] = event.email_template.id
+            # #(event.email_template.id, str(event.email_template))
+            # print(form.fields['email_templates'].default)
+            # print(form.fields['email_templates'].initial)
+            print("form.initial['email_templates'] = event.email_template.id: "+ str(form.initial['email_templates']))
+            # print(str(form.fields['email_templates'].choices))
+            # print(str(form.fields['email_templates'].choices[0]))
+            # print(str(form.fields['email_templates'].choices[2][0]))
+            # print(type(form.fields['email_templates'].choices[2][0]))
         return render(request, 'sendemail/detail.html', {'event': event,
                                                          'attendance_list': attendance_list,
                                                          'form': form})
