@@ -53,6 +53,8 @@ def detail(request, event_id):
     else:  # if a GET (or any other method) we'll create a blank form
         form = SendEmailForm()
         form.fields['email_templates'].choices = get_all_active_email_templates()
+        if event.email_template:
+            form.initial['email_templates'] = event.email_template.id
         return render(request, 'sendemail/detail.html', {'event': event,
                                                          'attendance_list': attendance_list,
                                                          'form': form})
