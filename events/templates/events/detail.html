@@ -70,6 +70,7 @@
       var input_phone = $('#candidate_phone input').val();
       var phone = input_phone;
       //Replace copy/paste, etc. characters so we end up with NNN-NNN-NNNN
+      phone = phone.replace('+1',''); // International notation (from autofill); rejects foreign numbers
       phone = phone.replace('(','');
       phone = phone.replace(')','');
       phone = phone.replace('--',''); // People typing in (NNN)NNN-NNNN without looking will end up with NNN-NNN--NNNN ... so fix it here
