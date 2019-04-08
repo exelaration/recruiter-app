@@ -13,7 +13,7 @@ from django.core.validators import validate_email
 
 def index(request):
     event_list = Event.objects.filter(enabled=True).order_by('-date_time')
-    context = {'event_list': event_list}
+    context = {'event_list': event_list, 'has_events': len(event_list) > 0 }
     return render(request, 'events/index.html', context)
 
 

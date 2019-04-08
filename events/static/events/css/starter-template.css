@@ -62,9 +62,34 @@ body {
   border-color: #3366BB !important;
 }
 
+.starter-template .btn-primary:hover {
+  background-color: #6699FF !important;
+  border-color: #6699FF !important;
+}
+
 .starter-template .btn-primary[disabled] {
   background-color: #CBD3DA !important;
   border-color: #CBD3DA !important;
+}
+
+.starter-template .btn-secondary {
+  color: white !important;
+  background-color: #77AAFF !important;
+  background-image: none !important;
+  border-color: #77AAFF !important;
+}
+
+.starter-template .btn-secondary:hover {
+  color: #444444 !important;
+  background-color: #99CCFF !important;
+  background-image: none !important;
+  border-color: #99CCFF !important;
+}
+
+.starter-template .btn-primary[disabled] {
+  color: #444444 !important;
+  background-color: #DBE3EA !important;
+  border-color: #DBE3EA !important;
 }
 
 .starter-template .list-item.row {
@@ -342,6 +367,15 @@ body {
 .dropdown-menu > li > a {
     padding: 0 1.2em !important;
     height: 2.8em;
+}
+
+.button-group {
+  margin-top: 2.5em;
+}
+
+.button-group .btn.btn-lg {
+  min-width: 15em;
+  min-height: 3em;
 }
 
 @media only screen and (orientation: landscape) and (max-height: 800px),

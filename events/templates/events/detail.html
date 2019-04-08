@@ -12,26 +12,26 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row starter-template">
   <div class="centerContainer">
-    <div class="starter-template row">
+    <div class="row">
       <div class='eventTitle row'>{{ event.title }}</div>
       <div class='eventDate row'>{{ event.date_time }}</div>
     </div>
     <div class="spacer"></div>
     <form action="/events/{{ event.id }}/" id="id-registrationForm" method="post">
             {% csrf_token %}
-            <div class="form-group required">
+            <div class="ta-left form-group required">
                 <div>{{ form.candidate_first_name|add_label_class:"input-Labels" }}</div>
                 <div>{{ form.candidate_first_name|add_class:"input" }}</div>
             </div>
 
-            <div class="form-group required">
+            <div class="ta-left form-group required">
                 <div>{{ form.candidate_last_name|add_label_class:"input-Labels" }}</div>
                 <div>{{ form.candidate_last_name|add_class:"input" }}</div>
             </div>
 
-            <div class="form-group required">
+            <div class="ta-left form-group required">
                 <div>{{ form.candidate_email|add_label_class:"input-Labels" }}</div>
                 <div>{{ form.candidate_email|add_class:"input" }}</div>
                 {% if form.candidate_email.errors %}
@@ -39,7 +39,7 @@
                 {% endif %}
             </div>
 
-            <div class="form-group">
+            <div class="ta-left form-group">
                 <div>{{ form.candidate_phone|add_label_class:"input-Labels" }}</div>
                 <div id="candidate_phone">{{ form.candidate_phone|add_class:"input" }}</div>
                 {% if form.candidate_phone.errors %}
@@ -47,7 +47,7 @@
                 {% endif %}
             </div>
 
-            <div class="form-group required">
+            <div class="ta-left form-group required">
                 <div>{{ form.candidate_job_postings|add_label_class:"input-Labels" }}</div>
                 <div class="input-Multi">{{ form.candidate_job_postings }}</div>
                 {% if form.candidate_job_postings.errors %}
@@ -55,8 +55,8 @@
                 {% endif %}
             </div>
 
-             <div class="form-group">
-                <div class="center"><button class="disableBtn customBtn" type="submit">Submit</button></div>
+             <div class="form-group button-group">
+                <button class="btn btn-lg btn-primary" type="submit" id="submit-form" disabled>Submit</button>
             </div>
         </form>
     </div>
@@ -115,10 +115,10 @@
         if($(this).val() == '') good = false;
       });
       if(good && $('.required input[type="checkbox"]:checked').length > 0){
-          $('#id-registrationForm>.form-group>div>button').removeClass('disableBtn').addClass('activeBtn');
+          $('#submit-form').attr('disabled', false);
       }
       else {
-        $('#id-registrationForm>.form-group>div>button').removeClass('activeBtn').addClass('disableBtn');
+        $('#submit-form').attr('disabled', true);
       }
     });
 

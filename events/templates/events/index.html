@@ -11,38 +11,49 @@
 <div class="add-item" data-toggle="modal" data-target="#addEvent" data-placement="left" title="Add Event"></div>
 <div class="starter-template">
 
-  <div class="row">
-      <div class="col-md-3 ta-left"><h4>Event name</h4></div>
-      <div class="col-md-2 ta-left"><h4>Date</h4></div>
-      <div class="col-md-2 ta-left"><!--<h4>Location</h4> Not yet--></div>
-      <div class="col-md-5"></div>
-  </div>
-  {% for event in event_list %}
-    <div class="row list-item">
-        <div class='col-md-3 ta-left'>{{ event.title }}</div>
-        <div class='col-md-2 ta-left'>{{ event.date_time }}</div>
-        <div class='col-md-2 ta-left'><!-- This needs to be implemented {{ event.location }} --></div>
-
-        <div class='col-md-5 ta-right'>
-          {% if user.is_authenticated %}
-            <button data-event-id="{{ event.id }}" class="btn btn-link edit-event">Edit</button>
-          {% endif %}
-          <a href="{{ event.id }}/"><button class="btn btn-primary">Open</button></a>
-        </div>
+  {% if has_events %}
+    <div class="row">
+        <div class="col-md-3 ta-left"><h4>Event name</h4></div>
+        <div class="col-md-2 ta-left"><h4>Date</h4></div>
+        <div class="col-md-2 ta-left"><!--<h4>Location</h4> Not yet--></div>
+        <div class="col-md-5"></div>
     </div>
-  {% endfor %}
-  <div class="modal fade modal-full-screen" id="addEvent" tabindex="-1" role="modal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-        {% block modal %}
-            {% include "events/evt_modal.html" %}
-        {% endblock %}
+    {% for event in event_list %}
+      <div class="row list-item">
+          <div class='col-md-3 ta-left'>{{ event.title }}</div>
+          <div class='col-md-2 ta-left'>{{ event.date_time }}</div>
+          <div class='col-md-2 ta-left'><!-- This needs to be implemented {{ event.location }} --></div>
+
+          <div class='col-md-5 ta-right'>
+            {% if user.is_authenticated %}
+              <button data-event-id="{{ event.id }}" class="btn btn-secondary email-event">Email</button>
+              <button data-event-id="{{ event.id }}" class="btn btn-link edit-event">Edit</button>
+            {% endif %}
+            <a href="{{ event.id }}/"><button class="btn btn-primary">Open</button></a>
+          </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="centerContainer">
+      <img src="/static/excellajobs/images/oops.svg"/>
+      <h4>Oooooppss!!</h4>
+      <div style="width: 50%; margin: 0 25%;">
+        <div>Looks like your dashboard is empty. Add an event by clicking <i class="fa fa-plus-circle" style="font-size:1.6em; color:#3366BB"></i> button above and let’s begin!</div>
       </div>
     </div>
-  </div>
+  {% endif %}
+    <div class="modal fade modal-full-screen" id="addEvent" tabindex="-1" role="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          {% block modal %}
+              {% include "events/evt_modal.html" %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
@@ -68,6 +79,10 @@
         $( '#addEvent .modal-body' ).replaceWith( data );
         $( '#addEvent').modal().show();
       });
+    });
+
+    $('.email-event').click(function(){
+      window.location.href = "/sendemail/" + $(this).data('event-id');
     });
   });
 </script>
