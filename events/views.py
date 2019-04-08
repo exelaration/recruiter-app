@@ -76,7 +76,8 @@ def update_or_create_candidate(request, form, event_id):
         attendance_list += [attendance]
 
     # Send emails automatically when the event creator wants them
-    if event_attended.auto_email and event_attended.email_template is not None:
-        send_emails(request, event_attended.email_template, attendance_list, event_attended)
+    if event_attended.auto_email and event_attended.auto_email_from and event_attended.email_template:
+        send_emails(request, event_attended.email_template, attendance_list, event_attended,
+                    from_email=event_attended.auto_email_from)
 
     return f_email
