@@ -67,8 +67,9 @@ def get_all_active_email_templates():
     return templates
 
 
-def send_emails(request, email_template, attendance_list, event):
-    from_email = str(request.user.email)
+def send_emails(request, email_template, attendance_list, event, from_email=None):
+    if not from_email:
+        from_email = str(request.user.email)
     email_recipients = defaultdict(list)
     for attendance in attendance_list:
         email_recipients[attendance.candidate] += [attendance.selected_job_posting]
