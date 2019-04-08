@@ -48,12 +48,25 @@ It is a mixture of Django RESTfull api in the back end plus Django admin for man
         * `$ python manage.py migrate` - run after `makemigrations` or fetching new 
         * `$ python manage.py migrate app_name_like_home 0002`
     
-### Working with Heroku
-* Verify you have the heroku remote:
-    * `https://git.heroku.com/excellarecruit.git`
-    * `$ heroku login`
-    * `$ heroku create` (actually creates the heroku remote)
-    * `$ git push heroku master`
+### Deploying excella jobs web container to Heroku
+* PRE-Steps to deployent
+    * Build docker container
+        * `$ docker-compose build`
+    * Verify you have the heroku remote:
+        * `$ git remote -v`
+            * `https://git.heroku.com/excellarecruit.git`
+* Start with instructions found in Heroku "Deploy" tab for this app
+* Deployment method: "Container Registry"
+* Steps from above mentioned page:
+    * Install the Heroku CLI
+        * `$ heroku login`
+    * Login to the Container Registry
+        * `$ heroku container:login`
+    * Push your Docker-based app
+        * `$ heroku container:push web`
+    * Deploy the changes
+        * `$ heroku container:release web`
+        
 * Other useful Heroku commands
     * `$ heroku open`
     * `$ heroku plugins:install heroku-config`

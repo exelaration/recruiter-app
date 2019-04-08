@@ -201,6 +201,11 @@ body {
     letter-spacing: 0;
 }
 
+.input-Multi .dropdown-menu>li>a {
+    padding: 0 1.2em !important;
+    line-height: 3em;
+}
+
 .input-Labels {
     border-radius: 4px;
     font-size: 1.4em !important;

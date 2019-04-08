@@ -8,7 +8,7 @@ from events.models.job_posting import JobPosting
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ['title', 'date_time', 'enabled']
-    fields = ['date_time', 'title', 'job_postings', 'enabled', 'auto_email', 'email_template']
+    fields = ['date_time', 'title', 'job_postings', 'enabled', 'auto_email', 'auto_email_from', 'email_template']
     search_fields = ['title', 'date_time', 'enabled']
     list_filter = ['date_time', 'enabled']
 
