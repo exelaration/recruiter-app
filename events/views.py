@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
 
 from events.models.attendance import Attendance
 from events.models.candidate import Candidate
@@ -7,8 +6,6 @@ from events.models.event import Event
 from events.models.job_posting import JobPosting
 from sendemail.views import send_emails
 from .forms import RegisterForm
-
-from django.core.validators import validate_email
 
 
 def index(request):
