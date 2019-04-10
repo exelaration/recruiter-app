@@ -3,7 +3,10 @@
 }
 
 #container{
-    background-color: #c1484a;
+    background-image: url("/static/excellajobs/images/abstract_red.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
