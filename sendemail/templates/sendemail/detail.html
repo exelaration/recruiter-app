@@ -15,13 +15,15 @@
       <form action="/sendemail/{{ event.id }}/" name="id-registrationForm" id="id-registrationForm" method="post">
           {% csrf_token %}
           {% crispy form form.helper %}
+
           <!-- Button trigger modal -->
           <div class="container col-md-12">
               <div class="row-fluid">
-                  <button id="id-send-email-button" type="button" class="disabled btn btn-primary btn-lg pull-left" data-toggle="modal" data-target="#myModal">Send Emails</button>
+                  <button id="id-send-email-button" type="button" class="btn btn-primary btn-lg pull-left" data-toggle="modal" data-target="#myModal">Send Emails</button>
                   <a href="/sendemail/{{ event.id }}/export" class="btn btn-primary btn-lg pull-right" role="button">Export XLSX</a>
               </div>
           </div>
+
           <!-- Modal -->
           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -77,17 +79,14 @@
     }
 
     $(document).ready(function() {
-      // Need to use document element to ensure that when the disabled class is
-      // added to or removed from button, that this fires (or does not fire) correctly
-      $(document).on('click','#id-send-email-button.disabled',function(evt){
-        evt.preventDefault();
-        $('#myModal').modal('toggle');
-      });
 
+      if ($("#id_email_templates").val() == "") {
+        $('#id-send-email-button').attr('disabled', 'true')
+      }
 
       $(document).on('change','#id_email_templates',function(){
-        if ($('#id_email_templates').val() != "") $('#id-send-email-button').removeClass('disabled');
-        else $('#id-send-email-button').addClass('disabled');
+        if ($('#id_email_templates').val() != "") $('#id-send-email-button').removeAttr('disabled');
+        else $('#id-send-email-button').attr('disabled', 'true');
       });
 
     });
