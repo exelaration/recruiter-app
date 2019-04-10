@@ -111,7 +111,7 @@ def send_emails(request, email_template, attendance_list, event, from_email=None
         email_body = email_body.replace('##JOBPOSTING##', job_posting)  # legacy
 
         response = send_email(event, candidate, from_email, to_email, subject, str(email_body))
-        if response != 1:
+        if response != 'SENT':
             email_errors.append(to_email)
 
     return email_errors
@@ -154,9 +154,9 @@ def send_email(event, candidate, from_address, to_address, subject, body_text):
     except Exception as err:
         response = 'Failed to send Email: ', err
 
-    if response == 1:
+    if response == 1 or response.status_code == 200:    #Need to test the send grid call...
         response = 'SENT'
-        
+
     # This will save the email in the log even if it has not been sent!
     # The response would be only indicator that it didn't go....
     # Need to decide if that is appropriate or not
