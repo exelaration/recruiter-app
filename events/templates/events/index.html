@@ -84,6 +84,8 @@
     $('.email-event').click(function(){
       window.location.href = "/sendemail/" + $(this).data('event-id');
     });
+
+    $('body').addClass('greybg');  // Not ideal, but would need to re-do the base template otherwise
   });
 </script>
 {% endblock %}

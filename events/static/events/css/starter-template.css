@@ -1,7 +1,6 @@
 body {
   font-family: 'Muli', sans-serif !important;
   font-size: 12px;
-  background-color: #EEEEEE !important;
 }
 
 .starter-template {
@@ -11,6 +10,10 @@ body {
 
 .errorlist {
   color: red;
+}
+
+.greybg {
+    background-color: #EEEEEE;
 }
 
 .add-item {
