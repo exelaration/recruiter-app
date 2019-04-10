@@ -11,6 +11,12 @@ body {
   color: red;
 }
 
+.row.error {
+    border: 1px solid #D13C45;
+    background: #E14C55;
+    color: #FADFEF;
+}
+
 .banner {
   background: #D13C45;
   color: #ffffff;

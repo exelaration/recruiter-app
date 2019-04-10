@@ -62,7 +62,8 @@
 <div class='row'>
   <div class='col-xs-12'>
     {% for attendance in attendance_list %}
-      <div class="row">
+      <div class="row {% if attendance.email_error %}error{% endif %}"
+        {% if attendance.email_error %}data-toggle="tooltip" data-placement="right" title="Error sending email.  Please see email log for additional details."{% endif %}>
         <div class='col-lg-2'>{{ attendance.candidate.first_name }} {{ attendance.candidate.last_name }}</div>
         <div class='col-lg-3'>{{ attendance.candidate.email|truncatechars:"45" }}</div>
         <div class='col-lg-2'>{{ attendance.candidate.phone }}</div>
