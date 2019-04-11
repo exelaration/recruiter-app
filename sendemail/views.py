@@ -159,11 +159,8 @@ def send_email(event, candidate, from_address, to_address, subject, body_text):
 
         #Need to test the send grid call...  sendgrid uses a python_http_client..... 
         if response == 1 or (not isinstance(response, (int, str)) and response.status_code == 200):
-        response = 'SENT'
+            response = 'SENT'
 
-    # This will save the email in the log even if it has not been sent!
-    # The response would be only indicator that it didn't go....
-    # Need to decide if that is appropriate or not
     EmailLog(event_id=event,
              candidate_id=candidate,
              to_address=to_address,
