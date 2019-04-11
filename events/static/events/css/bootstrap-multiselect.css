@@ -66,6 +66,12 @@ span.multiselect-native-select select {
 button.multiselect.dropdown-toggle.btn {
   display: inline-flex;
   justify-content: space-between;
+  font-size: 1.4em;
+  min-height: 2em;
+}
+
+button.multiselect.dropdown-toggle.btn>.caret {
+  margin-top: .5em;
 }
 
 .multiselect-container>li>a>label>input[type=checkbox] {

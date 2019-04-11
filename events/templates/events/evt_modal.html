@@ -1,0 +1,68 @@
+{% load widget_tweaks %}
+
+{% block content %}
+
+      <div class="modal-body">
+        <h5 class="modal-title" id="myModalLabel">CREATE NEW EVENT</h5>
+        <div class="row"><h2>Enter Event</h2></div>
+        <div class="container">
+
+          <form action="/events/edit/{{ event.id }}/" id="id-registrationForm" method="post">
+                  {% csrf_token %}
+                  <div class="form-group required">
+                      <div>{{ form.event_date|add_label_class:"input-Labels" }}</div>
+                      <div>{{ form.event_date|add_class:"input" }}</div>
+                  </div>
+
+                  <div class="form-group required">
+                      <div>{{ form.event_title|add_label_class:"input-Labels" }}</div>
+                      <div>{{ form.event_title|add_class:"input" }}</div>
+                  </div>
+
+                  <div class="form-group required">
+                      <div>{{ form.event_jobs|add_label_class:"input-Labels" }}</div>
+                      <div class="input-Multi">{{ form.event_jobs }}</div>
+                      {% if form.event_jobs.errors %}
+                        <p class="alert alert-danger"> {{ form.event_jobs.errors.as_text }} </p>
+                      {% endif %}
+                  </div>
+
+                   <div class="form-group">
+                      <div class="center"><button class="btn btn-primary btn-lg" id="event_submit" type="submit" disabled>Save</button></div>
+                  </div>
+              </form>
+        </div>
+        {{ form.errors }}
+        {{ form.non_field_errors }}
+      </div>
+
+    <script>
+      $(function () {
+        var date = moment($('#id_event_date').val()).toDate();
+        $('#id_event_date').datepicker({dateFormat: 'yy-mm-dd', defaultDate: date});
+        $('#id_event_jobs').multiselect();
+
+        /* Ensure all required fields have values.  If so, enable save button */
+        var checkInput = function() {
+          var good = true;
+
+          $('.required input:not([type="checkbox"])').each(function(i){
+            if($(this).val() == '') good = false;
+          });
+
+          if(good && $('.required input[type="checkbox"]:checked').length > 0){
+            $('#event_submit').attr('disabled', false);
+          }
+          else {
+            $('#event_submit').attr('disabled', true);
+          }
+        } // checkInpui
+
+        $('.required input').change(function(evt){
+          checkInput();
+        });
+
+        checkInput();
+      });
+    </script>
+{% endblock %}

@@ -5,6 +5,7 @@ import sendgrid
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, HttpResponse
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 from sendgrid.helpers.mail import *
 
@@ -40,6 +41,7 @@ def index(request):
 def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     attendance_list = Attendance.objects.filter(event=event)
+    attendance_count = Attendance.objects.values_list('candidate').filter(event=event).distinct().count()
 
     if request.method == 'POST':  # if this is a POST request we need to process the form data
         form = SendEmailForm(request.POST)
@@ -65,6 +67,7 @@ def detail(request, event_id):
             form.initial['email_templates'] = event.email_template.id
         return render(request, 'sendemail/detail.html', {'event': event,
                                                          'attendance_list': attendance_list,
+                                                         'attendance_count': attendance_count,
                                                          'form': form})
 
 
