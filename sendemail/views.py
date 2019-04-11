@@ -157,9 +157,8 @@ def send_email(event, candidate, from_address, to_address, subject, body_text):
     except Exception as err:
         response = 'Failed to send Email: ', err
 
-        #Need to test the send grid call...  sendgrid uses a python_http_client..... 
-        if response == 1 or (not isinstance(response, (int, str)) and response.status_code == 200):
-            response = 'SENT'
+    if response == 1 or (not isinstance(response, (int, str)) and response.status_code == 200):
+        response = 'SENT'
 
     EmailLog(event_id=event,
              candidate_id=candidate,
