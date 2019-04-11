@@ -157,7 +157,7 @@ def send_email(event, candidate, from_address, to_address, subject, body_text):
     except Exception as err:
         response = 'Failed to send Email: ', err
 
-    if response == 1 or (not isinstance(response, (int, str)) and response.status_code == 200):
+    if response == 1 or (not isinstance(response, (int, str)) and response.status_code == 202):
         response = 'SENT'
 
     EmailLog(event_id=event,
