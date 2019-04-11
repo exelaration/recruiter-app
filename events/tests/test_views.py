@@ -1,25 +1,34 @@
 from django.test import TestCase
+from django.urls import reverse
+
+from events.models.event import Event
+from events.models.job_posting import JobPosting
 
 
-# TODO: Test get request on /events or programmatically pulled URL: registration form is returned
 class RegistrationFormTest(TestCase):
-    # def setUp(self):
-    #     pass
+    def setUp(self):
+        job_posting = JobPosting.objects.create(title='Do this', job_link='www.excella.com')
+        event = Event.objects.create(title = '',
+                                     date_time = '01-01-1970 00:00:00', # Needs real date
+                                     enabled = True,
+                                     job_postings = job_posting,
+                                     auto_email = False)
 
-    # TODO
     def test_get_registration_form(self):
-        pass
+        url = reverse("events.views.detail")+'/'+event.id
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("content to look for - is this actually a good idea?", response.content)
 
     # TODO: test anything that should be pre-populated in specific circumstances
 
 
-# TODO: Test post request on /events: Attendance is added
-class RegistrationFormTest(TestCase):
+    # TODO: Test post request on /events/num: Attendance is added
     # TODO
     def test_post_valid_registration_form(self):
         pass
 
-    # TODO: one or more per registration field - maybe in test_forms.py instead?
+    # TODO: one or more tests per registration field - maybe in test_forms.py instead?
     def test_registration_form_invalid_for_each_field(self):
         pass
 
