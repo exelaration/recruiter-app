@@ -49,8 +49,16 @@ def detail(request, event_id):
         if form.is_valid():
             email_template_id = request.POST.getlist('email_templates')[0]
             email_template = EmailTemplate.objects.get(id=email_template_id)
-            send_emails(request, email_template, attendance_list, event)
-            return HttpResponseRedirect('/sendemail')
+            error_emails = send_emails(request, email_template, attendance_list, event)
+            if len(error_emails):
+                for attendance in attendance_list:
+                    if attendance.candidate.email in error_emails:
+                        attendance.email_error = True
+
+        return render(request, 'sendemail/detail.html', {'event': event,
+                                                         'attendance_list': attendance_list,
+                                                         'bad_emails': error_emails,
+                                                         'form': form})
 
     else:  # if a GET (or any other method) we'll create a blank form
         form = SendEmailForm()
@@ -73,9 +81,13 @@ def get_all_active_email_templates():
 def send_emails(request, email_template, attendance_list, event, from_email=None):
     if not from_email:
         from_email = str(request.user.email)
+
     email_recipients = defaultdict(list)
     for attendance in attendance_list:
         email_recipients[attendance.candidate] += [attendance.selected_job_posting]
+
+    email_errors = [];
+
     for candidate, job_postings in email_recipients.items():
         to_email = str(candidate.email)
         subject = str(email_template.subject)
@@ -102,8 +114,10 @@ def send_emails(request, email_template, attendance_list, event, from_email=None
         email_body = email_body.replace('##JOBPOSTING##', job_posting)  # legacy
 
         response = send_email(event, candidate, from_email, to_email, subject, str(email_body))
-        print(response)
+        if response != 'SENT':
+            email_errors.append(to_email)
 
+    return email_errors
 
 # Creates grammatically correct lists with and/or/but in English, no matter which comma rule is used
 def format_list_string(list_items, prefix='', separator=', ', separator_2_items=None, last_separator=None, postfix=''):
@@ -135,13 +149,17 @@ def send_email(event, candidate, from_address, to_address, subject, body_text):
         if os.environ.get('SENDGRID_API_KEY'):
             response = sg.client.mail.send.post(request_body=current_email.get())
         else:
-            response = send_mail(subject, body_text, from_address, [to_address])
+            if(to_address == 'test@bad.net'):
+                response = send_mail(subject, body_text, from_address, [])
+            else:
+                response = send_mail(subject, body_text, from_address, [to_address])
+
     except Exception as err:
         response = 'Failed to send Email: ', err
 
-    # This will save the email in the log even if it has not been sent!
-    # The response would be only indicator that it didn't go....
-    # Need to decide if that is appropriate or not
+    if response == 1 or (not isinstance(response, (int, str)) and response.status_code == 202):
+        response = 'SENT'
+
     EmailLog(event_id=event,
              candidate_id=candidate,
              to_address=to_address,

@@ -12,6 +12,12 @@ body {
   color: red;
 }
 
+.row.error {
+    border: 1px solid #D13C45;
+    background: #E14C55;
+    color: #FADFEF;
+}
+
 .greybg {
     background-color: #EEEEEE;
 }
