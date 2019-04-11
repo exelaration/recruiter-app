@@ -15,3 +15,8 @@ class RegisterForm(forms.Form):
     candidate_phone = forms.CharField(validators=[phone_regex], label='Phone number:', max_length=12, required=False, widget=forms.TextInput(attrs={'placeholder': 'XXX-XXX-XXXX'}))
     JobPostingFormSet = inlineformset_factory(JobPosting, Attendance, fields=('selected_job_posting',))
     candidate_job_postings = forms.MultipleChoiceField(label='Jobs:', initial='', widget=forms.SelectMultiple(), required=True)
+
+class EventForm(forms.Form):
+    event_date = forms.DateField(label='Event date time', widget=forms.TextInput(attrs={'autocomplete':'off'}))
+    event_title = forms.CharField(label='Title of Event')
+    event_jobs = forms.MultipleChoiceField(label='Job postings', initial='', widget=forms.SelectMultiple(), required=True)

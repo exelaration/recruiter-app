@@ -5,10 +5,106 @@ body {
 
 .starter-template {
   text-align: center;
+  position: relative;
 }
 
 .errorlist {
   color: red;
+}
+
+.greybg {
+    background-color: #EEEEEE;
+}
+
+.add-item {
+  position: relative;
+  background-color: #3366BB;
+  height: 4em;
+  width: 4em;
+  border-radius: 2em;
+  top: -2em;
+  left: 90%;
+  left: calc(100% - 4em);
+  cursor: pointer;
+  box-shadow: 0px 0px  6px rgba(0,0,0,0.12);
+  z-index: 100;
+}
+
+.add-item::before {
+  position: absolute;
+  content: "+";
+  width: 100%;
+  vertical-align: middle;
+  color: white;
+  line-height: 2em;
+  justify-content: center;
+  display: flex;
+  line-height: 1.8em;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.modal-full-screen>.modal-dialog {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: inline-block;
+  margin: 0;
+}
+
+.modal-full-screen>.modal-dialog>.modal-content {
+  height: 100%;
+}
+
+.starter-template .btn-primary {
+  color: white !important;
+  background-color: #3366BB !important;
+  background-image: none !important;
+  border-color: #3366BB !important;
+}
+
+.starter-template .btn-primary:hover {
+  background-color: #6699FF !important;
+  border-color: #6699FF !important;
+}
+
+.starter-template .btn-primary[disabled] {
+  background-color: #CBD3DA !important;
+  border-color: #CBD3DA !important;
+}
+
+.starter-template .btn-secondary {
+  color: white !important;
+  background-color: #77AAFF !important;
+  background-image: none !important;
+  border-color: #77AAFF !important;
+}
+
+.starter-template .btn-secondary:hover {
+  color: #444444 !important;
+  background-color: #99CCFF !important;
+  background-image: none !important;
+  border-color: #99CCFF !important;
+}
+
+.starter-template .btn-primary[disabled] {
+  color: #444444 !important;
+  background-color: #DBE3EA !important;
+  border-color: #DBE3EA !important;
+}
+
+.starter-template .list-item.row {
+  border-radius: .3em;
+  line-height: 2.4em;
+  background-color: white;
+  padding: .2em;
+  margin-bottom: .4em;
+}
+
+.starter-template .multiselect-container a {
+  text-decoration: none !important
 }
 
 .banner {
@@ -139,7 +235,6 @@ body {
 }
 
 .input-Labels {
-    background: #FFFFFF;
     border-radius: 4px;
     font-size: 1.4em !important;
     font-weight: 500;
@@ -242,4 +337,54 @@ body {
 
 .asteriskField {
   display: none;
+}
+
+.ta-left {
+  text-align: left;
+}
+
+.ta-right {
+  text-align: right;
+}
+
+.modal-header button.close {
+  width: 2em;
+  height: 2em;
+  font-size: 4em;
+  font-weight: normal;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  top: -.8em;
+  position: relative;
+}
+
+.modal-header button.close::after {
+    content: "cancel";
+    position: relative;
+    right: 3em;
+    top: 1em;
+    font-size: 1.6rem;
+}
+
+.dropdown-menu > li > a {
+    padding: 0 1.2em !important;
+    height: 2.8em;
+}
+
+.button-group {
+  margin-top: 2.5em;
+}
+
+.button-group .btn.btn-lg {
+  min-width: 15em;
+  min-height: 3em;
+}
+
+@media only screen and (orientation: landscape) and (max-height: 800px),
+only screen and (max-width: 800px)
+ {
+    .ui-datepicker {
+      font-size: 1.4em !important;
+    }
 }
