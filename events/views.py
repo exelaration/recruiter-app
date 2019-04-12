@@ -5,9 +5,12 @@ from events.models.attendance import Attendance
 from events.models.candidate import Candidate
 from events.models.event import Event
 from events.models.job_posting import JobPosting
+from sendemail.models.email_template import EmailTemplate
+
 from sendemail.views import send_emails
 from .forms import RegisterForm, EventForm
 
+import json
 from django.core.validators import validate_email
 
 
@@ -49,7 +52,8 @@ def edit(request, event_id):
         form.fields['event_jobs'].choices = get_all_enabled_job_postings()
         if form.is_valid():
             update_or_create_event(request, form, event_id)
-            return redirect('/events')
+            response = {'status': 301, 'location': '/events/'}
+            return HttpResponse(json.dumps(response), content_type='application/json')
         else:
             return render(request, 'events/evt_modal.html', {'event': event, 'form': form})
 
@@ -60,6 +64,11 @@ def edit(request, event_id):
             form.fields['event_title'].initial = event.title
             form.fields['event_jobs'].choices = get_all_enabled_job_postings()
             form.fields['event_jobs'].initial = get_job_posting_ids_for_event(event_id)
+            form.fields['event_auto_send'].initial = event.auto_email
+            form.fields['event_sender'].initial = event.auto_email_from
+            if event.email_template is not None:
+                form.fields['event_default_template'].initial = event.email_template.id
+
             print (get_job_posting_ids_for_event(event_id))
         else:
             form.fields['event_jobs'].choices = get_all_enabled_job_postings()
@@ -120,9 +129,16 @@ def update_or_create_event(request, form, event_id):
     print(event_id)
     f_date = form.cleaned_data['event_date']
     f_title = form.cleaned_data['event_title']
+    f_auto = form.cleaned_data['event_auto_send']
+    f_sender = form.cleaned_data['event_sender']
+    template_id = request.POST.get('event_default_template')
+    if template_id != '':
+        f_template = EmailTemplate.objects.get(id=request.POST.get('event_default_template'))
+    else:
+        f_template = None
     job_posting_ids = request.POST.getlist('event_jobs')
     if event_id is None:
-        event = Event(title=f_title, date_time=f_date, enabled=True)
+        event = Event(title=f_title, date_time=f_date, enabled=True, auto_email=f_auto, auto_email_from=f_sender, email_template=f_template)
         event.save()
         event.job_postings=job_posting_ids
     else:
@@ -130,6 +146,9 @@ def update_or_create_event(request, form, event_id):
         event.title = f_title
         event.date_time = f_date
         event.job_postings = job_posting_ids
+        event.auto_email = f_auto
+        event.auto_email_from = f_sender
+        event.email_template = f_template
 
     event.save()
     return
