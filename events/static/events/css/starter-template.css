@@ -52,7 +52,7 @@ body {
 
 .modal-full-screen>.modal-dialog {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   top: 0;
   left: 0;
   position: absolute;
@@ -76,11 +76,6 @@ body {
   border-color: #6699FF !important;
 }
 
-.starter-template .btn-primary[disabled] {
-  background-color: #CBD3DA !important;
-  border-color: #CBD3DA !important;
-}
-
 .starter-template .btn-secondary {
   color: white !important;
   background-color: #77AAFF !important;
@@ -95,7 +90,7 @@ body {
   border-color: #99CCFF !important;
 }
 
-.starter-template .btn-primary[disabled] {
+.starter-template .btn-primary[disabled], .starter-template .btn-danger[disabled] {
   color: #444444 !important;
   background-color: #DBE3EA !important;
   border-color: #DBE3EA !important;
@@ -249,6 +244,18 @@ body {
     margin-bottom: 0px !important;
 }
 
+.input-checkbox {
+  width: 1.4em;
+  height: 1.4em;
+  vertical-align: middle;
+  margin: -.5em 0 0 .5em !important;
+}
+
+label[disabled], input[disabled] {
+  cursor: not-allowed !important;
+  color: #999999;
+}
+
 .centerContainer {
   position: relative;
   margin: auto;
@@ -343,6 +350,10 @@ body {
 
 .asteriskField {
   display: none;
+}
+
+.tight-top {
+  margin-top: .2em;
 }
 
 .ta-left {

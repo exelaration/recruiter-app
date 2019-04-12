@@ -4,22 +4,22 @@
 
       <div class="modal-body">
         <h5 class="modal-title" id="myModalLabel">CREATE NEW EVENT</h5>
-        <div class="row"><h2>Enter Event</h2></div>
+        <div class="row"><h2 class="tight-top">Enter Event</h2></div>
         <div class="container">
 
           <form action="/events/edit/{{ event.id }}/" id="id-registrationForm" method="post">
                   {% csrf_token %}
-                  <div class="form-group required">
+                  <div class="form-group required ta-left">
                       <div>{{ form.event_date|add_label_class:"input-Labels" }}</div>
                       <div>{{ form.event_date|add_class:"input" }}</div>
                   </div>
 
-                  <div class="form-group required">
+                  <div class="form-group required ta-left">
                       <div>{{ form.event_title|add_label_class:"input-Labels" }}</div>
                       <div>{{ form.event_title|add_class:"input" }}</div>
                   </div>
 
-                  <div class="form-group required">
+                  <div class="form-group required ta-left">
                       <div>{{ form.event_jobs|add_label_class:"input-Labels" }}</div>
                       <div class="input-Multi">{{ form.event_jobs }}</div>
                       {% if form.event_jobs.errors %}
@@ -27,12 +27,32 @@
                       {% endif %}
                   </div>
 
+                  <div class="form-group ta-left" style="margin-bottom: 0;">
+                      <div>{{ form.event_auto_send|add_label_class:"input-Labels" }}{{ form.event_auto_send|add_class:"input-checkbox" }}</div>
+                  </div>
+                  <div class="form-group required ta-left" id="email-sender">
+                      <div>{{ form.event_sender|add_label_class:"input-Labels" }}</div>
+                      <div>{{ form.event_sender|add_class:"input" }}</div>
+                      {% if form.event_sender.errors %}
+                        <p class="alert alert-danger"> {{ form.event_sender.errors.as_text }} </p>
+                      {% endif %}
+                  </div>
+                  <div class="form-group required ta-left" id="email-template">
+                      <div>{{ form.event_default_template|add_label_class:"input-Labels" }}</div>
+                      <div>{{ form.event_default_template|add_class:"input" }}</div>
+                      {% if form.event_default_template.errors %}
+                        <p class="alert alert-danger"> {{ form.event_default_template.errors.as_text }} </p>
+                      {% endif %}
+                  </div>
                    <div class="form-group">
-                      <div class="center"><button class="btn btn-primary btn-lg" id="event_submit" type="submit" disabled>Save</button></div>
+                      <div class="center">
+                        <button class="btn btn-danger btn-lg" id="event_submit"
+                          type="submit" disabled
+                          style="min-width: 16em;">Save</button>
+                      </div>
                   </div>
               </form>
         </div>
-        {{ form.errors }}
         {{ form.non_field_errors }}
       </div>
 
@@ -42,13 +62,35 @@
         $('#id_event_date').datepicker({dateFormat: 'yy-mm-dd', defaultDate: date});
         $('#id_event_jobs').multiselect();
 
+        $('#event_submit').click(function(evt){
+          evt.preventDefault();
+
+          $.post("/events/edit/{{ event.id }}/",
+            $( "#id-registrationForm" ).serialize(),
+            function(data) {
+              if(data.status && data.status == 301) window.location.href = data.location;
+              else $( '#addEvent .modal-body' ).replaceWith(data);
+            });
+        });
+
         /* Ensure all required fields have values.  If so, enable save button */
         var checkInput = function() {
           var good = true;
 
-          $('.required input:not([type="checkbox"])').each(function(i){
+          if($('#id_event_auto_send').is(':checked')){
+            $('#email-sender, #email-template').addClass('required');
+            $('#email-sender input, #email-sender label').removeAttr('disabled');
+          }
+          else{
+            $('#email-sender, #email-template').removeClass('required');
+            $('#email-sender input, #email-sender label').attr('disabled', true);
+          }
+
+          $('.required input:not([type="checkbox"][disabled]), .required select').each(function(i){
             if($(this).val() == '') good = false;
           });
+
+
 
           if(good && $('.required input[type="checkbox"]:checked').length > 0){
             $('#event_submit').attr('disabled', false);
@@ -58,7 +100,7 @@
           }
         } // checkInpui
 
-        $('.required input').change(function(evt){
+        $('.required input, .required select, #id_event_auto_send').change(function(evt){
           checkInput();
         });
 
