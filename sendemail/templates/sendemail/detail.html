@@ -2,24 +2,37 @@
 {% load crispy_forms_tags %}
 {% crispy sendemail_form sendemail_form.helper %}
 
+{% block header %}
+    {% include "banner/banner.html" with nav_tmpl="banner/banner_large.html" title=event%}
+{% endblock %}
+
 {% block content %}
+<br />
+<div class="starter-template">
 <div class='row'>
-    <div class='col-md-9'><h1>{{ event.title }}</h1></div>
-    <div class='col-md-3'><h1>{{ event.date_time }}</h1></div>
+    <div class='col-xs-6 ta-left'><a href="/events">< back</a></div>
+    <div class='col-xs-6 ta-right'>{{ event.date_time }}</div>
 </div>
 
-<br /><br /><br />
-
+{% if attendance_list %}
 <div class="row">
   <div class='col-md-12'>
       <form action="/sendemail/{{ event.id }}/" name="id-registrationForm" id="id-registrationForm" method="post">
           {% csrf_token %}
           {% crispy form form.helper %}
 
+          {% if no_email %}
+            <div class="alert alert-warning" role="alert">
+              You have no email set in your user profile.  Cannot send emails
+              without it.  Please update your user profile and add a valid email address.
+              <a href="/admin/auth/user/{{user_id}}/change/">Edit Profile</a> 
+            </div>
+          {% endif %}
           <!-- Button trigger modal -->
           <div class="container col-md-12">
               <div class="row-fluid">
-                  <button id="id-send-email-button" type="button" class="btn btn-primary btn-lg pull-left" data-toggle="modal" data-target="#myModal">Send Emails</button>
+                  <button id="id-send-email-button" type="button" class="btn btn-primary btn-lg pull-left"
+                        data-toggle="modal" data-target="#myModal">Send Emails</button>
                   <a href="/sendemail/{{ event.id }}/export" class="btn btn-primary btn-lg pull-right" role="button">Export XLSX</a>
               </div>
           </div>
@@ -50,46 +63,60 @@
 <div class='row'>
   <div class='col-xs-12'>
     <div class="row">
-        <div class="col-xs-12"><legend><h1>Email Recipients</h1></legend></div>
+        <div class="col-xs-12 ta-left"><h3>Applicants</h3></div>
     </div>
-    <div class="row">
-        <div class='col-lg-7'><h3>Candidate</h3></div>
-        <div class='col-lg-3'><h3>Chosen Job Posting</h3></div>
+    <br />
+    <div class="row center">
+        <div class='col-lg-2'>First Name</div>
+        <div class='col-lg-2'>Last Name</div>
+        <div class='col-lg-2'>Phone Number</div>
+        <div class='col-lg-2'>Email Address</div>
+        <div class='col-lg-4'>Job</div>
     </div>
+    <hr />
   </div>
 </div>
+{% endif %}
 
-<div class='row'>
-  <div class='col-xs-12'>
     {% for attendance in attendance_list %}
-      <div class="row {% if attendance.email_error %}error{% endif %}"
+      <div class="row center {% if attendance.email_error %}error{% endif %}"
         {% if attendance.email_error %}data-toggle="tooltip" data-placement="right" title="Error sending email.  Please see email log for additional details."{% endif %}>
-        <div class='col-lg-2'>{{ attendance.candidate.first_name }} {{ attendance.candidate.last_name }}</div>
-        <div class='col-lg-3'>{{ attendance.candidate.email|truncatechars:"45" }}</div>
+        <div class='col-lg-2'>{{ attendance.candidate.first_name }}</div>
+        <div class='col-lg-2'>{{ attendance.candidate.last_name }}</div>
         <div class='col-lg-2'>{{ attendance.candidate.phone }}</div>
-        <div class='col-lg-5'>{{ attendance.selected_job_posting }}</div>
+        <div class='col-lg-2'>{{ attendance.candidate.email|truncatechars:"45" }}</div>
+        <div class='col-lg-4'>{{ attendance.selected_job_posting }}</div>
+      </div>
+    {% empty %}
+      <div class="centerContainer">
+        <img src="/static/excellajobs/images/oops.svg"/>
+        <h4>No applicants!!</h4>
+        <div style="width: 50%; margin: 0 25%;">
+          <div>You do not have any applicant submissions for this event at this time.</div>
+        </div>
       </div>
     {% endfor %}
-  </div>
 </div>
 
 <script type="text/javascript">
-
     function submitEmailForm() {
         HTMLFormElement.prototype.submit.call($('#id-registrationForm')[0]);
     }
 
     $(document).ready(function() {
+      var no_email = eval("{{ no_email }}".toLowerCase());
 
-      if ($("#id_email_templates").val() == "") {
+      if ($("#id_email_templates").val() == "" || no_email) {
         $('#id-send-email-button').attr('disabled', 'true')
       }
 
       $(document).on('change','#id_email_templates',function(){
-        if ($('#id_email_templates').val() != "") $('#id-send-email-button').removeAttr('disabled');
+        console.log(no_email)
+        if ($('#id_email_templates').val() != "" && !no_email) $('#id-send-email-button').removeAttr('disabled');
         else $('#id-send-email-button').attr('disabled', 'true');
       });
 
+      $('body').addClass('greybg');
     });
 </script>
 {% endblock %}
