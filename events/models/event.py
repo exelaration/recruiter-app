@@ -9,7 +9,7 @@ from sendemail.models.email_template import EmailTemplate
 
 class Event(models.Model):
     title = models.TextField(blank=False)
-    date_time = models.DateField('Event date time', default=timezone.now)
+    date_time = models.DateField('Event date', default=timezone.now)
     enabled = models.BooleanField(default=True)
     job_postings = models.ManyToManyField(JobPosting, blank=True,
                                           help_text='Select all Job Postings being recruited for this Event.')
