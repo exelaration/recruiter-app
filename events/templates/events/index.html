@@ -26,10 +26,12 @@
 
           <div class='col-md-5 ta-right'>
             {% if user.is_authenticated %}
-              <button data-event-id="{{ event.id }}" class="btn btn-secondary email-event">Email</button>
-              <button data-event-id="{{ event.id }}" class="btn btn-link edit-event">Edit</button>
+              <button data-event-id="{{ event.id }}" class="btn btn-secondary email-event" title="View/Email Applicants">View</button>
+              {% if user.is_superuser %}
+                <button data-event-id="{{ event.id }}" class="btn btn-link edit-event" title="Edit event details">Edit</button>
+                {% endif %}
             {% endif %}
-            <a href="{{ event.id }}/"><button class="btn btn-primary">Open</button></a>
+            <a href="{{ event.id }}/"><button class="btn btn-primary" title="Open Form">Open</button></a>
           </div>
       </div>
     {% endfor %}

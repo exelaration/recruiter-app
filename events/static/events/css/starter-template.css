@@ -336,11 +336,6 @@ label[disabled], input[disabled] {
     color: #494949;
 }
 
-.starter-template a {
-    text-decoration: underline !important;
-    cursor: pointer;
-}
-
 .form-group.required>div:first-of-type::before, label.requiredField::before {
     color: #D13C45;
     content: '* ';

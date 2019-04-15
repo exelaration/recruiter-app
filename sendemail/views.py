@@ -42,6 +42,7 @@ def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     attendance_list = Attendance.objects.filter(event=event)
     attendance_count = Attendance.objects.values_list('candidate').filter(event=event).distinct().count()
+    no_email = request.user.email is None or request.user.email == '';
 
     if request.method == 'POST':  # if this is a POST request we need to process the form data
         form = SendEmailForm(request.POST)
@@ -54,21 +55,20 @@ def detail(request, event_id):
                 for attendance in attendance_list:
                     if attendance.candidate.email in error_emails:
                         attendance.email_error = True
-
-        return render(request, 'sendemail/detail.html', {'event': event,
-                                                         'attendance_list': attendance_list,
-                                                         'bad_emails': error_emails,
-                                                         'form': form})
-
     else:  # if a GET (or any other method) we'll create a blank form
         form = SendEmailForm()
         form.fields['email_templates'].choices = get_all_active_email_templates()
+        error_emails = None
         if event.email_template:
             form.initial['email_templates'] = event.email_template.id
-        return render(request, 'sendemail/detail.html', {'event': event,
-                                                         'attendance_list': attendance_list,
-                                                         'attendance_count': attendance_count,
-                                                         'form': form})
+
+    return render(request, 'sendemail/detail.html', {'event': event,
+                                                 'no_email': no_email,
+                                                 'user_id' : request.user.id,
+                                                 'attendance_list': attendance_list,
+                                                 'bad_emails': error_emails,
+                                                 'attendance_count': attendance_count,
+                                                 'form': form})
 
 
 def get_all_active_email_templates():
