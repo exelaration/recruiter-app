@@ -56,6 +56,7 @@
             </div>
 
              <div class="form-group button-group">
+                <button class="btn btn-lg btn-danger" type="reset" id="reset-form">Cancel</button>
                 <button class="btn btn-lg btn-primary" type="submit" id="submit-form" disabled>Submit</button>
             </div>
         </form>
@@ -66,6 +67,21 @@
 
 <script>
   $(document).ready(function() {
+    var validate_form = function(){
+      var good = true;
+
+      $('.required input:not([type="checkbox"])').each(function(i){
+        if($(this).val() == '') good = false;
+      });
+
+      if(good && $('.required input[type="checkbox"]:checked').length > 0){
+          $('#submit-form').attr('disabled', false);
+      }
+      else {
+        $('#submit-form').attr('disabled', true);
+      }
+    };
+
     $('#candidate_phone').keyup(function(evt) {
       var input_phone = $('#candidate_phone input').val();
       var phone = input_phone;
@@ -108,23 +124,17 @@
 
     $('#id_candidate_job_postings').multiselect();
 
-    $('.required input').change(function(evt){
-      var good = true;
+    $('.required input').change(validate_form);
 
-      $('.required input:not([type="checkbox"])').each(function(i){
-        if($(this).val() == '') good = false;
-      });
-      if(good && $('.required input[type="checkbox"]:checked').length > 0){
-          $('#submit-form').attr('disabled', false);
-      }
-      else {
-        $('#submit-form').attr('disabled', true);
-      }
+    //Multi-select doesn't refresh properly from click.
+    $('#reset-form').click(function(evt){
+      // Let the actual event happen first, then do stuff.  Change event is not
+      // triggered from form reset so do that too.
+      setTimeout(function(){
+        $('#id_candidate_job_postings').multiselect('refresh');
+        validate_form();
+      }, 50);
     });
-
-    // $('.disableBtn').click(function( evt ) {
-    //   evt.preventDefault();
-    // });
   });
 </script>
 
