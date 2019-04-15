@@ -15,7 +15,7 @@ class JobPosting(models.Model):
     show_job_url.short_description = "Job URL"
 
     def __str__(self):
-        if self.location is None:
+        if self.location is None or self.location == '':
             return self.title
         else:
             return "{0} ({1})".format(self.title, self.location)
