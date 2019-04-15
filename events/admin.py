@@ -29,8 +29,6 @@ class CandidateAdmin(admin.ModelAdmin):
 class AttendanceAdmin(admin.ModelAdmin):
     list_display = ['event_id', 'event_title', 'candidate_first_name', 'candidate_last_name',
                     'candidate_email', 'candidate_phone', 'selected_job_posting']
-    fields = ['event_title', 'candidate_first_name', 'candidate_last_name',
-              'candidate_email', 'candidate_phone', 'selected_job_posting']
     search_fields = ['event__title', 'candidate__first_name', 'candidate__last_name',
                      'candidate__email', 'candidate__phone', 'selected_job_posting']
     list_filter = ['event__title', 'selected_job_posting']
@@ -53,7 +51,7 @@ class AttendanceAdmin(admin.ModelAdmin):
     def candidate_phone(self, obj):
         return obj.candidate.phone
 
-    def selected_job_posting(selfself, obj):
+    def selected_job_posting(self, obj):
         return obj.selected_job_posting
 
 
