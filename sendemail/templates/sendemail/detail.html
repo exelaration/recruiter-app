@@ -10,7 +10,7 @@
 <br />
 <div class="starter-template">
 <div class='row'>
-    <div class='col-xs-6 ta-left'><a href="/events">< back</a></div>
+    <div class='col-xs-6 ta-left'><a href="{{ request.META.HTTP_REFERER }}">< back</a></div>
     <div class='col-xs-6 ta-right'>{{ event.date_time }}</div>
 </div>
 
@@ -25,7 +25,7 @@
             <div class="alert alert-warning" role="alert">
               You have no email set in your user profile.  Cannot send emails
               without it.  Please update your user profile and add a valid email address.
-              <a href="/admin/auth/user/{{user_id}}/change/">Edit Profile</a> 
+              <a href="/admin/auth/user/{{user_id}}/change/">Edit Profile</a>
             </div>
           {% endif %}
           <!-- Button trigger modal -->
@@ -67,25 +67,24 @@
     </div>
     <br />
     <div class="row center">
-        <div class='col-lg-2'>First Name</div>
-        <div class='col-lg-2'>Last Name</div>
-        <div class='col-lg-2'>Phone Number</div>
-        <div class='col-lg-2'>Email Address</div>
-        <div class='col-lg-4'>Job</div>
+        <div class='col-lg-2'><h4>First Name</h4></div>
+        <div class='col-lg-2'><h4>Last Name</h4></div>
+        <div class='col-lg-2'><h4>Phone Number</h4></div>
+        <div class='col-lg-2'><h4>Email Address</h4></div>
+        <div class='col-lg-4'><h4>Job</h4></div>
     </div>
-    <hr />
   </div>
 </div>
 {% endif %}
 
     {% for attendance in attendance_list %}
-      <div class="row center {% if attendance.email_error %}error{% endif %}"
+      <div class="row center list-item {% if attendance.email_error %}error{% endif %}"
         {% if attendance.email_error %}data-toggle="tooltip" data-placement="right" title="Error sending email.  Please see email log for additional details."{% endif %}>
-        <div class='col-lg-2'>{{ attendance.candidate.first_name }}</div>
-        <div class='col-lg-2'>{{ attendance.candidate.last_name }}</div>
-        <div class='col-lg-2'>{{ attendance.candidate.phone }}</div>
-        <div class='col-lg-2'>{{ attendance.candidate.email|truncatechars:"45" }}</div>
-        <div class='col-lg-4'>{{ attendance.selected_job_posting }}</div>
+        <div class='col-lg-2'>{{ attendance.first_name }}</div>
+        <div class='col-lg-2'>{{ attendance.last_name }}</div>
+        <div class='col-lg-2'>{{ attendance.phone }}</div>
+        <div class='col-lg-2' title="{{ attendance.email }}">{{ attendance.email|truncatechars:"45" }}</div>
+        <div class='col-lg-4'>{{ attendance.postings }}</div>
       </div>
     {% empty %}
       <div class="centerContainer">

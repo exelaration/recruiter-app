@@ -40,8 +40,8 @@ def index(request):
 @login_required
 def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
-    attendance_list = Attendance.objects.filter(event=event)
-    attendance_count = Attendance.objects.values_list('candidate').filter(event=event).distinct().count()
+    attendance_detail = Attendance.candidates_for_event(event_id)
+    attendance_count = len(attendance_detail) #Attendance.objects.values_list('candidate').filter(event=event).distinct().count()
     no_email = request.user.email is None or request.user.email == '';
 
     if request.method == 'POST':  # if this is a POST request we need to process the form data
@@ -50,10 +50,11 @@ def detail(request, event_id):
         if form.is_valid():
             email_template_id = request.POST.getlist('email_templates')[0]
             email_template = EmailTemplate.objects.get(id=email_template_id)
+            attendance_list = Attendance.objects.filter(event=event)
             error_emails = send_emails(request, email_template, attendance_list, event)
             if len(error_emails):
-                for attendance in attendance_list:
-                    if attendance.candidate.email in error_emails:
+                for attendance in attendance_detail:
+                    if attendance.email in error_emails:
                         attendance.email_error = True
     else:  # if a GET (or any other method) we'll create a blank form
         form = SendEmailForm()
@@ -65,7 +66,7 @@ def detail(request, event_id):
     return render(request, 'sendemail/detail.html', {'event': event,
                                                  'no_email': no_email,
                                                  'user_id' : request.user.id,
-                                                 'attendance_list': attendance_list,
+                                                 'attendance_list': attendance_detail,
                                                  'bad_emails': error_emails,
                                                  'attendance_count': attendance_count,
                                                  'form': form})
