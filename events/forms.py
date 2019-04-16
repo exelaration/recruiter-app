@@ -23,6 +23,4 @@ class EventForm(forms.Form):
     event_jobs = forms.MultipleChoiceField(label='Job postings', initial='', widget=forms.SelectMultiple(), required=True)
     event_auto_send = forms.BooleanField(label='Auto send email on registration', required=False)
     event_sender = forms.EmailField(label='Auto-email sender', max_length=200, required=False)
-    templateChoices = [('','')] + [(email_template.id, str(email_template)) for email_template in
-                 EmailTemplate.objects.filter(enabled=True)]
-    event_default_template = forms.ChoiceField(label='Default email template', choices=templateChoices, required=False)
+    event_default_template = forms.ChoiceField(label='Default email template', required=False)

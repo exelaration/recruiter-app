@@ -66,6 +66,7 @@ def edit(request, event_id):
             form.fields['event_jobs'].initial = get_job_posting_ids_for_event(event_id)
             form.fields['event_auto_send'].initial = event.auto_email
             form.fields['event_sender'].initial = event.auto_email_from
+            form.fields['event_default_template'].choices = get_all_enabled_email_templates()
             if event.email_template is not None:
                 form.fields['event_default_template'].initial = event.email_template.id
 
@@ -84,6 +85,9 @@ def get_job_posting_ids_for_event(event_id):
 
 def get_all_enabled_job_postings():
     return [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(enabled=True)]
+
+def get_all_enabled_email_templates():
+    return [('','')] + [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
 
 def update_or_create_candidate(request, form, event_id):
     f_email = form.cleaned_data['candidate_email']
