@@ -75,6 +75,7 @@ def edit(request, event_id):
             print (get_job_posting_ids_for_event(event_id))
         else:
             form.fields['event_jobs'].choices = get_all_enabled_job_postings()
+            form.fields['event_default_template'].choices = get_all_enabled_email_templates()
 
         return render(request, 'events/evt_modal.html', {'event': event, 'form': form})
 
