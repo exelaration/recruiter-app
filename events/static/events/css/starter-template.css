@@ -14,7 +14,7 @@ body {
 
 .row.error {
     border: 1px solid #D13C45;
-    background: #E14C55;
+    background: #E14C55 !important;
     color: #FADFEF;
 }
 
@@ -52,6 +52,7 @@ body {
 
 .modal-full-screen>.modal-dialog {
   width: 100vw;
+  height:100%;
   min-height: 100vh;
   top: 0;
   left: 0;
@@ -367,16 +368,21 @@ label[disabled], input[disabled] {
   top: 0;
   margin: 0;
   padding: 0;
-  top: -.8em;
-  position: relative;
+  right: -.8em;
+  top: -.6em;
+  position: absolute;
 }
 
 .modal-header button.close::after {
     content: "cancel";
     position: relative;
-    right: 3em;
-    top: 1em;
+    right: 2.6em;
+    top: .6em;
     font-size: 1.6rem;
+}
+
+.modal-header {
+  min-height: 4.5em;
 }
 
 .dropdown-menu > li > a {

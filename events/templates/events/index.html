@@ -55,6 +55,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
           </div>
           {% block modal %}
               {% include "events/evt_modal.html" %}
@@ -74,6 +75,7 @@
     $('.add-item').tooltip();
 
     $('.add-item').click(function(){
+      $('.modal-title').html('CREATE NEW EVENT');
       $.ajax({
         url: "./edit/"
       }).done(function(data) {
@@ -82,6 +84,7 @@
     });
 
     $('.edit-event').click(function(){
+      $('.modal-title').html('EDIT EVENT');
       $.ajax({
         url: "./edit/" + $(this).data('event-id')
       }).done(function(data) {
