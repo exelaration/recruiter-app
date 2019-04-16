@@ -5,7 +5,7 @@ from sendemail.models.email_template import EmailTemplate
 
 
 class EmailTemplateAdmin(admin.ModelAdmin):
-    list_display = ['subject', 'enabled']
+    list_display = ['id', 'subject', 'enabled']
     fields = ['subject', 'body', 'enabled']
     search_fields = ['subject', 'enabled']
     list_filter = ['subject', 'enabled']
