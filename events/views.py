@@ -50,6 +50,7 @@ def edit(request, event_id):
     if request.method == 'POST':  # if this is a POST request we need to process the form data
         form = EventForm(request.POST)
         form.fields['event_jobs'].choices = get_all_enabled_job_postings()
+        form.fields['event_default_template'].choices = get_all_enabled_email_templates()
         if form.is_valid():
             update_or_create_event(request, form, event_id)
             response = {'status': 301, 'location': '/events/'}
@@ -67,6 +68,7 @@ def edit(request, event_id):
             form.fields['event_auto_send'].initial = event.auto_email
             form.fields['event_sender'].initial = event.auto_email_from
             form.fields['event_default_template'].choices = get_all_enabled_email_templates()
+            
             if event.email_template is not None:
                 form.fields['event_default_template'].initial = event.email_template.id
 
