@@ -49,8 +49,6 @@ def edit(request, event_id):
 
     if request.method == 'POST':  # if this is a POST request we need to process the form data
         form = EventForm(request.POST)
-        form.fields['event_jobs'].choices = get_all_enabled_job_postings()
-        form.fields['event_default_template'].choices = get_all_enabled_email_templates()
         if form.is_valid():
             update_or_create_event(request, form, event_id)
             response = {'status': 301, 'location': '/events/'}
@@ -63,19 +61,12 @@ def edit(request, event_id):
         if event:
             form.fields['event_date'].initial = event.date_time
             form.fields['event_title'].initial = event.title
-            form.fields['event_jobs'].choices = get_all_enabled_job_postings()
             form.fields['event_jobs'].initial = get_job_posting_ids_for_event(event_id)
             form.fields['event_auto_send'].initial = event.auto_email
             form.fields['event_sender'].initial = event.auto_email_from
-            form.fields['event_default_template'].choices = get_all_enabled_email_templates()
-            
+
             if event.email_template is not None:
                 form.fields['event_default_template'].initial = event.email_template.id
-
-            print (get_job_posting_ids_for_event(event_id))
-        else:
-            form.fields['event_jobs'].choices = get_all_enabled_job_postings()
-            form.fields['event_default_template'].choices = get_all_enabled_email_templates()
 
         return render(request, 'events/evt_modal.html', {'event': event, 'form': form})
 
@@ -85,12 +76,6 @@ def get_job_postings_for_event(event_id):
 
 def get_job_posting_ids_for_event(event_id):
     return [job_posting.id for job_posting in JobPosting.objects.filter(enabled=True).filter(event__id=event_id)]
-
-def get_all_enabled_job_postings():
-    return [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(enabled=True)]
-
-def get_all_enabled_email_templates():
-    return [('','')] + [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
 
 def update_or_create_candidate(request, form, event_id):
     f_email = form.cleaned_data['candidate_email']

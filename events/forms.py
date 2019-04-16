@@ -24,3 +24,11 @@ class EventForm(forms.Form):
     event_auto_send = forms.BooleanField(label='Auto send email on registration', required=False)
     event_sender = forms.EmailField(label='Auto-email sender', max_length=200, required=False)
     event_default_template = forms.ChoiceField(label='Default email template', initial='', required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.fields['event_default_template'].choices = [('','')] + _
+        [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
+
+        self.fields['event_jobs'].choices = _
+        [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(enabled=True)]
