@@ -1,3 +1,5 @@
+import datetime
+
 from django.test import TestCase
 from django.urls import reverse
 
@@ -8,20 +10,20 @@ from events.models.job_posting import JobPosting
 class RegistrationFormTest(TestCase):
     def setUp(self):
         job_posting = JobPosting.objects.create(title='Do this', job_link='www.excella.com')
-        event = Event.objects.create(title = '',
-                                     date_time = '01-01-1970 00:00:00', # Needs real date
-                                     enabled = True,
-                                     job_postings = job_posting,
-                                     auto_email = False)
+        self.event = Event.objects.create(title='',
+                                          date_time=datetime.date.today(),
+                                          enabled=True,
+                                          auto_email=False)
+        self.event.job_postings = [job_posting]
+        self.event.save()
 
     def test_get_registration_form(self):
-        url = reverse("events.views.detail")+'/'+event.id
+        url = reverse("events.detail", kwargs={'event_id': self.event.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertIn("content to look for - is this actually a good idea?", response.content)
 
     # TODO: test anything that should be pre-populated in specific circumstances
-
 
     # TODO: Test post request on /events/num: Attendance is added
     # TODO
