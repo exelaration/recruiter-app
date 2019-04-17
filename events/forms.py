@@ -27,8 +27,6 @@ class EventForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
-        self.fields['event_default_template'].choices = [('','')] + _
-        [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
+        self.fields['event_default_template'].choices = [('','')] + [(email_template.id, str(email_template)) for email_template in EmailTemplate.objects.filter(enabled=True)]
 
-        self.fields['event_jobs'].choices = _
-        [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(enabled=True)]
+        self.fields['event_jobs'].choices = [(job_posting.id, str(job_posting)) for job_posting in JobPosting.objects.filter(enabled=True)]
