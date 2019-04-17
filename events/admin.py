@@ -19,6 +19,16 @@ class JobPostingAdmin(admin.ModelAdmin):
     search_fields = ['title', 'location', 'job_link', 'enabled']
     list_filter = ['location', 'enabled']
 
+    ## Remove delete selected option from list of job postings
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
+    ## Disallow delete by anyone of job postings -- no delete button on job posting edit page
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 class CandidateAdmin(admin.ModelAdmin):
     list_display = ['last_name', 'first_name', 'email', 'phone']
@@ -29,8 +39,6 @@ class CandidateAdmin(admin.ModelAdmin):
 class AttendanceAdmin(admin.ModelAdmin):
     list_display = ['event_id', 'event_title', 'candidate_first_name', 'candidate_last_name',
                     'candidate_email', 'candidate_phone', 'selected_job_posting']
-    fields = ['event_title', 'candidate_first_name', 'candidate_last_name',
-              'candidate_email', 'candidate_phone', 'selected_job_posting']
     search_fields = ['event__title', 'candidate__first_name', 'candidate__last_name',
                      'candidate__email', 'candidate__phone', 'selected_job_posting']
     list_filter = ['event__title', 'selected_job_posting']
@@ -53,7 +61,7 @@ class AttendanceAdmin(admin.ModelAdmin):
     def candidate_phone(self, obj):
         return obj.candidate.phone
 
-    def selected_job_posting(selfself, obj):
+    def selected_job_posting(self, obj):
         return obj.selected_job_posting
 
 
