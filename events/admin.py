@@ -19,6 +19,16 @@ class JobPostingAdmin(admin.ModelAdmin):
     search_fields = ['title', 'location', 'job_link', 'enabled']
     list_filter = ['location', 'enabled']
 
+    ## Remove delete selected option from list of job postings
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
+    ## Disallow delete by anyone of job postings -- no delete button on job posting edit page
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 class CandidateAdmin(admin.ModelAdmin):
     list_display = ['last_name', 'first_name', 'email', 'phone']
