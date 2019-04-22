@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Excella Recruiting {% endblock %}
+
+{% block header %}
+    {% include "banner/banner.html" with nav_tmpl="banner/banner_large.html" title="My Events"%}
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+  <div class="add-item" data-toggle="modal" data-target="#addTemplate" data-placement="left" title="Add New Template"></div>
+{% else %}
+  <br />
+  <br />
+{% endif %}
+<div class="starter-template">
+
+  {% if has_templates %}
+    <div class="row">
+        <div class="col-md-1 ta-left"><h4>ID</h4></div>
+        <div class="col-md-3 ta-left"><h4>Subject</h4></div>
+        <div class="col-md-5 ta-left"><h4>Body</h4></div>
+        <div class="col-md-5"></div>
+    </div>
+    {% for template in email_template_list %}
+      <div class="row list-item {% if not template.enabled %}disabled{% endif %}">
+        <div class="col-md-1 ta-left">{{ template.id }}</div>
+        <div class='col-md-3 ta-left'>{{ template.subject }}</div>
+        <div class='col-md-5 ta-left'>{% autoescape off %}{{ template.body|truncatechars:100 }}{% endautoescape %}</div>
+
+          <div class='col-md-3 ta-right'>
+            {% if user.is_authenticated %}
+              {% if user.is_superuser %}
+                <button data-template-id="{{ template.id }}" class="btn btn-link edit-template" title="Edit/View template">Edit</button>
+              {% endif %}
+            {% endif %}
+          </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="centerContainer">
+      <img src="/static/excellajobs/images/oops.svg"/>
+      <h4>Oooooppss!!</h4>
+      <div style="width: 50%; margin: 0 25%;">
+        <div>Looks like your template list is empty. Add a template by clicking <i class="fa fa-plus-circle" style="font-size:1.6em; color:#3366BB"></i> button above and let’s begin!</div>
+      </div>
+    </div>
+  {% endif %}
+  {% if user.is_authenticated %}
+    <div class="modal fade modal-full-screen" id="addTemplate" tabindex="-1" role="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+          </div>
+          <iframe id="et-frame" class="modal-iframe" src="./templates/edit/"></iframe>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $('.add-item').tooltip();
+
+    $('.add-item').click(function(){
+      $('.modal-title').html('CREATE NEW TEMPLATE');
+      $('#et-frame').attr('src', "./templates/edit/")
+      // $.ajax({
+      //   url: "./templates/edit/"
+      // }).done(function(data) {
+      //   $( '#addTemplate .modal-body' ).replaceWith( data );
+      // });
+    });
+
+    $('.edit-template').click(function(){
+      $('.modal-title').html('EDIT TEMPLATE');
+
+      $('#et-frame').attr('src', "./templates/edit/" + $(this).data('template-id'));
+      $( '#addTemplate').modal('show');
+      // $.ajax({
+      //   url: "./templates/edit/" + $(this).data('template-id')
+      // }).done(function(data) {
+      //   $( '#addTemplate .modal-body' ).replaceWith( data );
+      //   $( '#addTemplate').modal('show');
+      // });
+    });
+
+    $('body').addClass('greybg');  // Not ideal, but would need to re-do the base template otherwise
+  });
+</script>
+{% endblock %}

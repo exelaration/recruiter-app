@@ -105,6 +105,11 @@ body {
   margin-bottom: .4em;
 }
 
+.list-item.row.disabled {
+  color: #444444;
+  background-color: #AAAAAA;
+}
+
 .starter-template .multiselect-container a {
   text-decoration: none !important
 }
