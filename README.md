@@ -63,9 +63,9 @@ It is a mixture of Django RESTfull api in the back end plus Django admin for man
     * Login to the Container Registry
         * `$ heroku container:login`
     * Push your Docker-based app
-        * `$ heroku container:push web`
+        * `$ heroku container:push web [--app excella-jobs]`
     * Deploy the changes
-        * `$ heroku container:release web`
+        * `$ heroku container:release web [--app excella-jobs]`
         
 * Other useful Heroku commands
     * `$ heroku open`
