@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Excella Recruiting {% endblock %}
+
+{% block header %}
+    {% include "banner/banner.html" with nav_tmpl="banner/banner_large.html" title="Job Postings"%}
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <div class="add-item" data-toggle="modal" data-target="#addJob" data-placement="left" title="Add Event"></div>
+{% else %}
+  <br />
+  <br />
+{% endif %}
+<div class="starter-template">
+
+  {% if has_jobs %}
+    <div class="row">
+        <div class="col-md-3 ta-left"><h4>Title</h4></div>
+        <div class="col-md-2 ta-left"><h4>Location</h4></div>
+        <div class="col-md-4 ta-left"><h4>URL</h4></div>
+        <div class="col-md-3"></div>
+    </div>
+    {% for posting in job_posting_list %}
+      <div class="row list-item {% if not posting.enabled %}disabled{% endif %}">
+          <div class='col-md-3 ta-left'>{{ posting.title }}</div>
+          <div class='col-md-2 ta-left'>{{ posting.location }}</div>
+          <div class='col-md-4 ta-left'>{{ posting.job_link }}</div>
+
+          <div class='col-md-3 ta-right'>
+            {% if user.is_authenticated %}
+              <button data-job-id="{{ posting.id }}" class="btn btn-link edit-posting" title="Edit job details">Edit</button>
+            {% endif %}
+          </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="centerContainer">
+      <img src="/static/excellajobs/images/oops.svg"/>
+      <h4>Oooooppss!!</h4>
+      <div style="width: 50%; margin: 0 25%;">
+        <div>There are no job postings in the database.  Click the <i class="fa fa-plus-circle" style="font-size:1.6em; color:#3366BB"></i> button above and let’s begin!</div>
+      </div>
+    </div>
+  {% endif %}
+  {% if user.is_authenticated %}
+    <div class="modal fade modal-full-screen" id="addJob" tabindex="-1" role="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+          </div>
+          {% block modal %}
+              {% include "events/jp_modal.html" %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script src='{% static "events/js/bootstrap-multiselect.js" %}'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+<script type="text/javascript">
+  $(function () {
+    $('.add-item').tooltip();
+
+    $('.add-item').click(function(){
+      $('.modal-title').html('CREATE NEW JOB POSTING');
+      $.ajax({
+        url: "./postings/edit/"
+      }).done(function(data) {
+        $( '#addJob .modal-body' ).replaceWith( data );
+      });
+    });
+
+    $('.edit-posting').click(function(){
+      $('.modal-title').html('EDIT JOB POSTING');
+      $.ajax({
+        url: "./postings/edit/" + $(this).data('job-id')
+      }).done(function(data) {
+        $( '#addJob .modal-body' ).replaceWith( data );
+        $( '#addJob').modal().show();
+      });
+    });
+
+    $('body').addClass('greybg');  // Not ideal, but would need to re-do the base template otherwise
+  });
+</script>
+{% endblock %}

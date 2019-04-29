@@ -1,0 +1,85 @@
+{% load widget_tweaks %}
+
+{% block content %}
+
+      <div class="modal-body">
+        <div class="row"><h2 class="tight-top">Enter Event</h2></div>
+        <div class="container">
+
+          <form action="/events/postings/edit/{{ job_posting.id }}/" id="id-jobPostingForm" method="post">
+                  {% csrf_token %}
+                  <div class="form-group required ta-left">
+                      <div>{{ form.title|add_label_class:"input-Labels" }}</div>
+                      <div>{{ form.title|add_class:"input" }}</div>
+                      {% if form.job_link.errors %}
+                        <p class="alert alert-danger"> {{ form.title.errors.as_text }} </p>
+                      {% endif %}
+                  </div>
+
+                  <div class="form-group ta-left">
+                      <div>{{ form.location|add_label_class:"input-Labels" }}</div>
+                      <div>{{ form.location|add_class:"input" }}</div>
+                  </div>
+
+                  <div class="form-group required ta-left">
+                      <div>{{ form.job_link|add_label_class:"input-Labels" }}</div>
+                      <div>{{ form.job_link|add_class:"input" }}</div>
+                      {% if form.job_link.errors %}
+                        <p class="alert alert-danger"> {{ form.job_link.errors.as_text }} </p>
+                      {% endif %}
+                  </div>
+
+                  <div class="form-group ta-left" style="margin-bottom: 0;">
+                      <div>{{ form.enabled|add_label_class:"input-Labels" }}{{ form.enabled|add_class:"input-checkbox" }}</div>
+                  </div>
+                   <div class="form-group">
+                      <div class="center">
+                        <button class="btn btn-danger btn-lg" id="posting_submit"
+                          type="submit" disabled
+                          style="min-width: 16em;">Save</button>
+                      </div>
+                  </div>
+              </form>
+        </div>
+        {{ form.non_field_errors }}
+      </div>
+
+    <script>
+      $(function () {
+        $('#posting_submit').click(function(evt){
+          evt.preventDefault();
+
+          $.post("/events/postings/edit/{{ job_posting.id }}/",
+            $( "#id-jobPostingForm" ).serialize(),
+            function(data) {
+              if(data.status && data.status == 301) location.reload(); // window.location.href = data.location;
+              else $( '#addJob .modal-body' ).replaceWith(data);
+            });
+        });
+
+        /* Ensure all required fields have values.  If so, enable save button */
+        var checkInput = function() {
+          var good = true;
+
+          $('.required input:not([type="checkbox"][disabled]), .required select').each(function(i){
+            if($(this).val() == '') good = false;
+          });
+
+
+
+          if(good){
+            $('#posting_submit').attr('disabled', false);
+          }
+          else {
+            $('#posting_submit').attr('disabled', true);
+          }
+        } // checkInpui
+
+        $('.required input, .required select').change(function(evt){
+          checkInput();
+        });
+
+        checkInput();
+      });
+    </script>
+{% endblock %}

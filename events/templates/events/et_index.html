@@ -4,7 +4,7 @@
 {% block title %} Excella Recruiting {% endblock %}
 
 {% block header %}
-    {% include "banner/banner.html" with nav_tmpl="banner/banner_large.html" title="My Events"%}
+    {% include "banner/banner.html" with nav_tmpl="banner/banner_large.html" title="Email Templates"%}
 {% endblock %}
 
 {% block content %}
@@ -92,5 +92,9 @@
 
     $('body').addClass('greybg');  // Not ideal, but would need to re-do the base template otherwise
   });
+
+  function formComplete(){
+    location.reload();
+  }
 </script>
 {% endblock %}
