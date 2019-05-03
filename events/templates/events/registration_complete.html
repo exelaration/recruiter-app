@@ -28,5 +28,10 @@
             </div>
         </form>
 </div>
+<script>
+    setTimeout(function () {
+            window.location.href = "/events/{{ event.id }}/"
+        }, 5000); //reset page after 5 secs.
+</script>
 
 {% endblock %}
