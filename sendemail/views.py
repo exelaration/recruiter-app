@@ -141,7 +141,8 @@ def send_email(event, candidate, from_address, to_address, subject, body_text):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email(from_address)
     to_email = Email(to_address)
-    content = Content("text/html", body_text)
+
+    content = Content(type_='text/html', value=body_text)
     current_email = Mail(from_email, subject, to_email, content)
     print('#############################')
     print('Send Email {0} : {1}'.format(to_address, subject))

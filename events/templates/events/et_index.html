@@ -21,14 +21,12 @@
     <div class="row">
         <div class="col-md-1 ta-left"><h4>ID</h4></div>
         <div class="col-md-3 ta-left"><h4>Subject</h4></div>
-        <div class="col-md-5 ta-left"><h4>Body</h4></div>
         <div class="col-md-5"></div>
     </div>
     {% for template in email_template_list %}
       <div class="row list-item {% if not template.enabled %}disabled{% endif %}">
         <div class="col-md-1 ta-left">{{ template.id }}</div>
         <div class='col-md-3 ta-left'>{{ template.subject }}</div>
-        <div class='col-md-5 ta-left'>{% autoescape off %}{{ template.body|truncatechars:100 }}{% endautoescape %}</div>
 
           <div class='col-md-3 ta-right'>
             {% if user.is_authenticated %}

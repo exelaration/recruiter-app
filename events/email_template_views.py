@@ -21,6 +21,7 @@ def edit(request, template_id):
         if form.is_valid():
             update_or_create_template(request, form, template_id)
             saved = True
+
     else:
         form = TemplateForm()
 
