@@ -39,8 +39,11 @@
             </div>
             <div class="form-group required ta-left" id="email-template">
                 <div>
-                  {{ form.body|add_label_class:"input-Labels" }}
-                  {{ form.body|safe }}
+                  <p>
+                    {{ form.body|add_label_class:"input-Labels" }} {As HTML}
+                  </p>
+                  <br />
+                  {{ form.body|add_class:"form-control"|safe }}
                 </div>
             </div>
             <div class="form-group required ta-left" id="email-template">
