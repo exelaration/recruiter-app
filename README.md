@@ -1,5 +1,5 @@
 # Recruit
-Currently deployed here: https://excella-jobs-stg.herokuapp.com/events/
+Currently deployed here: http://exelaration-recruiting.herokuapp.com/
 ##### Excella Jobs Web App for Recruiting
 * Use this web app to gather contact information from possible recruits and later send email with a link to job posting they are interested in
 * Information we want to gather:
