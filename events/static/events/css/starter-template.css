@@ -24,7 +24,7 @@ body {
 
 .add-item {
   position: relative;
-  background-color: #3366BB;
+  background-color: #3399cc;
   height: 4em;
   width: 4em;
   border-radius: 2em;
@@ -67,28 +67,29 @@ body {
 
 .starter-template .btn-primary {
   color: white !important;
-  background-color: #3366BB !important;
+  /* background-color: #3366BB !important; */
+  background-color: #003366 !important;
   background-image: none !important;
-  border-color: #3366BB !important;
+  border-color: #003366 !important;
 }
 
 .starter-template .btn-primary:hover {
-  background-color: #6699FF !important;
-  border-color: #6699FF !important;
+  background-color: #3399cc !important;
+  border-color: #3399cc !important;
 }
 
 .starter-template .btn-secondary {
   color: white !important;
-  background-color: #77AAFF !important;
+  background-color: #3399cc !important;
   background-image: none !important;
-  border-color: #77AAFF !important;
+  border-color: #3399cc !important;
 }
 
 .starter-template .btn-secondary:hover {
-  color: #444444 !important;
-  background-color: #99CCFF !important;
+  color: white !important;
+  background-color: #003366 !important;
   background-image: none !important;
-  border-color: #99CCFF !important;
+  border-color: #003366 !important;
 }
 
 .starter-template .btn-primary[disabled], .starter-template .btn-danger[disabled] {
@@ -115,7 +116,7 @@ body {
 }
 
 .banner {
-  background: #D13C45;
+  background: #333333;
   color: #ffffff;
   width: 100%;
   max-width: 100vw;
@@ -154,8 +155,11 @@ body {
 .BannerImg {
   margin: -4% auto auto auto;
   max-width: 100%;
-  max-height: 400px;
+  max-height: 200px;
   pointer-events: none;
+  width:100%;
+  height:auto;
+  padding-bottom:20px;
 }
 
 .page-title {
@@ -164,15 +168,19 @@ body {
 }
 
 .page-title .excella-logo-2 {
-  height: .9em;
+  height: 1.8em;
 }
 
 .page-title .title {
   display: inline-block;
   vertical-align: middle;
   font-size: 1.2em;
+  text-align:left;
 }
 
+.logo_1 {
+  height:50px;
+}
 .congratsImg {
     position: initial;
     width: 101vw;
@@ -180,6 +188,7 @@ body {
 
 .homeIcon {
     padding: 1em 0;
+    width:30px;
 }
 
 .homeIcon a {
@@ -280,7 +289,7 @@ label[disabled], input[disabled] {
 }
 
 .activeBtn {
-    background: #3366BB !important;
+    background: #003366 !important;
     border-radius: 4px;
     font-size: 1.4em;
     color: #FFFFFF !important;
@@ -357,12 +366,24 @@ label[disabled], input[disabled] {
   margin-top: .2em;
 }
 
+.wide-top {
+  margin-top: 1.5em;
+}
+
 .ta-left {
   text-align: left;
 }
 
 .ta-right {
   text-align: right;
+}
+
+.fl-left {
+  float: left;
+}
+
+.fl-right {
+  float: right;
 }
 
 .modal-header button.close {
