@@ -138,7 +138,7 @@ USE_L10N = True
 USE_TZ = True
 
 ADMINS = [
-    ('Allen Tuggle', 'allen.tuggle@excella.com')
+    ('Allen Tuggle', 'allen.tuggle@exelaration.com')
 ]
 
 # Update database configuration with $DATABASE_URL.

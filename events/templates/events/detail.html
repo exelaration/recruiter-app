@@ -6,14 +6,11 @@
 
 {% load static %}
 
-<div class="row">
-    <div class="col-sm-12">
-        <img alt='top design' class="center BannerImg" src='{% static "events/img/head.svg" %}'/>
-    </div>
-</div>
-
 <div class="row starter-template">
   <div class="centerContainer">
+    <div class="col-sm-12 center wide-top">
+      <img alt='top design' class="BannerImg" src='{% static "events/img/banner.png" %}'/>
+  </div>
     <div class="row">
       <div class='eventTitle row'>{{ event.title }}</div>
       <div class='eventDate row'>{{ event.date_time }}</div>
@@ -56,7 +53,7 @@
             </div>
 
              <div class="form-group button-group">
-                <button class="btn btn-lg btn-danger" type="reset" id="reset-form">Cancel</button>
+                <button class="btn btn-lg btn-secondary" type="reset" id="reset-form">Clear</button>
                 <button class="btn btn-lg btn-primary" type="submit" id="submit-form" disabled>Submit</button>
             </div>
         </form>
