@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+
 <br />
 <div class="starter-template">
 <div class='row'>
@@ -46,7 +47,7 @@
                   <h4 class="modal-title" id="myModalLabel">Send Emails!</h4>
                 </div>
                 <div class="modal-body">
-                    <p>You are about to send {{ attendance_count }} emails.</p>
+                    <p>You are about to send emails to the selected individuals.</p>
                     <p>Are you sure?</p>
                 </div>
                 <div class="modal-footer">
@@ -67,11 +68,12 @@
     </div>
     <br />
     <div class="row center">
+        <div class='col-lg-1'><h4>Selected</h4></div>
         <div class='col-lg-2'><h4>First Name</h4></div>
         <div class='col-lg-2'><h4>Last Name</h4></div>
         <div class='col-lg-2'><h4>Phone Number</h4></div>
         <div class='col-lg-2'><h4>Email Address</h4></div>
-        <div class='col-lg-4'><h4>Job</h4></div>
+        <div class='col-lg-3'><h4>Job</h4></div>
     </div>
   </div>
 </div>
@@ -80,11 +82,12 @@
     {% for attendance in attendance_list %}
       <div class="row center list-item {% if attendance.email_error %}error{% endif %}"
         {% if attendance.email_error %}data-toggle="tooltip" data-placement="right" title="Error sending email.  Please see email log for additional details."{% endif %}>
+        <div class='col-lg-1'><input id="students" type="checkbox"></div>
         <div class='col-lg-2'>{{ attendance.first_name }}</div>
         <div class='col-lg-2'>{{ attendance.last_name }}</div>
         <div class='col-lg-2'>{{ attendance.phone }}</div>
         <div class='col-lg-2' title="{{ attendance.email }}">{{ attendance.email|truncatechars:"45" }}</div>
-        <div class='col-lg-4'>{{ attendance.postings }}</div>
+        <div class='col-lg-3'>{{ attendance.postings }}</div>
       </div>
     {% empty %}
       <div class="centerContainer">
@@ -99,7 +102,8 @@
 
 <script type="text/javascript">
     function submitEmailForm() {
-        HTMLFormElement.prototype.submit.call($('#id-registrationForm')[0]);
+        alert(JSON.stringify($('#students')));
+       // HTMLFormElement.prototype.submit.call($('#id-registrationForm')[0]);
     }
 
     $(document).ready(function() {
